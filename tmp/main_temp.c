@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_temp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 11:25:35 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/18 21:12:35 by jgoudema         ###   ########.fr       */
+/*   Created: 2023/12/18 19:45:12 by jgoudema          #+#    #+#             */
+/*   Updated: 2023/12/18 21:15:01 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_temp.h"
 
 int	main(int argc, char **argv, char **env)
 {
@@ -18,8 +18,7 @@ int	main(int argc, char **argv, char **env)
 
 	// (void)(argc + (int)argv);
 	get_env(env, &data);
-	ft_cd(&data, argv[argc - 1]);
-	// ft_cd(&data, "tmp");
+	//ft_cd(&data, argv[argc - 1]);
 	ft_pwd(&data);
 	// ft_env(&data);
 }

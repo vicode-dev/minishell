@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_env.c                                      :+:      :+:    :+:   */
+/*   struct.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 12:25:51 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/18 19:44:33 by jgoudema         ###   ########.fr       */
+/*   Created: 2023/12/18 19:19:48 by jgoudema          #+#    #+#             */
+/*   Updated: 2023/12/18 20:40:51 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+/* Initialize the struct */
+
+#include "minishell_temp.h"
 
 int	ft_strslen(char **strs)
 {
@@ -22,32 +24,38 @@ int	ft_strslen(char **strs)
 	return (i);
 }
 
-void	ft_free_strs(char **board, int i, int quit)
+void	ft_free_strs(t_env *env, int i, int quit)
 {
-	while (board && board[i])  // while (i >= 0) et decrementer
-		free(board[i++]);
-	free(board);
+	while (i >= 0)
+	{
+		free(env[i--].name);
+	}
+	free(env);
 	if (quit == 1 || quit == 0)
 		exit(quit);
 }
 
 void	get_env(char **env, t_data *data)
 {
-	char	**new;
+	t_env	*new;
+	char	*temp;
 	int		i;
 
-	new = malloc((ft_strslen(env) + 1) * sizeof(char *));
+	new = malloc((ft_strslen(env) + 1) * sizeof(t_env));
 	if (!new)
 		exit (1);
 	i = 0;
 	while (env[i])
 	{
-		new[i] = ft_strdup(env[i]);
-		if (!new[i])
-			ft_free_strs(new, i, 1);
+		temp = ft_strchr(env[i], '=');
+		*temp = 0;
+		new[i].name = ft_strdup(env[i]);
+		new[i].content = ft_strdup(++temp);
+		// if (!new[i].name)
+		// 	ft_free_strs(new, i, 1);
 		i++;
 	}
-	new[i] = NULL;
+	new[i].name = NULL;
 	data->env = new;
 	data->var = malloc(sizeof(char *));
 	if (!data->var)

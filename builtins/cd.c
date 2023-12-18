@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:21:55 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/18 18:18:59 by vilibert         ###   ########.fr       */
+/*   Updated: 2023/12/18 21:13:52 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ int	change_env(t_data *data, char *path_dir)
 }
 // int	parse_path(t_data *data, char *path_dir)
 // {
-	
+// 	if (path_dir[0] != '/')
+// 	{
+		
+// 	}
 // }
 
 int	ft_cd(t_data *data, char *path_dir)
@@ -46,7 +49,7 @@ int	ft_cd(t_data *data, char *path_dir)
 	int 	pwd;
 
 	pwd = 0;
-		while (ft_strncmp(data->env[pwd], "PWD", 3))
+	while (ft_strncmp(data->env[pwd], "PWD", 3))
 		pwd++;
 	if (access(path_dir, F_OK | R_OK) == 0)
 	{
@@ -54,7 +57,7 @@ int	ft_cd(t_data *data, char *path_dir)
 		// parse_path(data, path_dir);
 		// change_env(data, path_dir);
 		chdir(path_dir);
-		data->env[pwd]
+		// data->env[pwd];
 	}
 	return (0);
 }

@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 11:25:35 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/18 21:12:35 by jgoudema         ###   ########.fr       */
+/*   Created: 2023/12/18 21:04:00 by jgoudema          #+#    #+#             */
+/*   Updated: 2023/12/18 21:17:21 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_temp.h"
 
-int	main(int argc, char **argv, char **env)
+int	ft_pwd(t_data *data)
 {
-	t_data	data;
+	int	i;
 
-	// (void)(argc + (int)argv);
-	get_env(env, &data);
-	ft_cd(&data, argv[argc - 1]);
-	// ft_cd(&data, "tmp");
-	ft_pwd(&data);
-	// ft_env(&data);
+	i = 0;
+	while (ft_strncmp(data->env[i].name, "PWD", 3) != 0)
+		i++;
+	ft_printf("%s\n", data->env[i].content);
+	return (0);
 }

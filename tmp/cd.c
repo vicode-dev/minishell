@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 11:25:35 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/18 21:12:35 by jgoudema         ###   ########.fr       */
+/*   Created: 2023/12/18 20:01:23 by jgoudema          #+#    #+#             */
+/*   Updated: 2023/12/18 20:44:30 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_temp.h"
 
-int	main(int argc, char **argv, char **env)
+int	ft_cd(t_data *data, char *dir_path)
 {
-	t_data	data;
+	int	pwd;
+	int	old;
 
-	// (void)(argc + (int)argv);
-	get_env(env, &data);
-	ft_cd(&data, argv[argc - 1]);
-	// ft_cd(&data, "tmp");
-	ft_pwd(&data);
-	// ft_env(&data);
+	pwd = 0;
+	while (ft_strncmp(data->env[pwd].name, "PWD", 3) != 0)
+		pwd++;
+	old = pwd + 1;
+	free(data->env[old].content);
+	data->env[old].content = data->env[pwd].content;
+	data->env[pwd].content = ft_strdup(dir_path);
+	return (0);
 }
