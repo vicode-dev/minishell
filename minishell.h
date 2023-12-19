@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/19 17:35:54 by vilibert         ###   ########.fr       */
+/*   Updated: 2023/12/19 19:49:29 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,9 @@ int		prompt_reader(t_data *data);
 char	*get_env_var(char **env, char *var);
 void	ft_exit_prog(t_data *data);
 void	ft_crash(t_data *data);
+
+t_env	*array_to_struct(t_data *data);
+char	**struct_to_array(t_env *env);
+int		ft_strslen(char **strs);
 
 #endif
