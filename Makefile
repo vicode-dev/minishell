@@ -1,5 +1,5 @@
 
-SRCS			:=	main.c
+SRCS			:=	main.c prompt.c
 SRCS_BUILTINS	:=	env.c cd.c pwd.c
 SRCS_PARSING	:=	parsing_env.c
 SRCS_PIPEX		:=	#pipex_main.c pipex_utils.c pipex_parsing.c
@@ -9,7 +9,8 @@ OBJS_BUILTINS	:= $(addprefix builtins/,$(SRCS_BUILTINS:.c=.o))
 OBJS_PIPEX		:= $(addprefix pipex/,$(SRCS_PIPEX:.c=.o))
 CC				:= gcc
 RM				:= rm -f
-CFLAGS			:= -Wall -Wextra -Werror  -I.
+CFLAGS			:= -Wall -Wextra -Werror  -I. -ggdb3#-fsanitize=address
+READLINE		:= -lreadline
 NAME			:= minishell
 # NAME_BONUS		:= pipex_bonus
 
@@ -17,7 +18,7 @@ all:			$(NAME)
 
 $(NAME):		$(OBJS) $(OBJS_PIPEX) $(OBJS_BUILTINS) $(OBJS_PARSING)
 				$(MAKE) bonus -C ./libft
-				$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(OBJS_PIPEX) $(OBJS_BUILTINS) $(OBJS_PARSING) libft/libft.a
+				$(CC) $(CFLAGS) $(READLINE) -o $(NAME) $(OBJS) $(OBJS_PIPEX) $(OBJS_BUILTINS) $(OBJS_PARSING) libft/libft.a
 				
 # bonus:			$(NAME_BONUS)
 

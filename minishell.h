@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/18 21:07:15 by jgoudema         ###   ########.fr       */
+/*   Updated: 2023/12/19 17:35:54 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # include <curses.h>
 # include <term.h>
 # include "libft/libft.h"
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <string.h>
 
 typedef struct s_env
 {
@@ -36,6 +39,10 @@ typedef struct s_data {
 void	get_env(char **env, t_data *data);
 int		ft_env(t_data *data);
 int		ft_cd(t_data *data, char *path_dir);
-int		ft_pwd(t_data *data);
+int		ft_pwd(void);
+int		prompt_reader(t_data *data);
+char	*get_env_var(char **env, char *var);
+void	ft_exit_prog(t_data *data);
+void	ft_crash(t_data *data);
 
 #endif

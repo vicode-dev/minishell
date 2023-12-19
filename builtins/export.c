@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 12:34:50 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/19 14:09:53 by vilibert         ###   ########.fr       */
+/*   Created: 2023/12/19 14:39:28 by vilibert          #+#    #+#             */
+/*   Updated: 2023/12/19 15:52:07 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_env(t_data *data)
+int	ft_export(t_data *data, char *var)
 {
-	int	i;
-
-	i = 0;
-	while (data->env[i])
-		ft_printf(1, "%s\n", data->env[i++]);
-	return (0);
+	
 }

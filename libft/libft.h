@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 16:20:00 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/07 12:38:49 by vilibert         ###   ########.fr       */
+/*   Updated: 2023/12/19 14:48:21 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,12 @@ t_list			*ft_lstnew(void *content);
 int				ft_lstsize(t_list *lst);
 
 /* ft_printf */
-int				ft_printf(const char *format, ...);
+int				ft_printf(int fd, const char *format, ...);
 char			*ft_uitoa(unsigned int n);
-int				ft_putchar(char c, int *length);
-int				ft_putnbr(int n, int *length);
-int				ft_putunbr(unsigned int n, int *length);
-int				ft_putstr(char *str, int *length);
+int				ft_putchar(int fd, char c, int *length);
+int				ft_putnbr(int fd, int n, int *length);
+int				ft_putunbr(int fd, unsigned int n, int *length);
+int				ft_putstr(int fd, char *str, int *length);
 
 /* get_next_line */
 # ifndef BUFFER_SIZE

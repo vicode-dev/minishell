@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 12:25:51 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/18 19:44:33 by jgoudema         ###   ########.fr       */
+/*   Updated: 2023/12/19 17:02:23 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,27 @@ void	ft_free_strs(char **board, int i, int quit)
 	free(board);
 	if (quit == 1 || quit == 0)
 		exit(quit);
+}
+
+char	*get_env_var(char **env, char *var)
+{
+	int		i;
+	char	*res;
+	// char	*tmp;
+
+	// tmp = ft_strjoin(var, "=");
+	// var = tmp;
+	i = 0;
+
+	while (env[i] && ft_strncmp(env[i], var, ft_strlen(var)))
+		i++;
+	if (env[i])
+	{
+		res = ft_strchr(env[i], '=');
+		res++;
+		return (res);
+	}
+	return (NULL);
 }
 
 void	get_env(char **env, t_data *data)

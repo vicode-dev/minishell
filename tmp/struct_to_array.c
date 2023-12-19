@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_to_array.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 20:46:01 by jgoudema          #+#    #+#             */
-/*   Updated: 2023/12/18 21:00:13 by jgoudema         ###   ########.fr       */
+/*   Updated: 2023/12/19 16:27:19 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,16 @@ int	ft_structlen(t_env *env)
 
 	i = 0;
 	while (env[i].name)
+		i++;
+	return (i);
+}
+
+int	ft_strslen(char **strs)
+{
+	int	i;
+
+	i = 0;
+	while (strs[i])
 		i++;
 	return (i);
 }
@@ -43,4 +53,9 @@ char	**struct_to_array(t_data *data)
 	}
 	array[i] = NULL;
 	return (array);
+}
+
+t_env	*array_to_struct(t_data *data)
+{
+	//Cf get_env
 }
