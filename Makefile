@@ -1,7 +1,7 @@
 
 SRCS			:=	main.c prompt.c
 SRCS_BUILTINS	:=	env.c cd.c pwd.c export_utils.c
-SRCS_PARSING	:=	parsing_env.c
+SRCS_PARSING	:=	parsing_env.c lexer.c
 SRCS_PIPEX		:=	#pipex_main.c pipex_utils.c pipex_parsing.c
 OBJS			:= $(SRCS:.c=.o)
 OBJS_PARSING	:= $(addprefix parsing/,$(SRCS_PARSING:.c=.o))
@@ -9,7 +9,7 @@ OBJS_BUILTINS	:= $(addprefix builtins/,$(SRCS_BUILTINS:.c=.o))
 OBJS_PIPEX		:= $(addprefix pipex/,$(SRCS_PIPEX:.c=.o))
 CC				:= gcc
 RM				:= rm -f
-CFLAGS			:= -Wall -Wextra -Werror  -I. -ggdb3#-fsanitize=address
+CFLAGS			:= -Wall -Wextra -Werror  -I. -ggdb3 -fsanitize=address
 READLINE		:= -lreadline
 NAME			:= minishell
 # NAME_BONUS		:= pipex_bonus

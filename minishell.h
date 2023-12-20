@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/19 19:49:29 by jgoudema         ###   ########.fr       */
+/*   Updated: 2023/12/20 16:27:17 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,18 @@ typedef struct s_data {
 	char	**var;
 }	t_data;
 
+typedef struct s_lexed {
+	char			*word;
+	int				token;
+	struct s_lexed	*next;
+	struct s_lexed	*prev;
+}	t_lexed;
+
+# define WORD 0
+# define DQUOTE 1
+# define SQUOTE 2
+# define PIPE 3
+
 void	get_env(char **env, t_data *data);
 int		ft_env(t_data *data);
 int		ft_cd(t_data *data, char *path_dir);
@@ -49,4 +61,6 @@ t_env	*array_to_struct(t_data *data);
 char	**struct_to_array(t_env *env);
 int		ft_strslen(char **strs);
 
+
+t_lexed	*lexer(t_data *data, char **line);
 #endif
