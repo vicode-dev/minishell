@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 09:25:57 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/20 17:37:39 by vilibert         ###   ########.fr       */
+/*   Updated: 2023/12/21 09:27:11 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	lst_add(t_lexed **list, int token, char *word)
 		(*list) = (*list)->next;
 	(*list)->next = new;
 	new->prev = (*list);
-	while((*list)->prev)
+	while ((*list)->prev)
 		(*list) = (*list)->prev;
 	return (0);
 }
@@ -92,16 +92,18 @@ int	get_quot(t_lexed **list, char **line, int *i)
 		{
 			*i += j - i_cpy + 1; 
 			if (type == '"')
-				return (lst_add(list, DQUOTE, ft_substr(*line, i_cpy, j - i_cpy)));
+				return (lst_add(list, DQUOTE,
+						ft_substr(*line, i_cpy, j - i_cpy)));
 			if (type == '\'')
-				return (lst_add(list, SQUOTE, ft_substr(*line, i_cpy, j - i_cpy)));
+				return (lst_add(list, SQUOTE,
+						ft_substr(*line, i_cpy, j - i_cpy)));
 		}
 		j++;
 	}
 	return (1);
 }
 
-int get_word(t_lexed **list, char *line, int *i)
+int	get_word(t_lexed **list, char *line, int *i)
 {
 	int	j;
 

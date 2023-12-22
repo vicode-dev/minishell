@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/20 16:27:17 by vilibert         ###   ########.fr       */
+/*   Updated: 2023/12/22 12:06:31 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,5 @@ int		ft_strslen(char **strs);
 
 
 t_lexed	*lexer(t_data *data, char **line);
+void	expand(t_data *data, t_lexed *list);
 #endif

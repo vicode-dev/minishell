@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 12:25:51 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/19 17:02:23 by vilibert         ###   ########.fr       */
+/*   Updated: 2023/12/22 12:13:56 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,10 @@ char	*get_env_var(char **env, char *var)
 {
 	int		i;
 	char	*res;
-	// char	*tmp;
 
-	// tmp = ft_strjoin(var, "=");
-	// var = tmp;
 	i = 0;
-
+	if (!var || !var[0])
+		return (NULL);
 	while (env[i] && ft_strncmp(env[i], var, ft_strlen(var)))
 		i++;
 	if (env[i])
@@ -50,6 +48,28 @@ char	*get_env_var(char **env, char *var)
 		return (res);
 	}
 	return (NULL);
+}
+
+void	increase_shlvl(t_data *data)
+{
+	char		*old_value;
+	char		*itoa;
+	uint16_t	shlvl;
+	int			i;
+
+	i = 0;
+	old_value = get_env_var(data->env, "SHLVL=");
+	shlvl = ft_atoi(old_value);
+	shlvl++;
+	while (data->env[i]
+		&& ft_strncmp(data->env[i], "SHLVL=", ft_strlen("SHLVL=")))
+		i++;
+	free(data->env[i]);
+	itoa = ft_itoa(shlvl);
+	data->env[i] = ft_strjoin("SHLVL=", itoa);
+	free(itoa);
+	if (!data->env[i])
+		ft_crash(data);
 }
 
 void	get_env(char **env, t_data *data)
@@ -74,4 +94,5 @@ void	get_env(char **env, t_data *data)
 	if (!data->var)
 		ft_free_strs(data->env, i, 1);
 	data->var[0] = NULL;
+	increase_shlvl(data);
 }

@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:36:00 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/20 16:45:56 by vilibert         ###   ########.fr       */
+/*   Updated: 2023/12/22 12:04:55 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,21 @@
 char	*get_prompt(t_data *data)
 {
 	char	*tmp;
+	char	*cwd;
 	char	*prompt;
 
 	prompt = ft_strjoin(get_env_var(data->env, "USER"), " ");
 	if (!prompt)
 		ft_crash(data);
-	tmp = ft_strrchr(get_env_var(data->env, "PWD"), '/');
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+		free(prompt);
+	if (!cwd)
+		ft_crash(data);
+	tmp = ft_strrchr(cwd, '/');
 	tmp = ft_strjoin(prompt, ++tmp);
 	free(prompt);
+	free(cwd);
 	if (!tmp)
 		ft_crash(data);
 	prompt = ft_strjoin(tmp, " % ");
@@ -48,7 +55,8 @@ int	prompt_reader(t_data *data)
 		line = readline(prompt);
 		free(prompt);
 		list = lexer(data, &line);
-		while(list)
+		expand(data, list);
+		while (list)
 		{
 			printf("%s\n", list->word);
 			list = list->next;
@@ -56,6 +64,8 @@ int	prompt_reader(t_data *data)
 		add_history(line);
 		if (!ft_strncmp(line, "exit", 5))
 			ft_exit_prog(data);
+		if (!ft_strncmp(line, "env", 4))
+			ft_env(data);
 		// ft_cd(data, line);
 		// ft_printf(1, "%s\n%s\n", get_env_var(data->env, "PWD"), get_env_var(data->env, "OLDPWD"));
 		// ft_pwd();
