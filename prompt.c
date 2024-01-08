@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:36:00 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/22 12:04:55 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/08 15:14:12 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,26 @@ int	prompt_reader(t_data *data)
 		line = readline(prompt);
 		free(prompt);
 		list = lexer(data, &line);
-		expand(data, list);
-		while (list)
-		{
-			printf("%s\n", list->word);
-			list = list->next;
-		}
 		add_history(line);
+		// expand(data, list);
+		// while (list)
+		// {
+		// 	printf("%s\n", list->word);
+		// 	list = list->next;
+		// }
 		if (!ft_strncmp(line, "exit", 5))
+		{
+			free(line);
+			ft_free_lexed(&list);
 			ft_exit_prog(data);
+		}
 		if (!ft_strncmp(line, "env", 4))
 			ft_env(data);
 		// ft_cd(data, line);
 		// ft_printf(1, "%s\n%s\n", get_env_var(data->env, "PWD"), get_env_var(data->env, "OLDPWD"));
 		// ft_pwd();
-		// free(line);
+		ft_free_lexed(&list);
+		free(line);
 	}
 	return (0);
 }

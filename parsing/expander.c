@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 09:26:17 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/22 12:14:30 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/08 14:26:27 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ char	*ft_replace(char *old_str, char *new_str, int i, int j)
 	part_2 = ft_substr(old_str, j, ft_strlen(old_str + j));
 	if (!part_1 || !part_2)
 		return (free(part_1), free(part_2), NULL);
+	if (!new_str)
+	{
+		tmp = ft_strjoin(part_1, part_2);
+		return (free(part_1), free(part_2), tmp);
+	}
 	tmp = ft_strjoin(part_1, new_str);
 	free(part_1);
 	if (!tmp)
@@ -50,15 +55,17 @@ void	expand(t_data *data, t_lexed *list)
 			while (list->word[j] && list->word[j] != ' ')
 				j++;
 			new = ft_substr(list->word, i, j - i);
-			// if (!new)
-				// free_lexed(list);
-				// ft_crash(data);
+			if (!new)
+			{
+				ft_free_lexed(&list);
+				ft_crash(data);
+			}
 			tmp = get_env_var(data->env, new + 1);
 			free(new);
 			new = ft_replace(list->word, tmp, i, j);
 			if (!new)
 			{
-				// free_lexed(list);
+				ft_free_lexed(&list);
 				ft_crash(data);
 			}
 			free(list->word);

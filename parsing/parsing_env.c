@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 12:25:51 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/22 12:13:56 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/08 14:12:43 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ char	*get_env_var(char **env, char *var)
 	i = 0;
 	if (!var || !var[0])
 		return (NULL);
-	while (env[i] && ft_strncmp(env[i], var, ft_strlen(var)))
+	while ((env[i] && ft_strncmp(env[i], var, ft_strlen(var))) 
+		|| (env[i] && env[i][ft_strlen(var)] != '='))
 		i++;
 	if (env[i])
 	{
@@ -58,7 +59,7 @@ void	increase_shlvl(t_data *data)
 	int			i;
 
 	i = 0;
-	old_value = get_env_var(data->env, "SHLVL=");
+	old_value = get_env_var(data->env, "SHLVL");
 	shlvl = ft_atoi(old_value);
 	shlvl++;
 	while (data->env[i]

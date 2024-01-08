@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 09:25:57 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/21 09:27:11 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/08 15:13:58 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	ft_free_lexed(t_lexed **list)
 	while (*list)
 	{
 		tmp = (*list)->next;
+		free((*list)->word);
 		free(*list);
 		*list = tmp;
 	}
@@ -33,7 +34,7 @@ int	lst_add(t_lexed **list, int token, char *word)
 		return (ft_free_lexed(list), 1);
 	new = malloc(sizeof(t_lexed));
 	if (!new)
-		return (ft_free_lexed(list), 1);
+		return (ft_free_lexed(list), free(word), 1);
 	new->next = NULL;
 	new->prev = NULL;
 	new->token = token;

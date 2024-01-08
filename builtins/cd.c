@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:21:55 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/19 17:42:17 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/08 14:13:36 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*check_relative(t_data *data, char *path_dir)
 
 	if (!ft_strncmp(path_dir, "~", 1))
 	{
-		tmp = ft_strjoin(get_env_var(data->env, "HOME="), ++path_dir);
+		tmp = ft_strjoin(get_env_var(data->env, "HOME"), ++path_dir);
 		free(--path_dir);
 		return (tmp);
 	}
