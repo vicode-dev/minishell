@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 09:46:51 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/19 14:51:14 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/08 16:45:47 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,28 @@ static int	print_hex(int fd, unsigned long long n, char cap, int *length)
 	return (1);
 }
 
-static int	format_handler(int fd, const char *format, va_list args, int *length)
+static int	format_handler(int fd, const char *format, va_list args, int *len)
 {
 	if (format[1] == 'c')
-		return (ft_putchar(fd, (char)va_arg(args, int), length));
+		return (ft_putchar(fd, (char)va_arg(args, int), len));
 	if (format[1] == 's')
-		return (ft_putstr(fd, va_arg(args, char *), length));
+		return (ft_putstr(fd, va_arg(args, char *), len));
 	if (format[1] == 'p')
 	{
-		if (ft_putstr(fd, "0x", length) != 1)
+		if (ft_putstr(fd, "0x", len) != 1)
 			return (-1);
-		return (print_hex(fd, va_arg(args, unsigned long long), 'a', length));
+		return (print_hex(fd, va_arg(args, unsigned long long), 'a', len));
 	}
 	if ((format[1] == 'd' || format[1] == 'i'))
-		return (ft_putnbr(fd, va_arg(args, int), length));
+		return (ft_putnbr(fd, va_arg(args, int), len));
 	if (format[1] == 'u')
-		return (ft_putunbr(fd, va_arg(args, unsigned int), length) == -1);
+		return (ft_putunbr(fd, va_arg(args, unsigned int), len) == -1);
 	if (format[1] == 'x')
-		return (print_hex(fd, va_arg(args, unsigned int), 'a', length));
+		return (print_hex(fd, va_arg(args, unsigned int), 'a', len));
 	if (format[1] == 'X')
-		return (print_hex(fd, va_arg(args, unsigned int), 'A', length));
+		return (print_hex(fd, va_arg(args, unsigned int), 'A', len));
 	else
-		return (ft_putchar(fd, format[1], length));
+		return (ft_putchar(fd, format[1], len));
 }
 
 int	ft_printf(int fd, const char *format, ...)

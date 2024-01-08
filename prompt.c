@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:36:00 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/08 15:14:12 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/08 19:08:11 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,14 @@ int	prompt_reader(t_data *data)
 
 	again = 1; 
 
+
+	char *s[2];
+	int i[2];
+	i[0] = 0;
+	i[1] = 1;
+	s[0] = "hello";
+	s[1] = 0;
+	
 	while (again)
 	{
 		prompt = get_prompt(data);
@@ -70,6 +78,9 @@ int	prompt_reader(t_data *data)
 		}
 		if (!ft_strncmp(line, "env", 4))
 			ft_env(data);
+
+		if (!ft_strncmp(line, "export", 7))
+			ft_export(data, s, i);
 		// ft_cd(data, line);
 		// ft_printf(1, "%s\n%s\n", get_env_var(data->env, "PWD"), get_env_var(data->env, "OLDPWD"));
 		// ft_pwd();

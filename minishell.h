@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/08 14:26:04 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/08 19:20:51 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,11 @@ typedef struct s_lexed {
 # define PIPE 3
 
 void	get_env(char **env, t_data *data);
-int		ft_env(t_data *data);
+int		ft_env(t_data *data, int out);
 int		ft_cd(t_data *data, char *path_dir);
 int		ft_pwd(void);
+int		ft_structlen(t_env *env);
+int		ft_export(t_data *data, char **vars, int *in_out);
 int		prompt_reader(t_data *data);
 char	*get_env_var(char **env, char *var);
 void	ft_exit_prog(t_data *data);
