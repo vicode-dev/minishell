@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:36:00 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/09 13:14:20 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/09 13:21:30 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ int	prompt_reader(t_data *data)
 		free(prompt);
 		list = lexer(data, &line);
 		add_history(line);
-		// expand(data, list);
-		// while (list)
+		expander(data, list);
+		while (list)
 		// {
 		// 	printf("%s\n", list->word);
 		// 	list = list->next;

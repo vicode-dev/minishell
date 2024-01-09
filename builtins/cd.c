@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:21:55 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/08 14:13:36 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/09 09:50:37 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*check_relative(t_data *data, char *path_dir)
 		if (!get_env_var(data->env, "OLDPWD"))
 			return (ft_printf(2, "minishell: cd: OLDPWD not set\n"), NULL);
 		tmp = ft_strdup(get_env_var(data->env, "OLDPWD"));
-		if(access(tmp, R_OK | F_OK))
+		if (access(tmp, R_OK | F_OK))
 			ft_printf(1, "%s\n", tmp);
 		return (free(path_dir), tmp);
 	}

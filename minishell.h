@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/08 19:20:51 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/09 13:21:01 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,5 @@ int		ft_strslen(char **strs);
 
 t_lexed	*lexer(t_data *data, char **line);
 void	ft_free_lexed(t_lexed **list);
-void	expand(t_data *data, t_lexed *list);
+void	expander(t_data *data, t_lexed *list);
 #endif
