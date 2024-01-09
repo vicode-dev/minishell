@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 14:39:28 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/09 12:22:52 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/09 15:04:38 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,14 @@ int	find_next(t_env *env, int i, int k)
 	return (j);
 }
 
+void	print_env2(t_env *env, int j, int out)
+{
+	if (env[j].content)
+		ft_printf(out, "declare -x %s=\"%s\"\n", env[j].name, env[j].content);
+	else
+		ft_printf(out, "declare -x %s\n", env[j].name);
+}
+
 int	print_env(t_data *data, int *f)
 {
 	t_env	*env;
@@ -72,11 +80,11 @@ int	print_env(t_data *data, int *f)
 		if (ft_strcmp(env[i].name, env[k].name) > 0)
 			k = i;
 	}
-	ft_printf(f[1], "declare -x %s=\"%s\"\n", env[j].name, env[j].content);
+	print_env2(env, j, f[1]);
 	while (i-- > 2)
 	{
 		j = find_next(env, j, k);
-		ft_printf(f[1], "declare -x %s=\"%s\"\n", env[j].name, env[j].content);
+		print_env2(env, j, f[1]);
 	}
 	free_struct(env);
 	return (0);
@@ -86,5 +94,7 @@ int	ft_export(t_data *data, char **vars, int *in_out)
 {
 	if (!vars[1])
 		print_env(data, in_out);
+	// else
+	// 	export_parse(data, vars, in_out);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:36:00 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/09 13:21:30 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/09 15:03:44 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ int	prompt_reader(t_data *data)
 		add_history(line);
 		expander(data, list);
 		while (list)
-		// {
-		// 	printf("%s\n", list->word);
-		// 	list = list->next;
-		// }
+		{
+			printf("%s\n", list->word);
+			list = list->next;
+		}
 		if (!ft_strncmp(line, "exit", 5))
 		{
 			free(line);
@@ -79,8 +79,8 @@ int	prompt_reader(t_data *data)
 		if (!ft_strncmp(line, "env", 4))
 			ft_env(data, 1);
 
-		if (!ft_strncmp(line, "export", 7))
-			ft_export(data, s, i);
+		// if (!ft_strncmp(line, "export", 7))
+		// 	ft_export(data, s, i);
 		// ft_cd(data, line);
 		// ft_printf(1, "%s\n%s\n", get_env_var(data->env, "PWD"), get_env_var(data->env, "OLDPWD"));
 		// ft_pwd();

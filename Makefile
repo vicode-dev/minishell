@@ -1,6 +1,6 @@
 
 SRCS			:=	main.c prompt.c
-SRCS_BUILTINS	:=	env.c cd.c pwd.c export_utils.c export.c
+SRCS_BUILTINS	:=	env.c cd.c pwd.c export_utils.c export.c export_add.c export_parsing.c
 SRCS_PARSING	:=	parsing_env.c lexer.c expander.c
 SRCS_PIPEX		:=	#pipex_main.c pipex_utils.c pipex_parsing.c
 OBJS			:= $(SRCS:.c=.o)
