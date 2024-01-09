@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/09 15:20:05 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/09 16:43:31 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_env
 
 typedef struct s_data {
 	char	**env;
-	char	**var;
+	t_exec	*exec;
 }	t_data;
 
 typedef struct s_lexed {
@@ -43,8 +43,7 @@ typedef struct s_lexed {
 	struct s_lexed	*prev;
 }	t_lexed;
 
-typedef struct s_exec
-{
+typedef struct s_exec{
 	int		infile;
 	int		outfile;
 	char	*path;
@@ -79,5 +78,5 @@ int		ft_strslen(char **strs);
 t_lexed	*lexer(t_data *data, char **line);
 void	ft_free_lexed(t_lexed **list);
 void	expander(t_data *data, t_lexed *list);
-t_exec	parse(t_data data, t_lexed list)
+t_exec	*parse(t_data *data, t_lexed *list);
 #endif
