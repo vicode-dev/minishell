@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 18:29:22 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/08 19:17:40 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/09 12:28:33 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ t_env	*array_to_struct(t_data *data)
 	while (data->env[i])
 	{
 		temp = ft_strchr(data->env[i], '=');
-		*temp = 0;
 		new[i].name = ft_strdup(data->env[i]);
 		new[i].content = ft_strdup(++temp);
 		// if (!new[i].name)

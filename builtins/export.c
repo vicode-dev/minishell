@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 14:39:28 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/08 19:24:58 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/09 12:22:52 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	find_next(t_env *env, int i, int k)
 	while (env[next].name)
 	{
 		if (next != i && ft_strcmp(env[i].name, env[next].name) < 0
-			&& ft_strcmp(env[j].name, env[next].name) > 0)
+			&& ft_strcmp(env[j].name, env[next].name) > 0
+			&& ft_strcmp(env[next].name, "_") != 0)
 			j = next;
 		next++;
 	}
@@ -72,7 +73,7 @@ int	print_env(t_data *data, int *f)
 			k = i;
 	}
 	ft_printf(f[1], "declare -x %s=\"%s\"\n", env[j].name, env[j].content);
-	while (i-- > 1)
+	while (i-- > 2)
 	{
 		j = find_next(env, j, k);
 		ft_printf(f[1], "declare -x %s=\"%s\"\n", env[j].name, env[j].content);

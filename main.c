@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:25:35 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/19 19:52:13 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/09 12:15:18 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,4 @@ int	main(int argc, char **argv, char **env)
 	g_exitcode = 0;
 	get_env(env, &data);
 	prompt_reader(&data);
-	ft_env(&data);
 }
