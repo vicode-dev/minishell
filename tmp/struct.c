@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 19:19:48 by jgoudema          #+#    #+#             */
-/*   Updated: 2023/12/18 20:40:51 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/09 18:42:02 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	get_env(char **env, t_data *data)
 	}
 	new[i].name = NULL;
 	data->env = new;
-	data->var = malloc(sizeof(char *));
-	if (!data->var)
-		ft_free_strs(data->env, i, 1);
-	data->var[0] = NULL;
+	// data->var = malloc(sizeof(char *));
+	// if (!data->var)
+	// 	ft_free_strs(data->env, i, 1);
+	// data->var[0] = NULL;
 }

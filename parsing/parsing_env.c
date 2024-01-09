@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 12:25:51 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/08 14:12:43 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/09 18:41:57 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ void	get_env(char **env, t_data *data)
 	}
 	new[i] = NULL;
 	data->env = new;
-	data->var = malloc(sizeof(char *));
-	if (!data->var)
-		ft_free_strs(data->env, i, 1);
-	data->var[0] = NULL;
+	// data->var = malloc(sizeof(char *));
+	// if (!data->var)
+	// 	ft_free_strs(data->env, i, 1);
+	// data->var[0] = NULL;
 	increase_shlvl(data);
 }

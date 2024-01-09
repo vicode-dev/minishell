@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:36:00 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/09 15:03:44 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/09 18:51:48 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,15 @@ int	prompt_reader(t_data *data)
 
 
 	char *s[2];
+	char *p[2];
 	int i[2];
 	i[0] = 0;
 	i[1] = 1;
 	s[0] = "hello";
-	s[1] = 0;
-	
+	s[1] = "test";
+	p[0] = "hello";
+	p[1] = 0;
+
 	while (again)
 	{
 		prompt = get_prompt(data);
@@ -79,8 +82,18 @@ int	prompt_reader(t_data *data)
 		if (!ft_strncmp(line, "env", 4))
 			ft_env(data, 1);
 
-		// if (!ft_strncmp(line, "export", 7))
+		// if (!ft_strncmp(line, "export 1", 9))
 		// 	ft_export(data, s, i);
+		// if (!ft_strncmp(line, "export", 7))
+		// 	ft_export(data, p, i);
+		else
+		{
+			s[1] = line;
+			if (!s[1][0])
+				s[1] = 0;
+			ft_export(data, s, i);
+		}
+
 		// ft_cd(data, line);
 		// ft_printf(1, "%s\n%s\n", get_env_var(data->env, "PWD"), get_env_var(data->env, "OLDPWD"));
 		// ft_pwd();

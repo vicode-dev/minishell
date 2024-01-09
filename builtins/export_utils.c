@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 18:29:22 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/09 12:28:33 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/09 20:23:12 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ t_env	*array_to_struct(t_data *data)
 {
 	t_env	*new;
 	char	*temp;
+	char	*temp2;
 	int		i;
 
 	new = malloc((ft_strslen(data->env) + 1) * sizeof(t_env));
@@ -61,11 +62,19 @@ t_env	*array_to_struct(t_data *data)
 	i = 0;
 	while (data->env[i])
 	{
-		temp = ft_strchr(data->env[i], '=');
-		new[i].name = ft_strdup(data->env[i]);
-		new[i].content = ft_strdup(++temp);
+		temp2 = ft_strdup(data->env[i]);
+		temp = ft_strchr(temp2, '=');
+		if (temp)
+			*temp = 0;
+		new[i].name = ft_strdup(temp2);
+		if (temp)
+			new[i].content = ft_strdup(++temp);
+		else
+			new[i].content = 0;
+		// ft_printf(1, "data %s, temp %s, name %s, content %s\n\n", data->env[i], temp, new[i].name, new[i].content);
 		// if (!new[i].name)
 		// 	ft_free_strs(new, i, 1); ?
+		free(temp2);
 		i++;
 	}
 	new[i].name = NULL;

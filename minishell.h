@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/09 16:43:31 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/09 19:20:34 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,13 @@ typedef struct s_env
 	char	*content;
 }	t_env;
 
+typedef struct s_exec {
+	int		infile;
+	int		outfile;
+	char	*path;
+	char	**argv;
+}	t_exec;
+
 typedef struct s_data {
 	char	**env;
 	t_exec	*exec;
@@ -43,13 +50,6 @@ typedef struct s_lexed {
 	struct s_lexed	*prev;
 }	t_lexed;
 
-typedef struct s_exec{
-	int		infile;
-	int		outfile;
-	char	*path;
-	char	**argv;
-}	t_exec;
-
 # define WORD 0
 # define DQUOTE 1
 # define SQUOTE 2
@@ -57,8 +57,11 @@ typedef struct s_exec{
 
 // Export
 int		ft_export(t_data *data, char **vars, int *in_out);
-void	export_parse(t_data *data, char **vars, int *in_out);
-void	export_add(t_data *data, char *arg, int out);
+int		export_parse(t_data *data, char **vars, int *in_out);
+int		export_add(t_data *data, char *arg);
+int		export_replace(t_data *data, char *arg, int pos, int i);
+int		print_env(t_data *data, int *f);
+int		ft_strcmp(char *s1, char *s2);
 
 void	get_env(char **env, t_data *data);
 int		ft_env(t_data *data, int out);
