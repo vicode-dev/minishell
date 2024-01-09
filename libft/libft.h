@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 16:20:00 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/19 14:48:21 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/09 15:09:37 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char			*ft_strtrim(char const *s1, char const *set);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
+char			*ft_replace(char *old_str, char *new_str, int i, int j);
 
 /* Bonus Struct */
 typedef struct s_list

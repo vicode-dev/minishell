@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/09 14:25:22 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/09 15:20:05 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,14 @@ typedef struct s_lexed {
 	struct s_lexed	*prev;
 }	t_lexed;
 
+typedef struct s_exec
+{
+	int		infile;
+	int		outfile;
+	char	*path;
+	char	**argv;
+}	t_exec;
+
 # define WORD 0
 # define DQUOTE 1
 # define SQUOTE 2
@@ -67,8 +75,9 @@ t_env	*array_to_struct(t_data *data);
 char	**struct_to_array(t_env *env);
 int		ft_strslen(char **strs);
 
-
+// Parsing
 t_lexed	*lexer(t_data *data, char **line);
 void	ft_free_lexed(t_lexed **list);
 void	expander(t_data *data, t_lexed *list);
+t_exec	parse(t_data data, t_lexed list)
 #endif

@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/12 10:06:45 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/09 14:04:09 by vilibert         ###   ########.fr       */
+/*   Created: 2024/01/09 15:04:07 by vilibert          #+#    #+#             */
+/*   Updated: 2024/01/09 15:17:12 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-size_t	ft_strlen(const char *str)
+t_exec	parse(t_data data, t_lexed list)
 {
-	int	i;
-	
-	if (!str)
-		return (0);
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+
 }
