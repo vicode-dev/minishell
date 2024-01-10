@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 09:25:57 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/09 10:18:32 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/10 12:23:46 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	ft_free_lexed(t_lexed **list)
 {
 	t_lexed	*tmp;
 
-	// while ((*list)->prev)
-	// 	*list = (*list)->prev;
+	while (*list && (*list)->prev)
+		*list = (*list)->prev;
 	while (*list)
 	{
 		tmp = (*list)->next;

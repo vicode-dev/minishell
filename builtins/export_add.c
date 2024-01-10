@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_add.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 13:41:26 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/10 13:06:26 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/10 18:31:38 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,13 @@ int	export_add(t_data *data, char *arg)
 {
 	char	**new_env;
 	char	*line;
-	int		i;
 
-	new_env = malloc((ft_strslen(data->env) + 2) * sizeof(char *));
-	if (!new_env)
-		return (1);
 	line = ft_strdup(arg);
 	if (!line)
-		return (free(new_env), 1);
-	i = 0;
-	while (data->env[i])
-	{
-		new_env[i] = data->env[i];
-		i++;
-	}
-	new_env[i++] = line;
-	new_env[i] = 0;
+		return (1);
+	new_env = ft_arrayjoin(data->env, &line, 1);
+	if (!new_env)
+		return (free(line), 1);
 	free(data->env);
 	data->env = new_env;
 	return (0);

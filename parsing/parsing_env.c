@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 12:25:51 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/09 18:41:57 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/10 18:17:17 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	ft_strslen(char **strs)
-{
-	int	i;
-
-	i = 0;
-	while (strs[i])
-		i++;
-	return (i);
-}
 
 void	ft_free_strs(char **board, int i, int quit)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/10 15:58:05 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/10 19:39:10 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,14 @@ int		prompt_reader(t_data *data);
 char	*get_env_var(char **env, char *var);
 void	ft_exit_prog(t_data *data);
 void	ft_crash(t_data *data);
+void	ft_free_strs(char **board, int i, int quit);
 
 t_env	*array_to_struct(t_data *data);
 char	**struct_to_array(t_env *env);
-int		ft_strslen(char **strs);
 
 // Parsing
 t_lexed	*lexer(t_data *data, char **line);
 void	ft_free_lexed(t_lexed **list);
 void	expander(t_data *data, t_lexed *list);
-t_exec	*parse(t_data *data, t_lexed *list);
+void	parse(t_data *data, t_lexed *list);
 #endif

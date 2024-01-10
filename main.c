@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:25:35 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/09 18:41:29 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/10 17:23:19 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	ft_exit_prog(t_data *data)
 	while (data->env && data->env[i])
 		free(data->env[i++]);
 	free(data->env);
+	// rl_clear_history();
 	i = 0;
 	// while (data->var && data->var[i])
 	// 	free(data->var[i]);
