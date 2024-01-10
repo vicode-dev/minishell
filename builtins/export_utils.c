@@ -6,13 +6,13 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 18:29:22 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/09 20:23:12 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/10 13:05:30 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_structlen(t_env *env)
+static int	ft_structlen(t_env *env)
 {
 	int	i;
 

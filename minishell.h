@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/09 19:20:34 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/10 13:01:37 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_lexed {
 
 // Export
 int		ft_export(t_data *data, char **vars, int *in_out);
-int		export_parse(t_data *data, char **vars, int *in_out);
+int		export_parse(t_data *data, char **vars);
 int		export_add(t_data *data, char *arg);
 int		export_replace(t_data *data, char *arg, int pos, int i);
 int		print_env(t_data *data, int *f);

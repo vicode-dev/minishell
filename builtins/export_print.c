@@ -6,13 +6,13 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:22:10 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/09 18:48:37 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/10 13:05:08 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_struct(t_env *env)
+static void	free_struct(t_env *env)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ void	free_struct(t_env *env)
 	free(env);
 }
 
-int	find_next(t_env *env, int i, int k)
+static int	find_next(t_env *env, int i, int k)
 {
 	int	j;
 	int	next;
@@ -43,7 +43,7 @@ int	find_next(t_env *env, int i, int k)
 	return (j);
 }
 
-void	print_env2(t_env *env, int j, int out)
+static void	print_env2(t_env *env, int j, int out)
 {
 	if (env[j].content)
 		ft_printf(out, "declare -x %s=\"%s\"\n", env[j].name, env[j].content);
@@ -51,7 +51,7 @@ void	print_env2(t_env *env, int j, int out)
 		ft_printf(out, "declare -x %s\n", env[j].name);
 }
 
-int	print_env(t_data *data, int *f)
+int	print_env(t_data *data, int out)
 {
 	t_env	*env;
 	int		i;
@@ -73,7 +73,7 @@ int	print_env(t_data *data, int *f)
 	while (i-- > 1)
 	{
 		j = find_next(env, j, k);
-		print_env2(env, j, f[1]);
+		print_env2(env, j, out);
 	}
 	free_struct(env);
 	return (0);

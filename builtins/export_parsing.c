@@ -6,13 +6,13 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:21:02 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/10 12:55:31 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/10 13:04:33 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_name(char *name, int i)
+static int	check_name(char *name, int i)
 {
 	int	j;
 
@@ -21,7 +21,7 @@ int	check_name(char *name, int i)
 	{
 		if (!ft_isalnum(name[j]) && name[j] != '_')
 		{
-			ft_printf(1, "export: `%s': not a valid identifier\n", name);
+			ft_printf(1, "export: `%s': not a valid identifier\n", name); // 1 ou 2 output ?
 			return (0);
 		}
 		j++;
@@ -34,7 +34,7 @@ int	check_name(char *name, int i)
 	return (1);
 }
 
-int	check_existence(t_data *data, char *var, int i)
+static int	check_existence(t_data *data, char *var, int i)
 {
 	int	j;
 
@@ -49,13 +49,12 @@ int	check_existence(t_data *data, char *var, int i)
 	return (-1);
 }
 
-int	export_parse(t_data *data, char **vars, int *in_out)
+int	export_parse(t_data *data, char **vars)
 {
 	int		i;
 	int		exist;
 
 	i = 0;
-	(void) in_out;
 	while (vars[1][i] && vars[1][i] != '=' && vars[1][i] != '+')
 		i++;
 	if (!check_name(vars[1], i))
