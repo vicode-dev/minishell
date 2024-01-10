@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:22:10 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/10 13:05:08 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/10 15:38:17 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	print_env(t_data *data, int out)
 		if (ft_strcmp(env[i].name, env[k].name) > 0)
 			k = i;
 	}
-	print_env2(env, j, f[1]);
+	print_env2(env, j, out);
 	while (i-- > 1)
 	{
 		j = find_next(env, j, k);

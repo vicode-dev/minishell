@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:21:02 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/10 13:04:33 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/10 15:25:13 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,20 @@ static int	check_name(char *name, int i)
 	{
 		if (!ft_isalnum(name[j]) && name[j] != '_')
 		{
-			ft_printf(1, "export: `%s': not a valid identifier\n", name); // 1 ou 2 output ?
+			ft_printf(2, "export: `%s': not a valid identifier\n", name);
 			return (0);
 		}
 		j++;
 	}
 	if (name[j] == '+' && name[j + 1] != '=')
 	{
-		ft_printf(1, "export: `%s': not a valid identifier\n", name);
+		ft_printf(2, "export: `%s': not a valid identifier\n", name);
 		return (0);
 	}
 	return (1);
 }
 
-static int	check_existence(t_data *data, char *var, int i)
+int	check_existence(t_data *data, char *var, int i)
 {
 	int	j;
 

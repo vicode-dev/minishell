@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:36:00 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/09 18:51:48 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/10 15:39:20 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,6 @@ int	prompt_reader(t_data *data)
 
 	char *s[2];
 	char *p[2];
-	int i[2];
-	i[0] = 0;
-	i[1] = 1;
 	s[0] = "hello";
 	s[1] = "test";
 	p[0] = "hello";
@@ -91,7 +88,7 @@ int	prompt_reader(t_data *data)
 			s[1] = line;
 			if (!s[1][0])
 				s[1] = 0;
-			ft_export(data, s, i);
+			ft_export(data, s, 1);
 		}
 
 		// ft_cd(data, line);

@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/10 13:01:37 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/10 15:32:56 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,13 @@ typedef struct s_lexed {
 # define PIPE 3
 
 // Export
-int		ft_export(t_data *data, char **vars, int *in_out);
+int		ft_export(t_data *data, char **vars, int out);
 int		export_parse(t_data *data, char **vars);
 int		export_add(t_data *data, char *arg);
 int		export_replace(t_data *data, char *arg, int pos, int i);
-int		print_env(t_data *data, int *f);
+int		print_env(t_data *data, int out);
 int		ft_strcmp(char *s1, char *s2);
+int		check_existence(t_data *data, char *var, int i);
 
 void	get_env(char **env, t_data *data);
 int		ft_env(t_data *data, int out);
