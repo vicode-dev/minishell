@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:21:02 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/09 19:25:22 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/10 12:07:16 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_name(char *name, int i)
 	j = 0;
 	while (j < i)
 	{
-		if (!ft_isalnum(name[j]))
+		if (!ft_isalnum(name[j]) && name[j] != '_')
 		{
 			ft_printf(1, "export: `%s': not a valid identifier\n", name);
 			return (0);
