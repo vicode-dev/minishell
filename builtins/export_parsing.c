@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:21:02 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/10 12:07:16 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/10 12:55:31 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int	check_existence(t_data *data, char *var, int i)
 	j = 0;
 	while (data->env[j])
 	{
-		if (!ft_strncmp(data->env[j], var, i))
+		if (!ft_strncmp(data->env[j], var, i) && (data->env[j][i] == 0 
+			|| data->env[j][i] == '='))
 			return (j);
 		j++;
 	}
