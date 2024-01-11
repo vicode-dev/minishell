@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:04:07 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/11 15:33:20 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/11 17:05:00 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,6 @@ void	parse(t_data *data)
 	while (exec_idx < 1)
 	{
 		the_array = create_the_array(data, &list);
-		
 		// remplir exec
 		exec_idx++;
 	}
