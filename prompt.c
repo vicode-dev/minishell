@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:36:00 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/10 19:54:33 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/11 13:42:11 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ char	*get_prompt(t_data *data)
 int	prompt_reader(t_data *data)
 {
 	int		again;
-	t_lexed	*list;
 	char	*line;
 	char	*prompt;
 
@@ -62,10 +61,10 @@ int	prompt_reader(t_data *data)
 		prompt = get_prompt(data);
 		line = readline(prompt);
 		free(prompt);
-		list = lexer(data, &line);
+		data->list = lexer(data, &line);
 		add_history(line);
-		expander(data, list);
-		parse(data, list);
+		expander(data);
+		parse(data);
 		// while (list)
 		// {
 		// 	printf("%s\n", list->word);
@@ -74,7 +73,7 @@ int	prompt_reader(t_data *data)
 		if (!ft_strncmp(line, "exit", 5))
 		{
 			free(line);
-			ft_free_lexed(&list);
+			ft_free_lexed(&(data->list));
 			ft_exit_prog(data);
 		}
 		if (!ft_strncmp(line, "env", 4))
@@ -95,7 +94,7 @@ int	prompt_reader(t_data *data)
 		// ft_cd(data, line);
 		// ft_printf(1, "%s\n%s\n", get_env_var(data->env, "PWD"), get_env_var(data->env, "OLDPWD"));
 		// ft_pwd();
-		ft_free_lexed(&list);
+		ft_free_lexed(&(data->list));
 		free(line);
 	}
 	return (0);

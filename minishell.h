@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/10 19:39:10 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/11 13:23:33 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,18 @@ typedef struct s_exec {
 	char	**argv;
 }	t_exec;
 
-typedef struct s_data {
-	char	**env;
-	t_exec	*exec;
-}	t_data;
-
 typedef struct s_lexed {
 	char			*word;
 	int				token;
 	struct s_lexed	*next;
 	struct s_lexed	*prev;
 }	t_lexed;
+
+typedef struct s_data {
+	char	**env;
+	t_exec	*exec;
+	t_lexed	*list;
+}	t_data;
 
 # define WORD 0
 # define DQUOTE 1
@@ -82,6 +83,6 @@ char	**struct_to_array(t_env *env);
 // Parsing
 t_lexed	*lexer(t_data *data, char **line);
 void	ft_free_lexed(t_lexed **list);
-void	expander(t_data *data, t_lexed *list);
-void	parse(t_data *data, t_lexed *list);
+void	expander(t_data *data);
+void	parse(t_data *data);
 #endif

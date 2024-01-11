@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 09:25:57 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/10 12:23:46 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/11 13:45:41 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_free_lexed(t_lexed **list)
 	*list = NULL;
 }
 
-int	lst_add(t_lexed **list, int token, char *word)
+static int	lst_add(t_lexed **list, int token, char *word)
 {
 	t_lexed	*new;
 
@@ -55,7 +55,7 @@ int	lst_add(t_lexed **list, int token, char *word)
 	return (0);
 }
 
-int	get_end_quot(char **line, int i, char type)
+static int	get_end_quot(char **line, int i, char type)
 {
 	char	*tmp;
 	char	*new_line;
@@ -78,7 +78,7 @@ int	get_end_quot(char **line, int i, char type)
 	return (0);
 }
 
-int	get_quot(t_lexed **list, char **line, int *i)
+static int	get_quot(t_lexed **list, char **line, int *i)
 {
 	char	type;
 	int		i_cpy;
@@ -106,7 +106,7 @@ int	get_quot(t_lexed **list, char **line, int *i)
 	return (1);
 }
 
-int	get_word(t_lexed **list, char *line, int *i)
+static int	get_word(t_lexed **list, char *line, int *i)
 {
 	int	j;
 

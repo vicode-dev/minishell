@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:25:35 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/10 17:23:19 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/11 13:25:03 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ unsigned char	g_exitcode;
 void	ft_crash(t_data *data)
 {
 	g_exitcode = 1;
+	ft_free_lexed(&(data->list));
 	ft_exit_prog(data);
 }
 
