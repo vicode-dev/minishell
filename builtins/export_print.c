@@ -6,11 +6,11 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:22:10 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/10 15:38:17 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/11 10:38:51 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static void	free_struct(t_env *env)
 {

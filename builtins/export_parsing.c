@@ -6,11 +6,11 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:21:02 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/10 15:25:13 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/11 20:24:38 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static int	check_name(char *name, int i)
 {
@@ -49,20 +49,40 @@ int	check_existence(t_data *data, char *var, int i)
 	return (-1);
 }
 
-int	export_parse(t_data *data, char **vars)
+int	check_dollar(t_data *data, char *var, int i, int out)
+{
+	int	start;
+
+	start = i;
+	while (var[i] && ft_isalnum(var[i]))
+		i++;
+	if ((i == start && var[i] == 0) || (var[i] != 0 && var[i] != '_')) // WTF
+	{
+		ft_printf(2, "export: `%s': not a valid identifier\n", var);
+		return (1);
+	}
+	else
+		print_env(data, out);
+	return (0);
+}
+
+int	export_parse(t_data *data, char *var, int out)
 {
 	int		i;
 	int		exist;
 
 	i = 0;
-	while (vars[1][i] && vars[1][i] != '=' && vars[1][i] != '+')
+	while (var[i] && var[i] != '=' && var[i] != '+'
+			&& var[i] != '$')
 		i++;
-	if (!check_name(vars[1], i))
+	if (var[i] == '$')
+		return (check_dollar(data, var, i + 1, out));
+	if (!check_name(var, i))
 		return (1); // Error : name invalid
-	exist = check_existence(data, vars[1], i);
+	exist = check_existence(data, var, i);
 	if (exist >= 0)
-		export_replace(data, vars[1], exist, i);
+		export_replace(data, var, exist, i);
 	else
-		export_add(data, vars[1]);
+		export_add(data, var);
 	return (0);
 }

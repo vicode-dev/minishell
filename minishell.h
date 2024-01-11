@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/11 13:23:33 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/11 20:25:08 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_data {
 
 // Export
 int		ft_export(t_data *data, char **vars, int out);
-int		export_parse(t_data *data, char **vars);
+int		export_parse(t_data *data, char *var, int out);
 int		export_add(t_data *data, char *arg);
 int		export_replace(t_data *data, char *arg, int pos, int i);
 int		print_env(t_data *data, int out);
@@ -69,6 +69,7 @@ void	get_env(char **env, t_data *data);
 int		ft_env(t_data *data, int out);
 int		ft_unset(t_data *data, char **arg);
 int		ft_cd(t_data *data, char *path_dir);
+int		ft_echo(t_data *data, char **args, int out);
 int		ft_pwd(void);
 int		ft_structlen(t_env *env);
 int		prompt_reader(t_data *data);

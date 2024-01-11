@@ -6,11 +6,11 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:15:55 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/10 16:04:03 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/11 10:38:58 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static int	check_name(char *name)
 {

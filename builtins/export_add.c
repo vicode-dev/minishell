@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export_add.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 13:41:26 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/10 18:31:38 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/11 10:38:43 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static int	find(char *s, char c)
 {

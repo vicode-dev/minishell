@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:36:00 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/11 13:42:11 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/11 20:15:38 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ int	prompt_reader(t_data *data)
 		add_history(line);
 		expander(data);
 		parse(data);
-		// while (list)
+		// while (data->list)
 		// {
-		// 	printf("%s\n", list->word);
-		// 	list = list->next;
+		// 	printf("%s\n", data->list->word);
+		// 	data->list = data->list->next;
 		// }
 		if (!ft_strncmp(line, "exit", 5))
 		{
@@ -88,8 +88,9 @@ int	prompt_reader(t_data *data)
 			s[1] = line;
 			if (!s[1][0])
 				s[1] = 0;
-			// ft_export(data, s, 1);
+			ft_export(data, s, 1);
 			// ft_unset(data, s);
+			// ft_echo(data, s, 1);
 		}
 		// ft_cd(data, line);
 		// ft_printf(1, "%s\n%s\n", get_env_var(data->env, "PWD"), get_env_var(data->env, "OLDPWD"));

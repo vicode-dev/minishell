@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:04:07 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/11 15:33:20 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/11 19:10:55 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,9 @@ char	**create_the_array(t_data *data, t_lexed **list)
 			the_array = create_the_array_quot(data, list, the_array);
 		*list = (*list)->next;
 	}
-	int i=0;
-	while(the_array[i])
-		ft_printf(1, "%s\n", the_array[i++]);
+	// int i=0;
+	// while(the_array[i])
+	// 	ft_printf(1, "%s\n", the_array[i++]);
 	return (the_array);
 }
 
