@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:04:07 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/11 14:24:19 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/11 15:33:20 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,29 @@ void	clear_crash(t_data *data, char **the_array)
 	ft_crash(data);
 }
 
+char	**join(t_data *data, char **the_array, char ***w_split, int *i)
+{
+	char	*tmp;
+
+	(void) data;
+	*i = ft_strslen(the_array) - 1;
+	tmp = ft_strjoin(the_array[*i], *w_split[0]);
+	if (!tmp)
+	{
+		ft_free_strs(*w_split, 0, 2);
+		clear_crash(data, the_array);
+	}
+	free(*w_split[0]);
+	free(the_array[*i]);
+	the_array[*i] = tmp;
+	(*w_split)++;
+	return (the_array);
+}
+
 char	**create_the_array_word(t_data *data, t_lexed **list, char **the_array)
 {
 	char	**w_split;
 	char	**tmp_array;
-	char	*tmp;
 	int		i;
 
 	w_split = ft_split((*list)->word, ' ');
@@ -45,15 +63,13 @@ char	**create_the_array_word(t_data *data, t_lexed **list, char **the_array)
 		clear_crash(data, the_array);
 	if ((*list)->prev && (*list)->prev->token != PIPE 
 		&& (*list)->word[0] != ' ')
+		the_array = join(data, the_array, &w_split, &i);
+	tmp_array = ft_arrayjoin(the_array, w_split, ft_strslen(w_split));
+	if (!tmp_array)
 	{
-		i = ft_strslen(the_array) - 1;
-		tmp = ft_strjoin(the_array[i], w_split[0]); // attention verifier le malloc
-		free(w_split[0]);
-		free(the_array[i]);
-		the_array[i] = tmp;
-		w_split++;
+		ft_free_strs(w_split, 0, 2);
+		clear_crash(data, the_array);
 	}
-	tmp_array = ft_arrayjoin(the_array, w_split, ft_strslen(w_split)); // ATTENTION A LA PROTECTION
 	free(the_array);
 	if (i != -10)
 		w_split--;
@@ -66,7 +82,6 @@ char	**create_the_array_quot(t_data *data, t_lexed **list, char **the_array)
 	char	*tmp;
 	char	**tmp_array;
 
-	(void)data;
 	if (((*list)->prev && (*list)->prev->token == WORD 
 			&& (*list)->prev->word[ft_strlen((*list)->prev->word) - 1] == ' ')
 		|| !(*list)->prev)
@@ -92,7 +107,6 @@ char	**create_the_array(t_data *data, t_lexed **list)
 {
 	char	**the_array;
 
-	(void) data;
 	the_array = ft_calloc(1, sizeof(char *));
 	while ((*list) && (*list)->token != PIPE)
 	{
@@ -102,9 +116,9 @@ char	**create_the_array(t_data *data, t_lexed **list)
 			the_array = create_the_array_quot(data, list, the_array);
 		*list = (*list)->next;
 	}
-	// int i=0;
-	// while(the_array[i])
-	// 	ft_printf(1, "%s\n", the_array[i++]);
+	int i=0;
+	while(the_array[i])
+		ft_printf(1, "%s\n", the_array[i++]);
 	return (the_array);
 }
 
