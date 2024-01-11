@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 14:39:28 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/11 20:26:38 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/11 20:44:24 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ int	ft_export(t_data *data, char **vars, int out)
 {
 	char	**array;
 	int		i;
+	int		ret;
 
+	ret = 0;
 	if (!vars[1])
 		print_env(data, out);
 	else
@@ -37,9 +39,9 @@ int	ft_export(t_data *data, char **vars, int out)
 		i = 0;
 		while (array[i])
 		{
-			export_parse(data, array[i], out);
+			ret = export_parse(data, array[i], out);
 			i++;
 		}
 	}
-	return (0);
+	return (ret);
 }

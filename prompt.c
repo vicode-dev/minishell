@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:36:00 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/11 20:15:38 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/11 20:45:13 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ int	prompt_reader(t_data *data)
 			s[1] = line;
 			if (!s[1][0])
 				s[1] = 0;
-			ft_export(data, s, 1);
-			// ft_unset(data, s);
+			// ft_export(data, s, 1);
+			ft_unset(data, s);
 			// ft_echo(data, s, 1);
 		}
 		// ft_cd(data, line);

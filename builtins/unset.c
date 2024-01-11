@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:15:55 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/11 10:38:58 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/11 20:43:27 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,26 @@ int	unset_remove(t_data *data, int idx)
 
 int	ft_unset(t_data *data, char **arg)
 {
-	int	idx;
+	char	**array;
+	int		ret;
+	int		idx;
+	int		i;
 
 	if (!arg[1])
 		return (0);
-	if (!check_name(arg[1]))
+	array = ft_split(arg[1], ' ');
+	if (!array)
 		return (1);
-	idx = check_existence(data, arg[1], ft_strlen(arg[1]));
-	if (idx >= 0)
-		unset_remove(data, idx);
-	return (0);
+	i = 0;
+	while (array[i])
+	{
+		if (!check_name(array[i]))
+			ret = 1;
+		idx = check_existence(data, array[i], ft_strlen(array[i]));
+		if (idx >= 0)
+			unset_remove(data, idx);
+		ret = 1;
+		i++;
+	}
+	return (ret);
 }
