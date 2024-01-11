@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:04:07 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/10 19:58:58 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/11 12:13:29 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	**create_the_array(t_data *data, t_lexed **list) //creer char**: ['ls<out',
 		if ((*list)->token == WORD)
 		{
 			temp = ft_split((*list)->word, ' ');
-			if ((*list)->prev && (*list)->prev->token != PIPE)
+			if ((*list)->prev && (*list)->prev->token != PIPE && (*list)->word[0] != ' ')
 			{
 				str = ft_strjoin(the_array[ft_strslen(the_array) - 1], temp[0]);
 				free(temp[0]);
@@ -50,17 +50,32 @@ char	**create_the_array(t_data *data, t_lexed **list) //creer char**: ['ls<out',
 			}
 			temp2 = ft_arrayjoin(the_array, temp, ft_strslen(temp));
 			free(the_array);
-			free(temp);
+			// free(temp);
 			the_array = temp2;
 		}
-		// if ((*list)->token == DQUOTE || (*list)->token == SQUOTE)
-			// if prec espace-> arrayjoin | pas espace -> join
+		if ((*list)->token == DQUOTE || (*list)->token == SQUOTE)
+		{
+			if (((*list)->prev && (*list)->prev->token == WORD && (*list)->prev->word[ft_strlen((*list)->prev->word) - 1] == ' ') || !(*list)->prev)
+			{
+				str = ft_strdup((*list)->word);
+				temp = ft_arrayjoin(the_array, &str, 1);
+				free(the_array);
+				the_array = temp;
+			}
+			else
+			{
+				*temp2 = ft_strdup((*list)->word);
+				str = ft_strjoin(the_array[ft_strslen(the_array) - 1], *temp2);
+				free(the_array[ft_strslen(the_array) - 1]);
+				the_array[ft_strslen(the_array) - 1] = str;
+			}
+		}
 		*list = (*list)->next;
 	}
 
 	int i=0;
 	while(the_array[i])
-		ft_printf(1, "%i %s\n", i, the_array[i++]);
+		ft_printf(1, "%s\n", the_array[i++]);
 
 	return (the_array);
 }

@@ -6,89 +6,94 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 15:28:18 by vicode            #+#    #+#             */
-/*   Updated: 2023/12/05 19:18:40 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/11 11:57:11 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	**ft_free(char **bye)
+static void	ft_fillboard(int *board, int size)
 {
 	int	i;
 
 	i = 0;
-	if (!bye)
-		return (NULL);
-	while (bye[i])
-	{
-		free(bye[i]);
-		i++;
-	}
-	free(bye);
-	return (NULL);
+	if (board == 0)
+		return ;
+	while (i < size)
+		board[i++] = 0;
 }
 
-static size_t	ft_count_strings(const char *str, char sep)
+static void	ft_free(char **strs, int size)
 {
 	int	i;
-	int	count;
 
 	i = 0;
-	count = 0;
-	while (str[i])
-	{
-		while (str[i] && (str[i] == sep))
-			i++;
-		if (str[i])
-			count++;
-		while (str[i] && !(str[i] == sep))
-			i++;
-	}
-	return (count);
+	while (i < size)
+		free(strs[i++]);
 }
 
-static void	ft_get_next_word(char **next_word, size_t *next_word_len, char c)
+static int	ft_count(const char *str, char c)
 {
-	size_t	i;
+	int	size;
 
-	*next_word += *next_word_len;
-	*next_word_len = 0;
-	i = 0;
-	while (**next_word && **next_word == c)
-		(*next_word)++;
-	while ((*next_word)[i])
+	size = 0;
+	while (*str)
 	{
-		if ((*next_word)[i] == c)
-			return ;
-		(*next_word_len)++;
-		i++;
+		while (*str == c)
+			str++;
+		if (*str && *str != c)
+			size++;
+		while (*str != c && *str)
+			str++;
 	}
+	return (size);
+}
+
+static int	ft_make(char const *s, char c, char **strs, int *ijkl)
+{
+	char	*word;
+
+	while (s[ijkl[0]])
+	{
+		ijkl[1] = ijkl[0];
+		while (s[ijkl[0]] != c && s[ijkl[0]])
+			ijkl[0]++;
+		word = malloc((ijkl[0] - ijkl[1] + 1) * sizeof(char));
+		if (word == NULL)
+		{
+			ft_free(strs, ijkl[3]);
+			return (0);
+		}
+		ijkl[2] = 0;
+		while (ijkl[1] < ijkl[0])
+			word[ijkl[2]++] = s[ijkl[1]++];
+		word[ijkl[2]] = '\0';
+		while (s[ijkl[0]] == c && s[ijkl[0]])
+			ijkl[0]++;
+		if (word[0] != '\0')
+			strs[ijkl[3]++] = word;
+		else
+			free(word);
+	}
+	return (1);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**res;
-	char	*nxtword;
-	size_t	nxtwordl;
-	size_t	i;
+	char	**strs;
+	int		ijkl[4];
 
-	if (!s)
-		return (NULL);
-	res = (char **)malloc(sizeof(char *) * (ft_count_strings(s, c) + 1));
-	if (!res)
-		return (NULL);
-	i = 0;
-	nxtword = (char *)s;
-	nxtwordl = 0;
-	while (i < ft_count_strings(s, c))
+	if (s == NULL)
+		return (0);
+	strs = malloc((ft_count(s, c) + 1) * sizeof(char *));
+	if (strs == NULL)
+		return (0);
+	ft_fillboard(ijkl, 4);
+	if (ft_make(s, c, strs, ijkl) == 0)
 	{
-		ft_get_next_word(&nxtword, &nxtwordl, c);
-		res[i] = (char *)malloc(sizeof(char) * (nxtwordl + 1));
-		if (!res[i])
-			return (ft_free(res));
-		ft_strlcpy(res[i], nxtword, nxtwordl + 1);
-		i++;
+		free(strs);
+		return (0);
 	}
-	res[i] = NULL;
-	return (res);
+	strs[ijkl[3]] = 0;
+	return (strs);
 }
