@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 09:26:17 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/11 13:46:20 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/12 15:34:21 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	expand_env_var(t_data *data, t_lexed *list, int i)
 	char	*tmp;
 
 	j = i + 1;
-	while (list->word[j] && list->word[j] != ' ' && list->word[j] != '$')
+	while (list->word[j] && (ft_isalnum(list->word[j]) || list->word[j] == '_'))
 		j++;
 	new = ft_substr(list->word, i, j - i);
 	if (!new)
@@ -79,7 +79,7 @@ static void	expand(t_data *data, t_lexed *list)
 		else if (list->word[i] == '$' && list->word[i + 1] == '?')
 			i += expand_exit_code(data, list, i);
 		else if (list->word[i] == '$' && 
-			(list->word[i + 1] == ' ' || list->word[i + 1] == 0))
+			(!ft_isalnum(list->word[i + 1]) || list->word[i + 1] == 0))
 			i++;
 		else if (list->word[i] == '$')
 			i += expand_env_var(data, list, i);

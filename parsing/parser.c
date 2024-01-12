@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:04:07 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/11 20:32:30 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/12 15:40:45 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,32 +26,25 @@ int	tab_size(t_lexed *list)
 	return (count);
 }
 
-void	clear_crash(t_data *data, char **the_array)
-{
-	ft_free_strs(the_array, 0, 2);
-	ft_crash(data);
-}
-
-char	**join(t_data *data, char **the_array, char ***w_split, int *i)
+char	**join(t_data *data, char ***w_split, int *i)
 {
 	char	*tmp;
 
-	(void) data;
-	*i = ft_strslen(the_array) - 1;
-	tmp = ft_strjoin(the_array[*i], *w_split[0]);
+	*i = ft_strslen(data->the_array) - 1;
+	tmp = ft_strjoin(data->the_array[*i], *w_split[0]);
 	if (!tmp)
 	{
 		ft_free_strs(*w_split, 0, 2);
-		clear_crash(data, the_array);
+		ft_crash(data);
 	}
 	free(*w_split[0]);
-	free(the_array[*i]);
-	the_array[*i] = tmp;
+	free(data->the_array[*i]);
+	data->the_array[*i] = tmp;
 	(*w_split)++;
-	return (the_array);
+	return (data->the_array);
 }
 
-char	**create_the_array_word(t_data *data, t_lexed **list, char **the_array)
+void	create_the_array_word(t_data *data, t_lexed **list)
 {
 	char	**w_split;
 	char	**tmp_array;
@@ -60,89 +53,168 @@ char	**create_the_array_word(t_data *data, t_lexed **list, char **the_array)
 	w_split = ft_split((*list)->word, ' ');
 	i = -10;
 	if (!w_split)
-		clear_crash(data, the_array);
+		ft_crash(data);
 	if ((*list)->prev && (*list)->prev->token != PIPE 
 		&& (*list)->word[0] != ' ')
-		the_array = join(data, the_array, &w_split, &i);
-	tmp_array = ft_arrayjoin(the_array, w_split, ft_strslen(w_split));
+		data->the_array = join(data, &w_split, &i);
+	tmp_array = ft_arrayjoin(data->the_array, w_split, ft_strslen(w_split));
 	if (!tmp_array)
 	{
 		ft_free_strs(w_split, 0, 2);
-		clear_crash(data, the_array);
+		ft_crash(data);
 	}
-	free(the_array);
+	free(data->the_array);
 	if (i != -10)
 		w_split--;
 	free(w_split);
-	return (tmp_array);
+	data->the_array = tmp_array;
 }
 
-char	**create_the_array_quot(t_data *data, t_lexed **list, char **the_array)
+void	create_the_array_quot(t_data *data, t_lexed **list)
 {
 	char	*tmp;
 	char	**tmp_array;
+	int		i;
 
 	if (((*list)->prev && (*list)->prev->token == WORD 
 			&& (*list)->prev->word[ft_strlen((*list)->prev->word) - 1] == ' ')
 		|| !(*list)->prev)
 	{
 		tmp = ft_strdup((*list)->word);
-		tmp_array = ft_arrayjoin(the_array, &tmp, 1);
-		free(the_array);
-		return (tmp_array);
+		tmp_array = ft_arrayjoin(data->the_array, &tmp, 1);
+		free(data->the_array);
 	}
 	else
 	{
-		tmp = ft_strjoin(the_array[ft_strslen(the_array) - 1], (*list)->word);
-		free(the_array[ft_strslen(the_array) - 1]);
+		i = ft_strslen(data->the_array) - 1;
+		tmp = ft_strjoin(data->the_array[i], (*list)->word);
+		free(data->the_array[i]);
 		if (!tmp)
-			clear_crash(data, the_array);
-		the_array[ft_strslen(the_array) - 1] = tmp;
-		tmp_array = the_array;
+			ft_crash(data);
+		data->the_array[i] = tmp;
+		tmp_array = data->the_array;
 	}
-	return (tmp_array);
+	data->the_array = tmp_array;
 }
 
-char	**create_the_array(t_data *data, t_lexed **list)
+void	create_the_array(t_data *data, t_lexed **list)
 {
-	char	**the_array;
-
-	the_array = ft_calloc(1, sizeof(char *));
+	data->the_array = ft_calloc(1, sizeof(char *));
 	while ((*list) && (*list)->token != PIPE)
 	{
 		if ((*list)->token == WORD)
-			the_array = create_the_array_word(data, list, the_array);
+			create_the_array_word(data, list);
 		else if ((*list)->token == DQUOTE || (*list)->token == SQUOTE)
-			the_array = create_the_array_quot(data, list, the_array);
+			create_the_array_quot(data, list);
 		*list = (*list)->next;
 	}
-	// int i=0;
-	// while(the_array[i])
-	// 	ft_printf(1, "%s\n", the_array[i++]);
-	return (the_array);
+	int i=0;
+	while(data->the_array[i])
+		ft_printf(1, "%s.\n", data->the_array[i++]);
+}
+
+void	parse_heredoc(t_data *data, int idx, int *i, int *j)
+{
+	int		doc;
+	char	*eof;
+	char	*buff;
+
+	doc = open(".tmp", O_RDWR | O_CREAT | O_TRUNC, 00777);
+	if (!data->the_array[*i][*j + 2])
+		eof = data->the_array[*i + 1];
+	else
+		eof = &(data->the_array[*i][*j + 2]);
+	buff = readline(">");
+	if (!buff)
+		ft_crash(data);
+	while (ft_strncmp(buff, eof, ft_strlen(buff)))
+	{
+		//expander here_doc(data, ...)
+		ft_printf(doc, "%s\n", buff);
+		free(buff);
+		buff = readline(">");
+		if (!buff)
+			ft_crash(data);
+	}
+	close(data->exec[idx].infile);
+	data->exec[idx].infile = doc;
+}
+
+// void	parse_infile(t_data *data, char **the_array, )
+
+void	parse_in(t_data *data, int idx, int *i, int *j)
+{
+	if (data->the_array[*i][*j + 1] == '<')
+		parse_heredoc(data, idx, i, j);
+	// else
+	// 	parse_infile();
+}
+
+void	fill_exec(t_data *data, int idx)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (data->the_array[i])
+	{
+		j = 0;
+		while (data->the_array[i][j])
+		{
+			if (data->the_array[i][j] == '<')
+				parse_in(data, idx, &i, &j);
+			// else if (the_array[ij[0]][ij[1]] == '>')
+			// 	parse_out();
+			// else
+			// 	parse_argv();
+			break ;
+			j++;
+		}
+		break ;
+		i++;
+	}
+}
+
+void	init_exec(t_data *data, int exec_size)
+{
+	int	i;
+
+	i = 0;
+	while (i < exec_size)
+	{
+		data->exec[i].infile = 0;
+		data->exec[i].outfile = 1;
+		data->exec[i].path = NULL;
+		data->exec[i].argv = NULL;
+		i++;
+	}
 }
 
 void	parse(t_data *data)
 {
 	int		exec_idx;
-	char	**the_array;
+	int		exec_size;
 	t_lexed	*list;
 
 	list = data->list;
 	if (!list)
 		return ;
-	data->exec = malloc(tab_size(list) * sizeof(t_exec));
+	exec_size = tab_size(list);
+	data->exec = malloc(exec_size * sizeof(t_exec));
 	if (!data->exec)
 		ft_crash(data);
+	init_exec(data, exec_size);
 	exec_idx = 0;
 	while (exec_idx < 1)
 	{
-		the_array = create_the_array(data, &list);
-		// remplir exec
+		create_the_array(data, &list);
+		fill_exec(data, exec_idx);
 		exec_idx++;
 	}
 	free(data->exec);
-	ft_free_strs(the_array, 0, 2);
+	data->exec = NULL;
+	ft_free_strs(data->the_array, 0, 2);
+	data->the_array = NULL;
 	// while (list->next)
 	// {
 	// 	j = 0;

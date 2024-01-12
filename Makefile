@@ -9,7 +9,7 @@ OBJS_BUILTINS	:= $(addprefix builtins/,$(SRCS_BUILTINS:.c=.o))
 OBJS_PIPEX		:= $(addprefix pipex/,$(SRCS_PIPEX:.c=.o))
 CC				:= gcc
 RM				:= rm -f
-CFLAGS			:= -Wall -Wextra -Werror  -I. -ggdb3 #-fsanitize=address
+CFLAGS			:= -Wall -Wextra -Werror  -I. -ggdb3 -fsanitize=address
 READLINE		:= -lreadline
 NAME			:= minishell
 # NAME_BONUS		:= pipex_bonus

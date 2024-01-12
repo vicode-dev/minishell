@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:25:35 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/11 15:27:34 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/12 15:19:35 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ unsigned char	g_exitcode;
 void	ft_crash(t_data *data)
 {
 	g_exitcode = 1;
-	ft_free_lexed(&(data->list));
-	free(data->exec);
 	ft_exit_prog(data);
 }
 
@@ -31,11 +29,11 @@ void	ft_exit_prog(t_data *data)
 	while (data->env && data->env[i])
 		free(data->env[i++]);
 	free(data->env);
+	if (data->the_array)
+		ft_free_strs(data->the_array, 0, 2);
+	ft_free_lexed(&(data->list));
+	free(data->exec);
 	// rl_clear_history();
-	i = 0;
-	// while (data->var && data->var[i])
-	// 	free(data->var[i]);
-	// free(data->var);
 	exit (g_exitcode);
 }
 
@@ -46,6 +44,7 @@ int	main(int argc, char **argv, char **env)
 	(void)(argc + (int)argv);
 	g_exitcode = 0;
 	data.exec = 0;
+	data.the_array = 0;
 	get_env(env, &data);
 	prompt_reader(&data);
 }
