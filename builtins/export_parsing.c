@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:21:02 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/11 20:24:38 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/12 16:43:15 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static int	check_name(char *name, int i)
 	j = 0;
 	while (j < i)
 	{
-		if (!ft_isalnum(name[j]) && name[j] != '_')
+		if ((!ft_isalnum(name[j]) && name[j] != '_') || 
+			(j == 0 && !ft_isalpha(name[j]) && name[j] != '_'))
 		{
 			ft_printf(2, "export: `%s': not a valid identifier\n", name);
 			return (0);

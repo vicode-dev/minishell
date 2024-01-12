@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:25:35 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/12 15:19:35 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/12 15:44:19 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int	main(int argc, char **argv, char **env)
 {
 	t_data	data;
 
-	(void)(argc + (int)argv);
+	(void) argc;
+	(void) argv;
 	g_exitcode = 0;
 	data.exec = 0;
 	data.the_array = 0;

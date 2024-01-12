@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:04:07 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/12 15:40:45 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/12 18:34:00 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,26 +108,42 @@ void	create_the_array(t_data *data, t_lexed **list)
 			create_the_array_quot(data, list);
 		*list = (*list)->next;
 	}
-	int i=0;
-	while(data->the_array[i])
-		ft_printf(1, "%s.\n", data->the_array[i++]);
+}
+
+/**
+ * @brief Find the position of the file's name or EOF delimitor in the_array
+ * 
+ * @param data 
+ * @param i 
+ * @param j 
+ */
+void	file_param(t_data *data, int *i, int *j)
+{
+	if (!data->the_array[*i][*j + 1])
+	{
+		(*i)++;
+		*j = 0;
+	}
+	else if (data->the_array[*i][*j + 1])
+		(*j)++;
+	if (!data->the_array[*i] || !data->the_array[*i][*j])
+		ft_crash(data);
 }
 
 void	parse_heredoc(t_data *data, int idx, int *i, int *j)
 {
 	int		doc;
-	char	*eof;
+	// char	*eof;
 	char	*buff;
 
 	doc = open(".tmp", O_RDWR | O_CREAT | O_TRUNC, 00777);
-	if (!data->the_array[*i][*j + 2])
-		eof = data->the_array[*i + 1];
-	else
-		eof = &(data->the_array[*i][*j + 2]);
+	if (doc == -1)
+		ft_crash(data); // A changer
+	file_param(data, i, j);
 	buff = readline(">");
 	if (!buff)
 		ft_crash(data);
-	while (ft_strncmp(buff, eof, ft_strlen(buff)))
+	while (ft_strncmp(buff, &(data->the_array[*i][*j]), ft_strlen(buff)))
 	{
 		//expander here_doc(data, ...)
 		ft_printf(doc, "%s\n", buff);
@@ -136,18 +152,111 @@ void	parse_heredoc(t_data *data, int idx, int *i, int *j)
 		if (!buff)
 			ft_crash(data);
 	}
-	close(data->exec[idx].infile);
+	if (data->exec[idx].infile > 2)
+		close(data->exec[idx].infile);
 	data->exec[idx].infile = doc;
 }
 
-// void	parse_infile(t_data *data, char **the_array, )
+void	parse_infile(t_data *data, int idx, int *i, int *j)
+{
+	int	fd;
+
+	file_param(data, i, j);
+	fd = open(&(data->the_array[*i][*j]), O_RDONLY);
+	if (fd == -1)
+	{
+		ft_printf(2, "minishell: ");
+		perror(&(data->the_array[*i][*j]));
+		return ; //a voir + printf
+	}
+	if (data->exec[idx].infile > 2)
+		close(data->exec[idx].infile);
+	data->exec[idx].infile = fd;
+}
 
 void	parse_in(t_data *data, int idx, int *i, int *j)
 {
 	if (data->the_array[*i][*j + 1] == '<')
+	{
+		(*j)++;
 		parse_heredoc(data, idx, i, j);
-	// else
-	// 	parse_infile();
+	}
+	else
+		parse_infile(data, idx, i, j);
+}
+
+void	parse_append(t_data *data, int idx, int *i, int *j)
+{
+	int	fd;
+
+	file_param(data, i, j);
+	fd = open(&(data->the_array[*i][*j]), O_WRONLY | O_CREAT | O_APPEND, 00777);
+	if (fd == -1)
+	{
+		ft_printf(2, "minishell: ");
+		perror(&(data->the_array[*i][*j]));
+		return ; //a voir + printf
+	}
+	if (data->exec[idx].outfile > 2)
+		close(data->exec[idx].outfile);
+	data->exec[idx].outfile = fd;
+}
+
+void	parse_outfile(t_data *data, int idx, int *i, int *j)
+{
+	int	fd;
+
+	file_param(data, i, j);
+	fd = open(&(data->the_array[*i][*j]), O_WRONLY | O_CREAT | O_TRUNC, 00777);
+	if (fd == -1)
+	{
+		ft_printf(2, "minishell: ");
+		perror(&(data->the_array[*i][*j]));
+		return ; //a voir + printf
+	}
+	if (data->exec[idx].outfile > 2)
+		close(data->exec[idx].outfile);
+	data->exec[idx].outfile = fd;
+}
+
+void	parse_out(t_data *data, int idx, int *i, int *j)
+{
+	if (data->the_array[*i][*j + 1] == '>')
+	{
+		(*j)++;
+		parse_append(data, idx, i, j);
+	}
+	else
+		parse_outfile(data, idx, i, j);
+}
+
+int	parse_argv(t_data *data, int idx, int *i, int *j)
+{
+	int		old_j;
+	char	*tmp;
+	char	**tmp_array;
+
+	old_j = *j;
+	while (data->the_array[*i][*j])
+	{
+		if (data->the_array[*i][*j] == '<' || data->the_array[*i][*j] == '>')
+			break ;
+		(*j)++;
+	}
+	tmp = ft_substr(data->the_array[*i], old_j, *j - old_j);
+	if (!tmp)
+		ft_crash(data);
+	if (!data->exec[idx].argv)
+		data->exec[idx].argv = ft_calloc(1, sizeof(char *));
+	tmp_array = ft_arrayjoin(data->exec[idx].argv, &tmp, 1);
+	if (!tmp_array)
+	{
+		free(tmp);
+		ft_crash(data);
+	}
+	free(data->exec[idx].argv);
+	data->exec[idx].argv = tmp_array;
+	return (0);
 }
 
 void	fill_exec(t_data *data, int idx)
@@ -163,14 +272,11 @@ void	fill_exec(t_data *data, int idx)
 		{
 			if (data->the_array[i][j] == '<')
 				parse_in(data, idx, &i, &j);
-			// else if (the_array[ij[0]][ij[1]] == '>')
-			// 	parse_out();
-			// else
-			// 	parse_argv();
-			break ;
-			j++;
+			else if (data->the_array[i][j] == '>')
+				parse_out(data, idx, &i, &j);
+			else
+				parse_argv(data, idx, &i, &j);
 		}
-		break ;
 		i++;
 	}
 }
@@ -190,6 +296,11 @@ void	init_exec(t_data *data, int exec_size)
 	}
 }
 
+/**
+ * @brief Transform list into the exec array
+ * 
+ * @param data 
+ */
 void	parse(t_data *data)
 {
 	int		exec_idx;
@@ -205,26 +316,24 @@ void	parse(t_data *data)
 		ft_crash(data);
 	init_exec(data, exec_size);
 	exec_idx = 0;
-	while (exec_idx < 1)
+	while (exec_idx < exec_size)
 	{
 		create_the_array(data, &list);
+
+		int i = 0;
+		ft_printf(1, "exec %i\n", exec_idx);
+		while (data->the_array[i])
+			ft_printf(1, "string '%s'\n", data->the_array[i++]);
+
+
 		fill_exec(data, exec_idx);
+		ft_free_strs(data->the_array, 0, 2);
+		data->the_array = NULL;
 		exec_idx++;
+		if (list)
+			list = list->next;
 	}
 	free(data->exec);
 	data->exec = NULL;
-	ft_free_strs(data->the_array, 0, 2);
 	data->the_array = NULL;
-	// while (list->next)
-	// {
-	// 	j = 0;
-	// 	while (list->word && list->word[j])
-	// 	{
-	// 		if (list->word[j] == '<')
-	// 			//trouver infile
-	// 		else if (list->word[j] == '>')
-	// 			//trouver outfile
-	// 		else if 
-	// 	}
-	// }
 }
