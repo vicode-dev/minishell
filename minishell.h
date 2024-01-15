@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/12 14:47:22 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/15 11:42:58 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_data {
 # define DQUOTE 1
 # define SQUOTE 2
 # define PIPE 3
+# define HERE_DOC 4
 
 // Export
 int		ft_export(t_data *data, char **vars, int out);
