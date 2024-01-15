@@ -1,0 +1,14 @@
+if (!ft_strcmp(data->exec[i].argv[0], "echo"))
+			ft_echo(data, data->exec[i].argv, data->exec[i].outfile);
+// else if (!ft_strcmp(data->exec[i]->argv[0], "cd"))
+// 	ft_cd(data, path)
+else if (!ft_strcmp(data->exec[i].argv[0], "env"))
+	ft_env(data, data->exec[i].outfile);
+else if (!ft_strcmp(data->exec[i].argv[0], "export"))
+	ft_export(data, data->exec[i].argv, data->exec[i].outfile);
+else if (!ft_strcmp(data->exec[i].argv[0], "pwd"))
+	ft_pwd();
+else if (!ft_strcmp(data->exec[i].argv[0], "unset"))
+	ft_unset(data, data->exec->argv);
+else if (!ft_strcmp(data->exec[i].argv[0], "exit") && i == 0 && !data->exec[i + 1].argv)
+	ft_unset(data, data->exec[i].argv);
