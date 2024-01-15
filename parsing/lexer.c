@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 09:25:57 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/11 13:45:41 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/15 14:00:34 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,32 @@ static int	get_word(t_lexed **list, char *line, int *i)
 	return (lst_add(list, WORD, ft_substr(line, j, *i + 1 - j)));
 }
 
+// static int	get_here_doc(t_lexed **list, char **line, int *i)
+// {
+// 	int		i_cpy;
+// 	int		j;
+
+// 	i_cpy = *i + 2;
+// 	while(*line[i_cpy] == ' ')
+// 		i_cpy++;
+	
+// 	while ((*line)[j])
+// 	{
+// 		if ((*line)[j] == type)
+// 		{
+// 			*i += j - i_cpy + 1; 
+// 			if (type == '"')
+// 				return (lst_add(list, DQUOTE,
+// 						ft_substr(*line, i_cpy, j - i_cpy)));
+// 			if (type == '\'')
+// 				return (lst_add(list, SQUOTE,
+// 						ft_substr(*line, i_cpy, j - i_cpy)));
+// 		}
+// 		j++;
+// 	}
+// 	return (1);
+// }
+
 t_lexed	*lexer(t_data *data, char **line)
 {
 	int		i;
@@ -136,6 +162,9 @@ t_lexed	*lexer(t_data *data, char **line)
 			if (lst_add(&list, PIPE, NULL))
 				ft_crash(data);
 		}
+		// else if ((*line)[i] == '<' && (*line)[i + 1] == '<')
+		// 	if (get_here_doc(&list, line, &i))
+		// 		ft_crash(data);
 		else if (get_word(&list, *line, &i))
 			ft_crash(data);
 		i++;

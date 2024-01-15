@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:04:07 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/15 11:43:33 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/15 14:00:44 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,10 +311,10 @@ void	parse(t_data *data)
 	if (!list)
 		return ;
 	exec_size = tab_size(list);
-	data->exec = malloc(exec_size * sizeof(t_exec));
+	data->exec = malloc((exec_size + 1) * sizeof(t_exec));
 	if (!data->exec)
 		ft_crash(data);
-	init_exec(data, exec_size);
+	init_exec(data, exec_size + 1);
 	exec_idx = 0;
 	while (exec_idx < exec_size)
 	{
@@ -333,12 +333,12 @@ void	parse(t_data *data)
 		if (list)
 			list = list->next;
 	}
-	// int	i = 0;
-	// while(i < 2)
-	// {
-	// 	printf("Command %i:\ninfile:%i\noutfile:%i\nargv[0]:%s\n", i, data->exec[i].infile, data->exec[i].outfile, data->exec[i].argv[0]);
-	// 	i++;
-	// }
+	int	i = 0;
+	while(data->exec[i].argv)
+	{
+		printf("Command %i:\ninfile:%i\noutfile:%i\nargv[0]:%s\n", i, data->exec[i].infile, data->exec[i].outfile, data->exec[i].argv[0]);
+		i++;
+	}
 	free(data->exec);
 	data->exec = NULL;
 	data->the_array = NULL;
