@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/16 15:18:18 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/16 18:08:37 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,13 @@ char	**struct_to_array(t_env *env);
 // Parsing
 t_lexed	*lexer(t_data *data, char **line);
 char	*get_quot(char **line, int *i);
-char	*get_token(char **line, int *i);
+char	*get_token(char **line, int *i, int token);
 void	ft_free_lexed(t_lexed **list);
 void	expander(t_data *data);
 void	parse(t_data *data);
+int		get_end_quot(char **line, int i, char type);
+void	parse_heredoc(t_data *data, int idx, t_lexed *list);
+int		tab_size(t_lexed *list);
+void	create_the_array_word(t_data *data, t_lexed **list);
+void	create_the_array_quot(t_data *data, t_lexed **list);
 #endif

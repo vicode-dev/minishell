@@ -6,27 +6,12 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 09:25:57 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/15 14:00:34 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/16 18:06:48 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_free_lexed(t_lexed **list)
-{
-	t_lexed	*tmp;
-
-	while (*list && (*list)->prev)
-		*list = (*list)->prev;
-	while (*list)
-	{
-		tmp = (*list)->next;
-		free((*list)->word);
-		free(*list);
-		*list = tmp;
-	}
-	*list = NULL;
-}
 
 static int	lst_add(t_lexed **list, int token, char *word)
 {
@@ -36,7 +21,7 @@ static int	lst_add(t_lexed **list, int token, char *word)
 		return (ft_free_lexed(list), 1);
 	new = malloc(sizeof(t_lexed));
 	if (!new)
-		return (ft_free_lexed(list), free(word), 1);
+		return (free(word), 1);
 	new->next = NULL;
 	new->prev = NULL;
 	new->token = token;
@@ -55,7 +40,7 @@ static int	lst_add(t_lexed **list, int token, char *word)
 	return (0);
 }
 
-static int	get_end_quot(char **line, int i, char type)
+int	get_end_quot(char **line, int i, char type)
 {
 	char	*tmp;
 	char	*new_line;
@@ -78,96 +63,48 @@ static int	get_end_quot(char **line, int i, char type)
 	return (0);
 }
 
-static int	get_quot(t_lexed **list, char **line, int *i)
-{
-	char	type;
-	int		i_cpy;
-	int		j;
-
-	type = (*line)[*i];
-	i_cpy = *i + 1;
-	if (!ft_strchr((*line) + i_cpy, type) && get_end_quot(line, i_cpy, type))
-		return (ft_free_lexed(list), 1);
-	j = i_cpy;
-	while ((*line)[j])
-	{
-		if ((*line)[j] == type)
-		{
-			*i += j - i_cpy + 1; 
-			if (type == '"')
-				return (lst_add(list, DQUOTE,
-						ft_substr(*line, i_cpy, j - i_cpy)));
-			if (type == '\'')
-				return (lst_add(list, SQUOTE,
-						ft_substr(*line, i_cpy, j - i_cpy)));
-		}
-		j++;
-	}
-	return (1);
-}
-
-static int	get_word(t_lexed **list, char *line, int *i)
+static char	*get_word(char *line, int *i)
 {
 	int	j;
 
 	j = *i;
-	while (line[*i] && line[*i] != '"' && line[*i] != '\'' && line[*i] != '|')
+	while (line[*i] && line[*i] != '"' && line[*i] != '\'' && line[*i] != '|'
+		&& line[*i] != '<' && line[*i] != '>')
 		(*i)++;
 	(*i)--;
-	return (lst_add(list, WORD, ft_substr(line, j, *i + 1 - j)));
+	return (ft_substr(line, j, *i + 1 - j));
 }
 
-// static int	get_here_doc(t_lexed **list, char **line, int *i)
-// {
-// 	int		i_cpy;
-// 	int		j;
-
-// 	i_cpy = *i + 2;
-// 	while(*line[i_cpy] == ' ')
-// 		i_cpy++;
-	
-// 	while ((*line)[j])
-// 	{
-// 		if ((*line)[j] == type)
-// 		{
-// 			*i += j - i_cpy + 1; 
-// 			if (type == '"')
-// 				return (lst_add(list, DQUOTE,
-// 						ft_substr(*line, i_cpy, j - i_cpy)));
-// 			if (type == '\'')
-// 				return (lst_add(list, SQUOTE,
-// 						ft_substr(*line, i_cpy, j - i_cpy)));
-// 		}
-// 		j++;
-// 	}
-// 	return (1);
-// }
+void	lst_add_handler(t_data *data, int token, char *word)
+{
+	if (lst_add(&(data->list), token, word))
+		ft_crash(data);
+}
 
 t_lexed	*lexer(t_data *data, char **line)
 {
 	int		i;
-	t_lexed	*list;
 
 	i = 0;
-	list = NULL;
 	while (*line && (*line)[i])
 	{
-		if ((*line)[i] == '"' || (*line)[i] == '\'')
-		{
-			if (get_quot(&list, line, &i))
-				ft_crash(data);
-		}
+		if ((*line)[i] == '"')
+			lst_add_handler(data, DQUOTE, get_quot(line, &i));
+		if ((*line)[i] == '\'')
+			lst_add_handler(data, SQUOTE, get_quot(line, &i));
 		else if ((*line)[i] == '|')
-		{
-			if (lst_add(&list, PIPE, NULL))
-				ft_crash(data);
-		}
-		// else if ((*line)[i] == '<' && (*line)[i + 1] == '<')
-		// 	if (get_here_doc(&list, line, &i))
-		// 		ft_crash(data);
-		else if (get_word(&list, *line, &i))
-			ft_crash(data);
+			lst_add_handler(data, PIPE, NULL);
+		else if ((*line)[i] == '<' && (*line)[i + 1] == '<')
+			lst_add_handler(data, HERE_DOC, get_token(line, &i, HERE_DOC));
+		else if ((*line)[i] == '<')
+			lst_add_handler(data, INFILE, get_token(line, &i, INFILE));
+		else if ((*line)[i] == '>' && (*line)[i + 1] == '>')
+			lst_add_handler(data, APPEND, get_token(line, &i, APPEND));
+		else if ((*line)[i] == '>')
+			lst_add_handler(data, OUTFILE, get_token(line, &i, OUTFILE));
+		else
+			lst_add_handler(data, WORD, get_word(*line, &i));
 		i++;
 	}
-	return (list);
+	return (data->list);
 }

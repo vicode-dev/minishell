@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 09:26:17 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/15 11:45:16 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/16 16:08:36 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ void	expander(t_data *data)
 	tmp = data->list;
 	while (tmp)
 	{
-		if (tmp->token == WORD || tmp->token == DQUOTE)
+		if (tmp->token == WORD || tmp->token == DQUOTE || tmp->token == INFILE
+			|| tmp->token == OUTFILE || tmp->token == APPEND)
 			expand(data, tmp);
 		tmp = tmp->next;
 	}

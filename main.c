@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:25:35 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/16 15:28:57 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/16 17:59:25 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,21 @@ void	ft_crash(t_data *data)
 {
 	g_exitcode = 1;
 	ft_exit_prog(data);
+}
+void	ft_free_lexed(t_lexed **list)
+{
+	t_lexed	*tmp;
+
+	while (*list && (*list)->prev)
+		*list = (*list)->prev;
+	while (*list)
+	{
+		tmp = (*list)->next;
+		free((*list)->word);
+		free(*list);
+		*list = tmp;
+	}
+	*list = NULL;
 }
 
 void	ft_exit_prog(t_data *data)
@@ -46,6 +61,7 @@ int	main(int argc, char **argv, char **env)
 	g_exitcode = 0;
 	data.exec = 0;
 	data.the_array = 0;
+	data.list = NULL;
 	data.status = 0;
 	data.pid = 0;
 	get_env(env, &data);
