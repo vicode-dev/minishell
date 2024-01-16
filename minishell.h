@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/16 18:08:37 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/16 18:14:01 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <string.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 typedef struct s_env
 {
@@ -100,4 +102,9 @@ void	parse_heredoc(t_data *data, int idx, t_lexed *list);
 int		tab_size(t_lexed *list);
 void	create_the_array_word(t_data *data, t_lexed **list);
 void	create_the_array_quot(t_data *data, t_lexed **list);
+
+// Execution
+int		executer(t_data *data);
+void	ft_init_pipex(t_data *data, int i);
+
 #endif
