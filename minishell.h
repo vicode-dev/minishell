@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/15 11:42:58 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/16 14:12:54 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ typedef struct s_data {
 # define SQUOTE 2
 # define PIPE 3
 # define HERE_DOC 4
+# define INFILE 5
+# define OUTFILE 6
+# define APPEND 7
 
 // Export
 int		ft_export(t_data *data, char **vars, int out);
@@ -85,6 +88,8 @@ char	**struct_to_array(t_env *env);
 
 // Parsing
 t_lexed	*lexer(t_data *data, char **line);
+char	*get_quot(char **line, int *i);
+char	*get_token(char **line, int *i);
 void	ft_free_lexed(t_lexed **list);
 void	expander(t_data *data);
 void	parse(t_data *data);
