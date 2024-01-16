@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:25:35 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/12 15:44:19 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/16 15:28:57 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	main(int argc, char **argv, char **env)
 	g_exitcode = 0;
 	data.exec = 0;
 	data.the_array = 0;
+	data.status = 0;
+	data.pid = 0;
 	get_env(env, &data);
 	prompt_reader(&data);
 }
