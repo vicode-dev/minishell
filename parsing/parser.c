@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:04:07 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/16 18:15:28 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/17 15:01:49 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,17 @@ void	parse_ioa(t_data *data, int idx, t_lexed *list)
 	{
 		ft_printf(2, "minishell: ");
 		perror(list->word);
-		return ; //a voir + printf
 	}
 	if (list->token == INFILE && data->exec[idx].infile > 2)
 		close(data->exec[idx].infile);
-	else if (data->exec[idx].outfile > 2)
+	else if (list->token != INFILE && data->exec[idx].outfile > 2)
 		close(data->exec[idx].outfile);
-	if (list->token == INFILE)
+	if (list->token == INFILE && data->exec[idx].infile != -1)
 		data->exec[idx].infile = fd;
-	else
+	else if (list->token == OUTFILE && data->exec[idx].outfile != -1)
 		data->exec[idx].outfile = fd;
+	else
+		close(fd);
 }
 
 void	create_the_array(t_data *data, t_lexed **list, int exec_idx)

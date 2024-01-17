@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_env.c                                      :+:      :+:    :+:   */
+/*   parsing_env_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 12:25:51 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/10 18:17:17 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/17 17:25:43 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ void	increase_shlvl(t_data *data)
 
 	i = 0;
 	old_value = get_env_var(data->env, "SHLVL");
-	shlvl = ft_atoi(old_value);
+	if (old_value)
+		shlvl = ft_atoi(old_value);
+	else
+		shlvl = -1;
 	shlvl++;
 	while (data->env[i]
 		&& ft_strncmp(data->env[i], "SHLVL=", ft_strlen("SHLVL=")))

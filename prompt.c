@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:36:00 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/16 18:15:18 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/17 18:19:51 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_prompt(t_data *data)
 
 	prompt = ft_strjoin(get_env_var(data->env, "USER"), " ");
 	if (!prompt)
-		ft_crash(data);
+		return(ft_strdup("minishell % "));
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 		free(prompt);
@@ -67,7 +67,8 @@ int	prompt_reader(t_data *data)
 		add_history(line);
 		expander(data);
 		parse(data);
-		executer(data);
+		if (data->exec)
+			executer(data);
 		// while (data->list)
 		// {
 		// 	printf("%s\n", data->list->word);
@@ -98,6 +99,8 @@ int	prompt_reader(t_data *data)
 		// ft_printf(1, "%s\n%s\n", get_env_var(data->env, "PWD"), get_env_var(data->env, "OLDPWD"));
 		// ft_pwd();
 		ft_free_lexed(&(data->list));
+		free(data->exec); // a changer par une fonction de clean correct
+		data->exec = NULL;
 		free(line);
 	}
 	return (0);

@@ -6,12 +6,11 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 09:25:57 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/16 18:06:48 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/17 10:39:21 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 static int	lst_add(t_lexed **list, int token, char *word)
 {
@@ -90,7 +89,7 @@ t_lexed	*lexer(t_data *data, char **line)
 	{
 		if ((*line)[i] == '"')
 			lst_add_handler(data, DQUOTE, get_quot(line, &i));
-		if ((*line)[i] == '\'')
+		else if ((*line)[i] == '\'')
 			lst_add_handler(data, SQUOTE, get_quot(line, &i));
 		else if ((*line)[i] == '|')
 			lst_add_handler(data, PIPE, NULL);

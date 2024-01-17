@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/16 18:14:01 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/17 15:57:41 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,6 @@ void	create_the_array_quot(t_data *data, t_lexed **list);
 
 // Execution
 int		executer(t_data *data);
-void	ft_init_pipex(t_data *data, int i);
+void	ft_init_pipex(t_data *data, int i, int stdout_cpy);
 
 #endif
