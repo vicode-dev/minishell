@@ -6,13 +6,13 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 12:34:50 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/09 18:42:50 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/17 13:52:34 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_env(t_data *data, int out)
+int	ft_env(t_data *data)
 {
 	int	i;
 	int	j;
@@ -24,7 +24,7 @@ int	ft_env(t_data *data, int out)
 		while (data->env[i][j] && data->env[i][j] != '=')
 			j++;
 		if (data->env[i][j] == '=')
-			ft_printf(out, "%s\n", data->env[i]);
+			ft_printf(1, "%s\n", data->env[i]);
 		i++;
 	}
 	return (0);

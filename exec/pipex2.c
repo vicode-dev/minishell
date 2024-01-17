@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:27:48 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/17 20:41:38 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/17 18:33:28 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,8 @@ static void	ft_pipex(t_data *data, int i, int *end)
 		close(end[0]);
 		if (data->exec[i].infile == -1 || data->exec[i].outfile == -1)
 			exit (1);
-		if (is_builtins(data->exec[i].argv[0]))
-		{
-			exec_builtins(data, is_builtins(data->exec[i].argv[0]), i);
-			exit (0);
-		}
-		else if (execve(data->exec[i].path, data->exec[i].argv, data->env) == -1)
+
+		if (execve(data->exec[i].path, data->exec[i].argv, data->env) == -1)
 		{
 			printf("Command not found\n");
 			exit (1);

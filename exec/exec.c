@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:44:54 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/17 16:04:06 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/17 20:37:13 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	is_builtins(t_data *data, char *str, int i)
+int	is_builtins(char *str)
 {
 	if (!ft_strcmp(str, "echo"))
 		return (1);
@@ -26,29 +26,29 @@ int	is_builtins(t_data *data, char *str, int i)
 		return (5);
 	else if (!ft_strcmp(str, "unset"))
 		return (6);
-	else if (!ft_strcmp(str, "exit") && i == 0 && !data->exec[i + 1].argv)
+	else if (!ft_strcmp(str, "exit"))// && i == 0 && !data->exec[i + 1].argv)
 		return (7);
 	else
 		return (0);
 }
 
-// void	exec_builtins(t_data *data, int type, int i)
-// {
-// 	if (type == 1)
-// 		ft_echo(data, data->exec[i]);
-// 	else if (!ft_strcmp(str, "cd"))
-// 		return (2);
-// 	else if (!ft_strcmp(str, "env"))
-// 		return (3);
-// 	else if (!ft_strcmp(str, "export"))
-// 		return (4);
-// 	else if (!ft_strcmp(str, "pwd"))
-// 		return (5);
-// 	else if (!ft_strcmp(str, "unset"))
-// 		return (6);
-// 	else if (!ft_strcmp(str, "exit") && i == 0 && !data->exec[i + 1].argv)
-// 		return (7);
-// }
+void	exec_builtins(t_data *data, int type, int i)
+{
+	if (type == 1)
+		ft_echo(data->exec[i].argv);
+	// else if (type == 2)
+	// 	ft_cd;
+	else if (type == 3)
+		ft_env(data);
+	else if (type == 4)
+		ft_export(data, data->exec[i].argv, data->exec[i].outfile);
+	else if (type == 5)
+		ft_pwd();
+	else if (type == 6)
+		ft_unset(data, data->exec[i].argv);
+	else
+		ft_exit(data, data->exec[i].argv);
+}
 
 // static int	ft_execlen(t_exec *exec)
 // {
@@ -104,10 +104,10 @@ int	executer(t_data *data)
 	int		stdout_cpy;
 
 	i = 0;
-	builtin = is_builtins(data, data->exec[i].argv[0], i);
+	builtin = is_builtins(data->exec[i].argv[0]);
 	if (builtin && !data->exec[1].argv)
 	{
-		// exec_builtins(data, builtin, i);
+		exec_builtins(data, builtin, i);
 		i++;
 	}
 	stdin_cpy = dup(0);

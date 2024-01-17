@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:36:00 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/17 18:19:51 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/17 20:29:55 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,21 @@ int	prompt_reader(t_data *data)
 		// 	printf("%s\n", data->list->word);
 		// 	data->list = data->list->next;
 		// }
-		if (!ft_strncmp(line, "exit", 5))
-		{
-			free(line);
-			ft_exit_prog(data);
-		}
-		if (!ft_strncmp(line, "env", 4))
-			ft_env(data, 1);
-
+		// if (!ft_strncmp(line, "exit", 5))
+		// {
+		// 	free(line);
+		// 	ft_exit_prog(data);
+		// }
+		// if (!ft_strncmp(line, "env", 4))
+		// 	ft_env(data);
+		// if (!ft_strncmp(line, "echo", 4))
+		// 	ft_echo(data->exec[0].argv);
+		// if (!ft_strncmp(line, "export", 6))
+		// 	ft_export(data, data->exec[0].argv, 1);
+		// if (!ft_strncmp(line, "unset", 5))
+		// 	ft_unset(data, data->exec[0].argv);
+		// if (!ft_strncmp(line, "pwd", 3))
+		// 	ft_pwd();
 		// if (!ft_strncmp(line, "export 1", 9))
 		// 	ft_export(data, s, i);
 		// if (!ft_strncmp(line, "export", 7))

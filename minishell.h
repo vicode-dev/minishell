@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/17 15:57:41 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/17 20:29:36 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <curses.h>
 # include <term.h>
 # include "libft/libft.h"
+# include "exitcode.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <string.h>
@@ -75,11 +76,12 @@ int		ft_strcmp(char *s1, char *s2);
 int		check_existence(t_data *data, char *var, int i);
 
 void	get_env(char **env, t_data *data);
-int		ft_env(t_data *data, int out);
+int		ft_env(t_data *data);
 int		ft_unset(t_data *data, char **arg);
 int		ft_cd(t_data *data, char *path_dir);
-int		ft_echo(t_data *data, char **args, int out);
+int		ft_echo(char **argv);
 int		ft_pwd(void);
+void	ft_exit(t_data *data, char **argv);
 int		ft_structlen(t_env *env);
 int		prompt_reader(t_data *data);
 char	*get_env_var(char **env, char *var);
@@ -106,5 +108,7 @@ void	create_the_array_quot(t_data *data, t_lexed **list);
 // Execution
 int		executer(t_data *data);
 void	ft_init_pipex(t_data *data, int i, int stdout_cpy);
+void	exec_builtins(t_data *data, int type, int i);
+int		is_builtins(char *str);
 
 #endif
