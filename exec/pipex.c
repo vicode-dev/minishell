@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:27:48 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/17 20:41:38 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/18 16:39:03 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ void	ft_init_pipex(t_data *data, int i, int stdout_cpy)
 		perror("Pipe");
 		exit (-1); // A CHANGER
 	}
-	if (data->exec[i].infile > -1)
+	if (data->exec[i].infile > 2)
 		dup2(data->exec[i].infile, STDIN_FILENO);
-	if (data->exec[i].outfile > 2)
+	if (data->exec[i].outfile > 2) 
 		dup2(data->exec[i].outfile, STDOUT_FILENO);
 	else if (data->exec[i + 1].argv)
 		dup2(end[1], STDOUT_FILENO);
@@ -61,5 +61,4 @@ void	ft_init_pipex(t_data *data, int i, int stdout_cpy)
 	if (data->pid < 0)
 		return ; // A CHANGER
 	ft_pipex(data, i, end);
-	
 }

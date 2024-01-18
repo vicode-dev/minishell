@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:44:54 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/17 20:37:13 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/18 16:46:41 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,23 @@ void	exec_builtins(t_data *data, int type, int i)
 	else
 		ft_exit(data, data->exec[i].argv);
 }
+void	redirect_exec_builtins(t_data *data, int type, int i)
+{
+	int	stdin_cpy;
+	int	stdout_cpy;
 
+	stdin_cpy = dup(STDIN_FILENO);
+	stdout_cpy = dup(STDOUT_FILENO);
+	if (data->exec[i].infile > -1)
+		dup2(data->exec[i].infile, STDIN_FILENO);
+	if (data->exec[i].outfile > 2)
+		dup2(data->exec[i].outfile, STDOUT_FILENO);
+	exec_builtins(data, type, i);
+	dup2(stdin_cpy, STDIN_FILENO);
+	dup2(stdout_cpy, STDOUT_FILENO);
+	close(stdin_cpy);
+	close(stdout_cpy);
+}
 // static int	ft_execlen(t_exec *exec)
 // {
 // 	int	i;
@@ -107,7 +123,7 @@ int	executer(t_data *data)
 	builtin = is_builtins(data->exec[i].argv[0]);
 	if (builtin && !data->exec[1].argv)
 	{
-		exec_builtins(data, builtin, i);
+		redirect_exec_builtins(data, builtin, i);
 		i++;
 	}
 	stdin_cpy = dup(0);
@@ -124,5 +140,11 @@ int	executer(t_data *data)
 	close(stdout_cpy);
 	waitpid(data->pid, &status, 0);
 	data->status = WEXITSTATUS(status);
+	int j = 0;
+	while(j < tab_size(data->list))
+	{
+		wait(NULL);
+		j++;
+	}
 	return (0);
 }
