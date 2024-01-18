@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:36:00 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/17 20:29:55 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/18 18:02:48 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,7 @@ int	prompt_reader(t_data *data)
 	char	*line;
 	char	*prompt;
 
-	again = 1; 
-
-
-	char *s[2];
-	char *p[2];
-	s[0] = "hello";
-	s[1] = "test";
-	p[0] = "hello";
-	p[1] = 0;
-
+	again = 1;
 	while (again)
 	{
 		prompt = get_prompt(data);
@@ -69,42 +60,6 @@ int	prompt_reader(t_data *data)
 		parse(data);
 		if (data->exec)
 			executer(data);
-		// while (data->list)
-		// {
-		// 	printf("%s\n", data->list->word);
-		// 	data->list = data->list->next;
-		// }
-		// if (!ft_strncmp(line, "exit", 5))
-		// {
-		// 	free(line);
-		// 	ft_exit_prog(data);
-		// }
-		// if (!ft_strncmp(line, "env", 4))
-		// 	ft_env(data);
-		// if (!ft_strncmp(line, "echo", 4))
-		// 	ft_echo(data->exec[0].argv);
-		// if (!ft_strncmp(line, "export", 6))
-		// 	ft_export(data, data->exec[0].argv, 1);
-		// if (!ft_strncmp(line, "unset", 5))
-		// 	ft_unset(data, data->exec[0].argv);
-		// if (!ft_strncmp(line, "pwd", 3))
-		// 	ft_pwd();
-		// if (!ft_strncmp(line, "export 1", 9))
-		// 	ft_export(data, s, i);
-		// if (!ft_strncmp(line, "export", 7))
-		// 	ft_export(data, p, i);
-		// else
-		// {
-		// 	s[1] = line;
-		// 	if (!s[1][0])
-		// 		s[1] = 0;
-			// ft_export(data, s, 1);
-			// ft_unset(data, s);
-		// 	ft_echo(data, s, 1);
-		// }
-		// ft_cd(data, line);
-		// ft_printf(1, "%s\n%s\n", get_env_var(data->env, "PWD"), get_env_var(data->env, "OLDPWD"));
-		// ft_pwd();
 		ft_free_lexed(&(data->list));
 		free(data->exec); // a changer par une fonction de clean correct
 		data->exec = NULL;

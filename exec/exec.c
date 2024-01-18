@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:44:54 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/18 16:46:41 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/18 18:02:42 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,18 @@ int	is_builtins(char *str)
 void	exec_builtins(t_data *data, int type, int i)
 {
 	if (type == 1)
-		ft_echo(data->exec[i].argv);
+		ft_echo(data, data->exec[i].argv);
 	// else if (type == 2)
 	// 	ft_cd;
 	else if (type == 3)
 		ft_env(data);
 	else if (type == 4)
-		ft_export(data, data->exec[i].argv, data->exec[i].outfile);
+		ft_export(data, data->exec[i].argv);
 	else if (type == 5)
-		ft_pwd();
+		ft_pwd(data);
 	else if (type == 6)
 		ft_unset(data, data->exec[i].argv);
-	else
+	else if (type == 7)
 		ft_exit(data, data->exec[i].argv);
 }
 void	redirect_exec_builtins(t_data *data, int type, int i)
@@ -110,9 +110,8 @@ char	*parse_path(t_data *data, int i)
 	return (path);
 }
 
-int	executer(t_data *data)
+void	executer(t_data *data)
 {
-	// ["ls", "-la", "cat"]
 	int		i;
 	int		builtin;
 	int		status;
@@ -124,7 +123,7 @@ int	executer(t_data *data)
 	if (builtin && !data->exec[1].argv)
 	{
 		redirect_exec_builtins(data, builtin, i);
-		i++;
+		return ;
 	}
 	stdin_cpy = dup(0);
 	stdout_cpy = dup(1);
@@ -146,5 +145,5 @@ int	executer(t_data *data)
 		wait(NULL);
 		j++;
 	}
-	return (0);
+	return ;
 }

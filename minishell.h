@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/18 16:26:20 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/18 18:00:58 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,33 +66,36 @@ typedef struct s_data {
 # define OUTFILE 6
 # define APPEND 7
 
-// Export
-int		ft_export(t_data *data, char **vars, int out);
-int		export_parse(t_data *data, char *var, int out);
+// BUILTINS - Export, unset
+void	ft_export(t_data *data, char **vars);
+int		export_parse(t_data *data, char *var);
 int		export_add(t_data *data, char *arg);
 int		export_replace(t_data *data, char *arg, int pos, int i);
-int		print_env(t_data *data, int out);
+int		print_env(t_data *data);
 int		ft_strcmp(char *s1, char *s2);
 int		check_existence(t_data *data, char *var, int i);
+void	ft_unset(t_data *data, char **arg);
 
+// BUILTINS - Env
 void	get_env(char **env, t_data *data);
-int		ft_env(t_data *data);
-int		ft_unset(t_data *data, char **arg);
-int		ft_cd(t_data *data, char *path_dir);
-int		ft_echo(char **argv);
-int		ft_pwd(void);
+void	ft_env(t_data *data);
+
+// BUILTINS - Cd, echo, pwd, exit
+void	ft_cd(t_data *data, char *path_dir);
+void	ft_echo(t_data *data, char **argv);
+void	ft_pwd(t_data *data);
 void	ft_exit(t_data *data, char **argv);
+
 int		ft_structlen(t_env *env);
 int		prompt_reader(t_data *data);
 char	*get_env_var(char **env, char *var);
 void	ft_exit_prog(t_data *data);
 void	ft_crash(t_data *data);
 void	ft_free_strs(char **board, int i, int quit);
-
 t_env	*array_to_struct(t_data *data);
 char	**struct_to_array(t_env *env);
 
-// Parsing
+// PARSING
 t_lexed	*lexer(t_data *data, char **line);
 char	*get_quot(char **line, int *i);
 char	*get_token(char **line, int *i, int token);
@@ -105,8 +108,8 @@ int		tab_size(t_lexed *list);
 void	create_the_array_word(t_data *data, t_lexed **list);
 void	create_the_array_quot(t_data *data, t_lexed **list);
 
-// Execution
-int		executer(t_data *data);
+// EXECUTION
+void	executer(t_data *data);
 void	ft_init_pipex(t_data *data, int i, int stdout_cpy);
 void	exec_builtins(t_data *data, int type, int i);
 int		is_builtins(char *str);

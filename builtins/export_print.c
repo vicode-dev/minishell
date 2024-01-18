@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:22:10 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/11 10:38:51 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/18 17:18:30 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ static int	find_next(t_env *env, int i, int k)
 	return (j);
 }
 
-static void	print_env2(t_env *env, int j, int out)
+static void	print_env2(t_env *env, int j)
 {
 	if (env[j].content)
-		ft_printf(out, "declare -x %s=\"%s\"\n", env[j].name, env[j].content);
+		ft_printf(1, "declare -x %s=\"%s\"\n", env[j].name, env[j].content);
 	else
-		ft_printf(out, "declare -x %s\n", env[j].name);
+		ft_printf(1, "declare -x %s\n", env[j].name);
 }
 
-int	print_env(t_data *data, int out)
+int	print_env(t_data *data)
 {
 	t_env	*env;
 	int		i;
@@ -69,11 +69,11 @@ int	print_env(t_data *data, int out)
 		if (ft_strcmp(env[i].name, env[k].name) > 0)
 			k = i;
 	}
-	print_env2(env, j, out);
+	print_env2(env, j);
 	while (i-- > 1)
 	{
 		j = find_next(env, j, k);
-		print_env2(env, j, out);
+		print_env2(env, j);
 	}
 	free_struct(env);
 	return (0);

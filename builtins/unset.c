@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:15:55 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/17 15:10:31 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/18 18:52:44 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static int	check_name(char *name)
 	{
 		if (!ft_isalnum(name[j]) && name[j] != '_')
 		{
-			ft_printf(2, "unset: `%s': not a valid identifier\n", name);
+			ft_printf(2, "minishell: unset: `%s': not a valid identifier\n", 
+				name);
 			return (0);
 		}
 		j++;
@@ -29,7 +30,7 @@ static int	check_name(char *name)
 	return (1);
 }
 
-int	unset_remove(t_data *data, int idx)
+static int	unset_remove(t_data *data, int idx)
 {
 	char	**new;
 	int		i;
@@ -54,15 +55,19 @@ int	unset_remove(t_data *data, int idx)
 	return (0);
 }
 
-int	ft_unset(t_data *data, char **arg)
+void	ft_unset(t_data *data, char **arg)
 {
 	int		ret;
 	int		idx;
 	int		i;
 
 	if (!arg[1])
-		return (0);
+	{
+		data->status = 0;
+		return ;
+	}
 	i = 0;
+	ret = 0;
 	while (arg[i])
 	{
 		if (!check_name(arg[i]))
@@ -70,8 +75,7 @@ int	ft_unset(t_data *data, char **arg)
 		idx = check_existence(data, arg[i], ft_strlen(arg[i]));
 		if (idx >= 0)
 			unset_remove(data, idx);
-		ret = 1;
 		i++;
 	}
-	return (ret);
+	data->status = ret;
 }

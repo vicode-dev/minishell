@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 18:29:22 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/10 15:31:22 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/18 17:18:08 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ t_env	*array_to_struct(t_data *data)
 			new[i].content = ft_strdup(++temp);
 		else
 			new[i].content = 0;
-		// ft_printf(1, "data %s, temp %s, name %s, content %s\n\n", data->env[i], temp, new[i].name, new[i].content);
 		// if (!new[i].name)
 		// 	ft_free_strs(new, i, 1); ?
 		free(temp2);

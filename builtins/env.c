@@ -6,13 +6,13 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 12:34:50 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/17 13:52:34 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/18 17:28:22 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_env(t_data *data)
+void	ft_env(t_data *data)
 {
 	int	i;
 	int	j;
@@ -27,5 +27,5 @@ int	ft_env(t_data *data)
 			ft_printf(1, "%s\n", data->env[i]);
 		i++;
 	}
-	return (0);
+	data->status = 0;
 }

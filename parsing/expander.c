@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 09:26:17 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/16 16:08:36 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/18 17:54:10 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	expand_exit_code(t_data *data, t_lexed *list, int i)
 	char	*tmp;
 	int		len;
 
-	tmp = ft_itoa((int)g_exitcode);
+	tmp = ft_itoa((int) data->status);
 	len = ft_strlen(tmp);
 	tmp = ft_replace(list->word, tmp, i, i + 2);
 	if (!tmp)

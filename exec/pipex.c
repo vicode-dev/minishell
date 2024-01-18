@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:27:48 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/18 16:39:03 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/18 18:54:52 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ static void	ft_pipex(t_data *data, int i, int *end)
 		if (is_builtins(data->exec[i].argv[0]))
 		{
 			exec_builtins(data, is_builtins(data->exec[i].argv[0]), i);
-			exit (0);
+			exit (data->status);
 		}
 		else if (execve(data->exec[i].path, data->exec[i].argv, data->env) == -1)
 		{
-			printf("Command not found\n");
-			exit (1);
+			ft_printf(2, "minishell: %s: command not found\n", data->exec[i].argv[0]);
+			exit (COM_NOT_FOUND);
 		}
 	}
 	else

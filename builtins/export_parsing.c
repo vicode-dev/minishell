@@ -3,33 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   export_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:21:02 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/12 16:43:15 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/18 18:52:11 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	check_name(char *name, int i)
+static int	check_name(char *str, int i)
 {
 	int	j;
 
 	j = 0;
 	while (j < i)
 	{
-		if ((!ft_isalnum(name[j]) && name[j] != '_') || 
-			(j == 0 && !ft_isalpha(name[j]) && name[j] != '_'))
+		if ((!ft_isalnum(str[j]) && str[j] != '_') || 
+			(j == 0 && !ft_isalpha(str[j]) && str[j] != '_'))
 		{
-			ft_printf(2, "export: `%s': not a valid identifier\n", name);
+			ft_printf(2, "minishell: export: `%s': not a valid identifier\n", 
+				str);
 			return (0);
 		}
 		j++;
 	}
-	if (name[j] == '+' && name[j + 1] != '=')
+	if (str[j] == '+' && str[j + 1] != '=')
 	{
-		ft_printf(2, "export: `%s': not a valid identifier\n", name);
+		ft_printf(2, "minishell: export: `%s': not a valid identifier\n", str);
 		return (0);
 	}
 	return (1);
@@ -50,34 +51,14 @@ int	check_existence(t_data *data, char *var, int i)
 	return (-1);
 }
 
-int	check_dollar(t_data *data, char *var, int i, int out)
-{
-	int	start;
-
-	start = i;
-	while (var[i] && ft_isalnum(var[i]))
-		i++;
-	if ((i == start && var[i] == 0) || (var[i] != 0 && var[i] != '_')) // WTF
-	{
-		ft_printf(2, "export: `%s': not a valid identifier\n", var);
-		return (1);
-	}
-	else
-		print_env(data, out);
-	return (0);
-}
-
-int	export_parse(t_data *data, char *var, int out)
+int	export_parse(t_data *data, char *var)
 {
 	int		i;
 	int		exist;
 
 	i = 0;
-	while (var[i] && var[i] != '=' && var[i] != '+'
-			&& var[i] != '$')
+	while (var[i] && var[i] != '=' && var[i] != '+')
 		i++;
-	if (var[i] == '$')
-		return (check_dollar(data, var, i + 1, out));
 	if (!check_name(var, i))
 		return (1); // Error : name invalid
 	exist = check_existence(data, var, i);
