@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:25:35 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/16 17:59:25 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/18 16:34:45 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_exit_prog(t_data *data)
 	ft_free_lexed(&(data->list));
 	free(data->exec);
 	// rl_clear_history();
-	exit (g_exitcode);
+	exit (data->status);
 }
 
 int	main(int argc, char **argv, char **env)
