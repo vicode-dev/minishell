@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:25:35 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/18 16:34:45 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/19 16:00:04 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ unsigned char	g_exitcode;
 //For malloc crash
 void	ft_crash(t_data *data)
 {
-	g_exitcode = 1;
+	data->status = 1;
 	ft_exit_prog(data);
 }
 void	ft_free_lexed(t_lexed **list)

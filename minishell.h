@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/18 18:00:58 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/19 09:56:49 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,14 @@ int		print_env(t_data *data);
 int		ft_strcmp(char *s1, char *s2);
 int		check_existence(t_data *data, char *var, int i);
 void	ft_unset(t_data *data, char **arg);
+void	ft_cd(t_data *data, char **argv);
 
 // BUILTINS - Env
 void	get_env(char **env, t_data *data);
 void	ft_env(t_data *data);
 
 // BUILTINS - Cd, echo, pwd, exit
-void	ft_cd(t_data *data, char *path_dir);
+void	ft_cd(t_data *data, char *argv[0]);
 void	ft_echo(t_data *data, char **argv);
 void	ft_pwd(t_data *data);
 void	ft_exit(t_data *data, char **argv);

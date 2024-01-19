@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 09:44:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/16 17:41:32 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/19 17:01:23 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,9 +121,13 @@ void	parse_heredoc(t_data *data, int idx, t_lexed *list)
 {
 	int		doc;
 	char	*file_name;
+	// char	*tmp;
 	char	*buff;
 
+	// tmp = ft_strjoin(get_env_var(data->env, "TMPDIR"), ".tmp");
+	// ft_printf(1, "%s\n", tmp);
 	file_name = ft_strjoin(".tmp", ft_itoa(idx));
+	// free(tmp);
 	if (!file_name)
 		ft_crash(data);
 	doc = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 00777);
@@ -144,4 +148,5 @@ void	parse_heredoc(t_data *data, int idx, t_lexed *list)
 	if (data->exec[idx].infile > 2)
 		close(data->exec[idx].infile);
 	data->exec[idx].infile = doc;
+
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_temp.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2023/12/18 21:07:10 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/19 09:56:01 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_data {
 
 void	get_env(char **env, t_data *data);
 int		ft_env(t_data *data);
-int		ft_cd(t_data *data, char *path_dir);
+int		ft_cd(t_data *data, char *argv[0]);
 int		ft_pwd(t_data *data);
 char	**struct_to_array(t_data *data);
 

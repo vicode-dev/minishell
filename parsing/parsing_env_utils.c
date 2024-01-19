@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 12:25:51 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/17 17:25:43 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/19 10:52:57 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,27 +43,22 @@ char	*get_env_var(char **env, char *var)
 
 void	increase_shlvl(t_data *data)
 {
-	char		*old_value;
 	char		*itoa;
+	char		*new_line[3];
 	uint16_t	shlvl;
-	int			i;
 
-	i = 0;
-	old_value = get_env_var(data->env, "SHLVL");
-	if (old_value)
-		shlvl = ft_atoi(old_value);
-	else
-		shlvl = -1;
-	shlvl++;
-	while (data->env[i]
-		&& ft_strncmp(data->env[i], "SHLVL=", ft_strlen("SHLVL=")))
-		i++;
-	free(data->env[i]);
+	shlvl = 1;
+	if (get_env_var(data->env, "SHLVL"))
+		shlvl += ft_atoi(get_env_var(data->env, "SHLVL"));
 	itoa = ft_itoa(shlvl);
-	data->env[i] = ft_strjoin("SHLVL=", itoa);
-	free(itoa);
-	if (!data->env[i])
+	new_line[1] = ft_strjoin("SHLVL=", itoa);
+	new_line[2] = 0;
+	if (!new_line[1])
 		ft_crash(data);
+	free(itoa);
+	ft_export(data, new_line);
+	free(new_line[1]);
+	data->status = 0;
 }
 
 void	get_env(char **env, t_data *data)

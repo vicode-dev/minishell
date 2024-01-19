@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:36:00 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/18 18:02:48 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/19 16:48:19 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,17 @@ char	*get_prompt(t_data *data)
 
 	prompt = ft_strjoin(get_env_var(data->env, "USER"), " ");
 	if (!prompt)
-		return(ft_strdup("minishell % "));
+		return (ft_strdup("minishell % "));
 	cwd = getcwd(NULL, 0);
-	if (!cwd)
-		free(prompt);
-	if (!cwd)
-		ft_crash(data);
+	if (cwd)
+	{
 	tmp = ft_strrchr(cwd, '/');
 	tmp = ft_strjoin(prompt, ++tmp);
-	free(prompt);
 	free(cwd);
+	free(prompt);
+	}
+	else
+		tmp = prompt;
 	if (!tmp)
 		ft_crash(data);
 	prompt = ft_strjoin(tmp, " % ");
@@ -58,7 +59,7 @@ int	prompt_reader(t_data *data)
 		add_history(line);
 		expander(data);
 		parse(data);
-		if (data->exec)
+		if (data->exec && data->exec[0].argv[0])
 			executer(data);
 		ft_free_lexed(&(data->list));
 		free(data->exec); // a changer par une fonction de clean correct

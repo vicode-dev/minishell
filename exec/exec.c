@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:44:54 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/18 18:02:42 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/19 16:10:14 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	exec_builtins(t_data *data, int type, int i)
 {
 	if (type == 1)
 		ft_echo(data, data->exec[i].argv);
-	// else if (type == 2)
-	// 	ft_cd;
+	else if (type == 2)
+		ft_cd(data, data->exec[i].argv);
 	else if (type == 3)
 		ft_env(data);
 	else if (type == 4)
@@ -131,6 +131,8 @@ void	executer(t_data *data)
 	{
 		data->exec[i].path = parse_path(data, i);
 		ft_init_pipex(data, i, stdout_cpy);
+		if (is_builtins(data->exec[i].argv[0]) == 2)
+			redirect_exec_builtins(data, 2, i);
 		i++;
 	}
 	dup2(stdin_cpy, 0);
