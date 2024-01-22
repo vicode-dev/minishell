@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:27:48 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/19 16:09:36 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/22 14:39:25 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ static void	ft_pipex(t_data *data, int i, int *end)
 	{
 		close(end[1]);
 		close(end[0]);
-		if (data->exec[i].infile == -1 || data->exec[i].outfile == -1 
-			|| is_builtins(data->exec[i].argv[0]) == 2)
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		if (data->exec[i].infile == -1 || data->exec[i].outfile == -1)
 			exit (1);
 		if (is_builtins(data->exec[i].argv[0]))
 		{
@@ -28,8 +29,8 @@ static void	ft_pipex(t_data *data, int i, int *end)
 		}
 		else if (execve(data->exec[i].path, data->exec[i].argv, data->env) == -1)
 		{
-			// ft_printf(2, "minishell: %s: command not found\n", data->exec[i].argv[0]);
-			perror("");
+			ft_printf(2, "minishell: %s: command not found\n", data->exec[i].argv[0]);
+			// perror("");
 			exit (COM_NOT_FOUND);
 		}
 	}

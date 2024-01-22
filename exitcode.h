@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exitcode.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:39:38 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/18 19:05:05 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/22 11:52:43 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,15 @@
 # define CANNOT_EXEC 126 // Ex : 	/dev/null
 # define COM_NOT_FOUND 127
 # define ERROR_SIG 128
+# define INTERRUPT_SIG 130
 # define SYNTAX_ERROR 258
+
+
+// SIG CODES
+#define SIGHUP  1   /* Hangup the process */ 
+#define SIGINT  2   /* Interrupt the process */ 
+#define SIGQUIT 3   /* Quit the process */ 
+#define SIGILL  4   /* Illegal instruction. */ 
+#define SIGTRAP 5   /* Trace trap. */ 
 
 #endif

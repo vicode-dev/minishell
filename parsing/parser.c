@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:04:07 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/17 15:01:49 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/22 17:20:52 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,25 @@ void	parse_ioa(t_data *data, int idx, t_lexed *list)
 	int	fd;
 
 	fd = -1;
-	if (list->token == INFILE)
+	if (data->exec[idx].infile == -1 || data->exec[idx].outfile == -1)
+		return ;
+	else if (list->token == INFILE)
 		fd = open(list->word, O_RDONLY);
 	else if (list->token == OUTFILE)
 		fd = open(list->word, O_WRONLY | O_CREAT | O_TRUNC, 00777);
 	else if (list->token == APPEND)
 		fd = open(list->word, O_WRONLY | O_CREAT | O_APPEND, 00777);
 	if (fd == -1)
-	{
 		ft_printf(2, "minishell: ");
+	if (fd == -1)
 		perror(list->word);
-	}
 	if (list->token == INFILE && data->exec[idx].infile > 2)
 		close(data->exec[idx].infile);
 	else if (list->token != INFILE && data->exec[idx].outfile > 2)
 		close(data->exec[idx].outfile);
-	if (list->token == INFILE && data->exec[idx].infile != -1)
+	if (list->token == INFILE)
 		data->exec[idx].infile = fd;
-	else if (list->token == OUTFILE && data->exec[idx].outfile != -1)
+	else if (list->token == OUTFILE)
 		data->exec[idx].outfile = fd;
 	else
 		close(fd);
@@ -245,11 +246,5 @@ void	parse(t_data *data)
 		if (list)
 			list = list->next;
 	}
-	// int	i = 0;
-	// while(data->exec[i].argv)
-	// {
-	// 	printf("Command %i:\ninfile:%i\noutfile:%i\nargv[0]:%s\n", i, data->exec[i].infile, data->exec[i].outfile, data->exec[i].argv[0]);
-	// 	i++;
-	// }
-	data->the_array = NULL;
+
 }

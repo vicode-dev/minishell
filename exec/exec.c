@@ -6,11 +6,13 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:44:54 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/19 16:10:14 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/22 14:46:09 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	g_signal;
 
 int	is_builtins(char *str)
 {
@@ -131,8 +133,6 @@ void	executer(t_data *data)
 	{
 		data->exec[i].path = parse_path(data, i);
 		ft_init_pipex(data, i, stdout_cpy);
-		if (is_builtins(data->exec[i].argv[0]) == 2)
-			redirect_exec_builtins(data, 2, i);
 		i++;
 	}
 	dup2(stdin_cpy, 0);
@@ -141,11 +141,17 @@ void	executer(t_data *data)
 	close(stdout_cpy);
 	waitpid(data->pid, &status, 0);
 	data->status = WEXITSTATUS(status);
-	int j = 0;
-	while(j < tab_size(data->list))
+	data->pid = 0;
+	if (g_signal == SIGINT)
+	{
+		data->status = INTERRUPT_SIG;
+		g_signal = 0;
+	}
+	i = 0;
+	while (i < tab_size(data->list))
 	{
 		wait(NULL);
-		j++;
+		i++;
 	}
 	return ;
 }

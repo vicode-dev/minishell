@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:22:10 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/18 17:18:30 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/22 17:52:44 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	free_struct(t_env *env)
+void	free_struct_env(t_env *env)
 {
 	int	i;
 
@@ -75,6 +75,6 @@ int	print_env(t_data *data)
 		j = find_next(env, j, k);
 		print_env2(env, j);
 	}
-	free_struct(env);
+	free_struct_env(env);
 	return (0);
 }

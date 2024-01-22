@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:36:00 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/19 16:48:19 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/22 18:12:42 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,19 @@ int	prompt_reader(t_data *data)
 	{
 		prompt = get_prompt(data);
 		line = readline(prompt);
-		if (!line)
-			ft_crash(data);
 		free(prompt);
-		data->list = lexer(data, &line);
+		if (!line)
+			ft_exit_prog(data);
+		lexer(data, &line);
 		add_history(line);
-		expander(data);
-		parse(data);
-		if (data->exec && data->exec[0].argv[0])
-			executer(data);
-		ft_free_lexed(&(data->list));
-		free(data->exec); // a changer par une fonction de clean correct
-		data->exec = NULL;
+		if (!syntax_checker(data, data->list))
+		{
+			expander(data);
+			parse(data);
+			if (data->exec && data->exec[0].argv[0])
+				executer(data);
+		}
+		ft_free_cycle(data);
 		free(line);
 	}
 	return (0);

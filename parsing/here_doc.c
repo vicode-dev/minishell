@@ -6,13 +6,12 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 09:44:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/19 17:16:28 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/22 18:18:26 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int g_exitcode;
 
 char	*get_token(char **line, int *i, int token)
 {
@@ -65,7 +64,7 @@ static char	*expand_exit_code(t_data *data, char *buff, int i)
 	char	*tmp;
 	int		len;
 
-	tmp = ft_itoa((int)g_exitcode);
+	tmp = ft_itoa(data->status);
 	len = ft_strlen(tmp);
 	tmp = ft_replace(buff, tmp, i, i + 2);
 	free(buff);

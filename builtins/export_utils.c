@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 18:29:22 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/18 17:18:08 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/22 17:59:38 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,19 @@ char	**struct_to_array(t_env *env)
 	int		i;
 
 	array = malloc((ft_structlen(env) + 1) * sizeof(char *));
-	// if (!array)
-	// 	?
+	if (!array)
+		return (NULL);
 	i = 0;
 	while (env[i].name)
 	{
 		temp = ft_strjoin(env[i].name, "=");
-		// if (!temp)
-		// ?
 		line = ft_strjoin(temp, env[i].content);
-		// if (!line)
-		// 	?
 		free(temp);
+		if (!line)
+		{
+			array[i] = 0;
+			return (ft_free_strs(array, 0, 2), NULL);
+		}
 		array[i] = line;
 		i++;
 	}
@@ -53,27 +54,24 @@ t_env	*array_to_struct(t_data *data)
 {
 	t_env	*new;
 	char	*temp;
-	char	*temp2;
 	int		i;
 
 	new = malloc((ft_strslen(data->env) + 1) * sizeof(t_env));
-	// if (!new)
-	// 	exit (1); ?
+	if (!new)
+		return (NULL);
 	i = 0;
 	while (data->env[i])
 	{
-		temp2 = ft_strdup(data->env[i]);
-		temp = ft_strchr(temp2, '=');
+		new[i].name = ft_strdup(data->env[i]);
+		if (!new[i].name)
+			return (free_struct_env(new), NULL);
+		temp = ft_strchr(new[i].name, '=');
 		if (temp)
 			*temp = 0;
-		new[i].name = ft_strdup(temp2);
 		if (temp)
 			new[i].content = ft_strdup(++temp);
 		else
-			new[i].content = 0;
-		// if (!new[i].name)
-		// 	ft_free_strs(new, i, 1); ?
-		free(temp2);
+			new[i].content = NULL;
 		i++;
 	}
 	new[i].name = NULL;

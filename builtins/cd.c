@@ -6,44 +6,12 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:21:55 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/19 16:33:45 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/22 18:01:51 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include <errno.h>
-
-// int	change_env(t_data *data, char *path_dir)
-// {
-// 	int	pwd;
-// 	int old_pwd;
-// 	char *temp;
-// 	char *temp_temp;
-
-// 	pwd = 0;
-// 	old_pwd = 0;
-// 	while (ft_strncmp(data->env[pwd], "PWD", 3))
-// 		pwd++;
-// 	while (ft_strncmp(data->env[old_pwd], "OLDPWD", 6))
-// 		old_pwd++;
-// 	temp = ft_strdup(path_dir);
-// 	if (!temp)
-// 		return (1);
-// 	temp_temp = ft_strjoin("PWD=", temp);
-// 	free(temp);
-// 	free(data->env[old_pwd]);
-// 	data->env[old_pwd] = ft_strjoin("OLD", data->env[pwd]);
-// 	free(data->env[pwd]);
-// 	data->env[pwd] = temp_temp;
-// 	return (0);
-// }
-// int	parse_path(t_data *data, char *path_dir)
-// {
-// 	if (path_dir[0] != '/')
-// 	{
-		
-// 	}
-// }
 
 char	*check_relative(t_data *data, char *path_dir)
 {
@@ -61,6 +29,7 @@ char	*check_relative(t_data *data, char *path_dir)
 	}
 	return (ft_strdup(path_dir));
 }
+
 char	*go_home(t_data *data)
 {
 	char	*home;
@@ -76,7 +45,7 @@ char	*go_home(t_data *data)
 
 void	ft_cd(t_data *data, char **argv)
 {
-	char 	*oldtmp;
+	char	*oldtmp;
 	char	*url[3];
 
 	url[2] = 0;

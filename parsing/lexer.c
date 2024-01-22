@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 09:25:57 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/17 10:39:21 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/22 17:21:42 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	lst_add_handler(t_data *data, int token, char *word)
 		ft_crash(data);
 }
 
-t_lexed	*lexer(t_data *data, char **line)
+void	lexer(t_data *data, char **line)
 {
 	int		i;
 
@@ -105,5 +105,4 @@ t_lexed	*lexer(t_data *data, char **line)
 			lst_add_handler(data, WORD, get_word(*line, &i));
 		i++;
 	}
-	return (data->list);
 }
