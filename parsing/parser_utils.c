@@ -6,25 +6,11 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 18:02:56 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 15:27:14 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 17:18:48 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	tab_size(t_lexed *list)
-{
-	int	count;
-
-	count = 1;
-	while (list->next)
-	{
-		if (list->token == PIPE)
-			count++;
-		list = list->next;
-	}
-	return (count);
-}
 
 char	**join(t_data *data, char ***w_split, int *i)
 {
@@ -98,6 +84,33 @@ void	create_the_array_quot(t_data *data, t_lexed **list)
 	data->the_array = tmp_array;
 }
 
+void	get_token_handler(char **line, int *i_cpy, int *j, char **res)
+{
+	char	*tmp;
+	char	*tmp_2;
+
+	while ((*line)[*j])
+	{
+		if ((*line)[*j] == '"' || (*line)[*j] == '\'')
+		{
+			tmp = ft_substr(*line, *i_cpy, *j - *i_cpy);
+			tmp_2 = ft_strjoin(*res, tmp);
+			free(tmp);
+			*i_cpy = *j;
+			tmp = get_quot(line, i_cpy);
+			*res = ft_strjoin(tmp_2, tmp);
+			free(tmp_2);
+			free(tmp);
+			(*i_cpy)++;
+			*j = *i_cpy;
+		}
+		if ((*line)[*j] == ' ' || (*line)[*j] == '<' || (*line)[*j] == '>'
+			|| (*line)[*j] == '|')
+			break ;
+		(*j)++;
+	}
+}
+
 char	*get_token(char **line, int *i, int token)
 {
 	int		i_cpy;
@@ -114,29 +127,8 @@ char	*get_token(char **line, int *i, int token)
 	while ((*line)[i_cpy] == ' ')
 		i_cpy++;
 	j = i_cpy;
-	if ((*line)[j] == '<' || (*line)[j] == '>' || (*line)[j] == '|')
-		return (NULL);
 	res = ft_calloc(1, 1);
-	while ((*line)[j])
-	{
-		if ((*line)[j] == '"' || (*line)[j] == '\'')
-		{
-			tmp = ft_substr(*line, i_cpy, j - i_cpy);
-			tmp_2 = ft_strjoin(res, tmp);
-			free(tmp);
-			i_cpy = j;
-			tmp = get_quot(line, &i_cpy);
-			res = ft_strjoin(tmp_2, tmp);
-			free(tmp_2);
-			free(tmp);
-			i_cpy++;
-			j = i_cpy;
-		}
-		if ((*line)[j] == ' ' || (*line)[j] == '<' || (*line)[j] == '>'
-			|| (*line)[j] == '|')
-			break ;
-		j++;
-	}
+	get_token_handler(line, &i_cpy, &j, &res);
 	tmp = ft_substr(*line, i_cpy, j - i_cpy);
 	tmp_2 = ft_strjoin(res, tmp);
 	free(tmp);

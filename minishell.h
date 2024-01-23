@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 15:39:15 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 16:58:45 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	expander(t_data *data);
 void	parse(t_data *data);
 int		get_end_quot(char **line, int i, char type);
 void	here_doc(t_data *data, int idx, t_lexed *list);
+char	*expand(t_data *data, char *buff);
 int		tab_size(t_lexed *list);
 void	create_the_array_word(t_data *data, t_lexed **list);
 void	create_the_array_quot(t_data *data, t_lexed **list);
@@ -114,8 +115,10 @@ void	executer(t_data *data);
 void	ft_init_pipex(t_data *data, int i, int stdout_cpy);
 void	exec_builtins(t_data *data, int type, int i);
 int		is_builtins(char *str);
+char	*get_path(char *cmd, char **env);
+void	redirect_exec_builtins(t_data *data, int type, int i);
 
-//free functions
+// FREE
 void	ft_free_cycle(t_data *data);
 void	ft_free_lexed(t_lexed **list);
 void	ft_exit_prog(t_data *data);

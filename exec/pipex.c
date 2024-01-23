@@ -6,35 +6,38 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:27:48 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/23 15:34:57 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 16:36:02 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+static void	ft_pipex_child(t_data *data, int i, int *end)
+{
+	close(end[1]);
+	close(end[0]);
+	enable_signal_print();
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	if (data->exec[i].infile == -1 || data->exec[i].outfile == -1)
+		exit (1);
+	if (is_builtins(data->exec[i].argv[0]))
+	{
+		exec_builtins(data, is_builtins(data->exec[i].argv[0]), i);
+		exit (data->status);
+	}
+	else if (execve(data->exec[i].path, data->exec[i].argv, data->env) < 0)
+	{
+		ft_printf(2, "minishell: %s: command not found\n",
+			data->exec[i].argv[0]);
+		exit (COM_NOT_FOUND);
+	}
+}
+
 static void	ft_pipex(t_data *data, int i, int *end)
 {
 	if (!data->pid)
-	{
-		close(end[1]);
-		close(end[0]);
-		enable_signal_print();
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
-		if (data->exec[i].infile == -1 || data->exec[i].outfile == -1)
-			exit (1);
-		if (is_builtins(data->exec[i].argv[0]))
-		{
-			exec_builtins(data, is_builtins(data->exec[i].argv[0]), i);
-			exit (data->status);
-		}
-		else if (execve(data->exec[i].path, data->exec[i].argv, data->env) < 0)
-		{
-			ft_printf(2, "minishell: %s: command not found\n",
-				data->exec[i].argv[0]);
-			exit (COM_NOT_FOUND);
-		}
-	}
+		ft_pipex_child(data, i, end);
 	else
 	{
 		signal(SIGQUIT, sig_quit);

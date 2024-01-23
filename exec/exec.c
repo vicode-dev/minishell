@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:44:54 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/23 16:15:15 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 16:34:03 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,86 +14,7 @@
 
 int	g_signal;
 
-int	is_builtins(char *str)
-{
-	if (!ft_strcmp(str, "echo"))
-		return (1);
-	else if (!ft_strcmp(str, "cd"))
-		return (2);
-	else if (!ft_strcmp(str, "env"))
-		return (3);
-	else if (!ft_strcmp(str, "export"))
-		return (4);
-	else if (!ft_strcmp(str, "pwd"))
-		return (5);
-	else if (!ft_strcmp(str, "unset"))
-		return (6);
-	else if (!ft_strcmp(str, "exit"))
-		return (7);
-	else
-		return (0);
-}
-
-void	exec_builtins(t_data *data, int type, int i)
-{
-	if (type == 1)
-		ft_echo(data, data->exec[i].argv);
-	else if (type == 2)
-		ft_cd(data, data->exec[i].argv);
-	else if (type == 3)
-		ft_env(data);
-	else if (type == 4)
-		ft_export(data, data->exec[i].argv);
-	else if (type == 5)
-		ft_pwd(data);
-	else if (type == 6)
-		ft_unset(data, data->exec[i].argv);
-	else if (type == 7)
-		ft_exit(data, data->exec[i].argv);
-}
-
-void	redirect_exec_builtins(t_data *data, int type, int i)
-{
-	int	stdin_cpy;
-	int	stdout_cpy;
-
-	stdin_cpy = dup(STDIN_FILENO);
-	stdout_cpy = dup(STDOUT_FILENO);
-	if (data->exec[i].infile > -1)
-		dup2(data->exec[i].infile, STDIN_FILENO);
-	if (data->exec[i].outfile > 2)
-		dup2(data->exec[i].outfile, STDOUT_FILENO);
-	exec_builtins(data, type, i);
-	dup2(stdin_cpy, STDIN_FILENO);
-	dup2(stdout_cpy, STDOUT_FILENO);
-	close(stdin_cpy);
-	close(stdout_cpy);
-}
-
-char	*get_path(char *cmd, char **env)
-{
-	char	**paths;
-	char	*path;
-	char	*temp;
-	int		j;
-
-	paths = ft_split(get_env_var(env, "PATH"), ':');
-	j = 0;
-	while (paths && paths[j])
-	{
-		temp = ft_strjoin(paths[j], "/");
-		free(paths[j]);
-		path = ft_strjoin(temp, cmd);
-		free(temp);
-		if (access(path, F_OK | X_OK) != -1)
-			return (ft_free_strs(paths, j + 1, 2), path);
-		free(path);
-		j++;
-	}
-	return (free(paths), NULL);
-}
-
-char	*parse_path(t_data *data, int i)
+static char	*parse_path(t_data *data, int i)
 {
 	char	*path;
 
@@ -104,7 +25,7 @@ char	*parse_path(t_data *data, int i)
 	return (path);
 }
 
-void	receive_sig(t_data *data)
+static void	receive_sig(t_data *data)
 {
 	if (g_signal == SIGINT)
 	{
@@ -118,54 +39,56 @@ void	receive_sig(t_data *data)
 	}
 }
 
-void	executer(t_data *data)
+static void	waits(t_data *data)
 {
-	int		i;
-	int		builtin;
-	int		status;
-	int		stdin_cpy;
-	int		stdout_cpy;
+	int	i;
 
-	i = 0;
-	builtin = is_builtins(data->exec[i].argv[0]);
-	if (builtin && !data->exec[1].argv)
-	{
-		redirect_exec_builtins(data, builtin, i);
-		return ;
-	}
-	stdin_cpy = dup(0);
-	stdout_cpy = dup(1);
-	while (data->exec[i].argv)
-	{
-		data->exec[i].path = parse_path(data, i);
-		ft_init_pipex(data, i, stdout_cpy);
-		i++;
-	}
-	dup2(stdin_cpy, 0);
-	dup2(stdout_cpy, 1);
-	close(stdin_cpy);
-	close(stdout_cpy);
-	waitpid(data->pid, &status, 0);
-	data->status = WEXITSTATUS(status);
-	data->pid = 0;
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, sig_interrupt);
-	disable_signal_print();
-	if (g_signal == SIGINT)
-	{
-		data->status = INTERRUPT_SIG;
-		g_signal = 0;
-	}
-	if (g_signal == SIGQUIT)
-	{
-		data->status = QUIT_SIG;
-		g_signal = 0;
-	}
 	i = 0;
 	while (i < tab_size(data->list))
 	{
 		wait(NULL);
 		i++;
 	}
-	return ;
+}
+
+static void	executer_handler(t_data *data, int stdout_cpy)
+{
+	int	i;
+
+	i = 0;
+	while (data->exec[i].argv)
+	{
+		data->exec[i].path = parse_path(data, i);
+		ft_init_pipex(data, i, stdout_cpy);
+		i++;
+	}
+}
+
+void	executer(t_data *data)
+{
+	int		builtin;
+	int		status;
+	int		stdin_cpy;
+	int		stdout_cpy;
+
+	builtin = is_builtins(data->exec[0].argv[0]);
+	if (builtin && !data->exec[1].argv)
+	{
+		redirect_exec_builtins(data, builtin, 0);
+		return ;
+	}
+	stdin_cpy = dup(0);
+	stdout_cpy = dup(1);
+	executer_handler(data, stdout_cpy);
+	dup2(stdin_cpy, 0);
+	dup2(stdout_cpy, 1);
+	close(stdin_cpy);
+	close(stdout_cpy);
+	waitpid(data->pid, &status, 0);
+	data->status = WEXITSTATUS(status);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, sig_interrupt);
+	disable_signal_print();
+	receive_sig(data);
+	waits(data);
 }

@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 09:26:17 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 15:30:09 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 17:12:49 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	expand_home(t_data *data, t_lexed *list, int i)
 	return (1);
 }
 
-static void	expand(t_data *data, t_lexed *list)
+static void	expander_handler(t_data *data, t_lexed *list)
 {
 	int		i;
 
@@ -99,7 +99,7 @@ void	expander(t_data *data)
 	{
 		if (tmp->token == WORD || tmp->token == DQUOTE || tmp->token == INFILE
 			|| tmp->token == OUTFILE || tmp->token == APPEND)
-			expand(data, tmp);
+			expander_handler(data, tmp);
 		tmp = tmp->next;
 	}
 }

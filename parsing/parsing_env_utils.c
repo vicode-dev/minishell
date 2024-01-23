@@ -6,11 +6,25 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 12:25:51 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 15:24:36 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 17:10:58 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	tab_size(t_lexed *list)
+{
+	int	count;
+
+	count = 1;
+	while (list->next)
+	{
+		if (list->token == PIPE)
+			count++;
+		list = list->next;
+	}
+	return (count);
+}
 
 char	*get_env_var(char **env, char *var)
 {
