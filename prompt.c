@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:36:00 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 15:33:33 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/23 16:03:29 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,21 @@ char	*get_prompt(t_data *data)
 int	prompt_reader(t_data *data)
 {
 	int		again;
-	char	*line;
 	char	*prompt;
 
 	again = 1;
 	while (again)
 	{
 		prompt = get_prompt(data);
-		line = readline(prompt);
+		data->line = readline(prompt);
 		free(prompt);
-		if (!line)
+		if (!data->line)
 			ft_crash(data);
-		if (!check_syntax_error(data, line))
-			lexer(data, &line);
-		add_history(line);
-		if (g_signal != SIGINT && data->list && !syntax_checker(data, data->list))
+		// if (!check_syntax_error(data, data->line))
+			lexer(data, &(data->line));
+		add_history(data->line);
+		if (g_signal != SIGINT && data->list 
+			&& !syntax_checker(data, data->list))
 		{
 			expander(data);
 			parse(data);
@@ -67,8 +67,6 @@ int	prompt_reader(t_data *data)
 				executer(data);
 		}
 		ft_free_cycle(data);
-		g_signal = 0;
-		free(line);
 	}
 	return (0);
 }

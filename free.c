@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 11:22:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 15:24:45 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:49:23 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//For malloc crash
+int	g_signal;
+
+// For malloc crash
 void	ft_crash(t_data *data)
 {
 	data->status = 1;
@@ -66,6 +68,10 @@ void	ft_free_cycle(t_data *data)
 		free(data->exec);
 		data->exec = NULL;
 	}
+	if (data->line)
+		free(data->line);
+	data->line = 0;
+	g_signal = 0;
 }
 
 void	ft_exit_prog(t_data *data)
@@ -73,6 +79,6 @@ void	ft_exit_prog(t_data *data)
 	ft_free_strs(data->env, 0, 2);
 	rl_clear_history();
 	ft_free_cycle(data);
-	switch_signal_print();
+	enable_signal_print();
 	exit (data->status);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:21:55 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 15:31:45 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/23 16:06:44 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,47 +42,41 @@ char	*go_home(t_data *data)
 	return (ft_strdup(home));
 }
 
+int	cd_export(t_data *data, char **url, char *s1, char *s2)
+{
+	free(url[1]);
+	url[1] = ft_strjoin(s1, s2);
+	free(s2);
+	if (!url[1])
+		return (1);
+	ft_export(data, url);
+	return (0);
+}
+
 void	ft_cd(t_data *data, char **argv)
 {
 	char	*oldtmp;
 	char	*url[3];
 
 	url[2] = 0;
+	data->status = 1;
 	if (!argv[1])
 		url[1] = go_home(data);
 	else
 		url[1] = check_relative(data, argv[1]);
 	if (!url[1])
-	{
-		data->status = 1;
 		return ;
-	}
 	oldtmp = getcwd(NULL, 0);
 	if (chdir(url[1]) == -1)
 	{
 		ft_printf(2, "cd: %s : %s\n", strerror(errno), url[1]);
 		free(url[1]);
 		free(oldtmp);
-		data->status = 1;
 		return ;
 	}
-	free(url[1]);
-	url[1] = ft_strjoin("OLDPWD=", oldtmp);
-	free(oldtmp);
-	if (!url[1])
-	{
-		data->status = 1;
+	if (cd_export(data, url, "OLDPWD=", oldtmp))
 		return ;
-	}
-	ft_export(data, url);
-	free(url[1]);
-	url[1] = ft_strjoin("PWD=", getcwd(NULL, 0));
-	if (!url[1])
-	{
-		data->status = 1;
+	if (cd_export(data, url, "PWD=", getcwd(NULL, 0)))
 		return ;
-	}
-	ft_export(data, url);
-	free(url[1]);
 	data->status = 0;
 }

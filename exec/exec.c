@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:44:54 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/23 15:33:08 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/23 16:15:15 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,20 @@ char	*parse_path(t_data *data, int i)
 	else
 		path = get_path(data->exec[i].argv[0], data->env);
 	return (path);
+}
+
+void	receive_sig(t_data *data)
+{
+	if (g_signal == SIGINT)
+	{
+		data->status = INTERRUPT_SIG;
+		g_signal = 0;
+	}
+	if (g_signal == SIGQUIT)
+	{
+		data->status = QUIT_SIG;
+		g_signal = 0;
+	}
 }
 
 void	executer(t_data *data)
