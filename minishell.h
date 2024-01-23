@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/22 18:19:31 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 12:04:14 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,15 @@ void	ft_free_lexed(t_lexed **list);
 void	ft_exit_prog(t_data *data);
 void	ft_crash(t_data *data);
 void	ft_free_strs(char **board, int i, int quit);
+
+//Signals
+void	switch_signal_print(void);
+void	enable_signal_print(void);
+void	disable_signal_print(void);
+void	sig_interrupt(int signal);
+void	sig_interrupt_exec(int signal);
+void	sig_quit(int signal);
+
 //Protos
 void	rl_clear_history(void);
 void 	rl_replace_line(const char *str, int undo);

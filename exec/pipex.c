@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:27:48 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/22 14:39:25 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 12:05:03 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	ft_pipex(t_data *data, int i, int *end)
 	{
 		close(end[1]);
 		close(end[0]);
+		enable_signal_print();
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		if (data->exec[i].infile == -1 || data->exec[i].outfile == -1)
@@ -36,6 +37,8 @@ static void	ft_pipex(t_data *data, int i, int *end)
 	}
 	else
 	{
+		signal(SIGQUIT, sig_quit);
+		signal(SIGINT, sig_interrupt_exec);
 		close(end[1]);
 		if (data->exec[i].infile <= 2)
 			dup2(end[0], STDIN_FILENO);
@@ -62,6 +65,6 @@ void	ft_init_pipex(t_data *data, int i, int stdout_cpy)
 		dup2(stdout_cpy, STDOUT_FILENO);
 	data->pid = fork();
 	if (data->pid < 0)
-		return ; // A CHANGER
+		ft_crash(data);
 	ft_pipex(data, i, end);
 }

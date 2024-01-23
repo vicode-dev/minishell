@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:44:54 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/22 14:46:09 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 12:01:18 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,9 +142,17 @@ void	executer(t_data *data)
 	waitpid(data->pid, &status, 0);
 	data->status = WEXITSTATUS(status);
 	data->pid = 0;
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, sig_interrupt);
+	disable_signal_print();
 	if (g_signal == SIGINT)
 	{
 		data->status = INTERRUPT_SIG;
+		g_signal = 0;
+	}
+	if (g_signal == SIGQUIT)
+	{
+		data->status = QUIT_SIG;
 		g_signal = 0;
 	}
 	i = 0;

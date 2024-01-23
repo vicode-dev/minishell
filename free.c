@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 11:22:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/22 16:41:09 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 10:03:17 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ void	ft_exit_prog(t_data *data)
 	ft_free_strs(data->env, 0, 2);
 	rl_clear_history();
 	ft_free_cycle(data);
+	switch_signal_print();
 	exit (data->status);
 }

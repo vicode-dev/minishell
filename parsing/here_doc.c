@@ -6,12 +6,13 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 09:44:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/22 18:18:26 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 10:45:33 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+int	g_signal;
 
 char	*get_token(char **line, int *i, int token)
 {

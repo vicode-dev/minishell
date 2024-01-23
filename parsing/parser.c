@@ -6,13 +6,13 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:04:07 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/22 17:20:52 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 10:45:24 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
+int	g_signal;
 
 void	parse_ioa(t_data *data, int idx, t_lexed *list)
 {
@@ -239,7 +239,6 @@ void	parse(t_data *data)
 	while (exec_idx < exec_size)
 	{
 		create_the_array(data, &list, exec_idx);
-
 		data->exec[exec_idx].argv = data->the_array;
 		data->the_array = NULL;
 		exec_idx++;

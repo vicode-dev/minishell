@@ -6,12 +6,14 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:36:00 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/22 18:12:42 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 10:44:59 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
+
+int g_signal;
 
 char	*get_prompt(t_data *data)
 {
@@ -57,7 +59,7 @@ int	prompt_reader(t_data *data)
 			ft_exit_prog(data);
 		lexer(data, &line);
 		add_history(line);
-		if (!syntax_checker(data, data->list))
+		if (data->list && !syntax_checker(data, data->list))
 		{
 			expander(data);
 			parse(data);

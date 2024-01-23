@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 16:39:38 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/22 11:52:43 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 10:26:19 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define COM_NOT_FOUND 127
 # define ERROR_SIG 128
 # define INTERRUPT_SIG 130
+# define QUIT_SIG 131
 # define SYNTAX_ERROR 258
 
 
