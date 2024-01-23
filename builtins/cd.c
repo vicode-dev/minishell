@@ -6,12 +6,11 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:21:55 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 16:06:44 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 19:08:08 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <errno.h>
 
 char	*check_relative(t_data *data, char *path_dir)
 {
@@ -69,7 +68,7 @@ void	ft_cd(t_data *data, char **argv)
 	oldtmp = getcwd(NULL, 0);
 	if (chdir(url[1]) == -1)
 	{
-		ft_printf(2, "cd: %s : %s\n", strerror(errno), url[1]);
+		ft_printf(2, "minishell: cd: %s: %s\n", url[1], strerror(errno));
 		free(url[1]);
 		free(oldtmp);
 		return ;

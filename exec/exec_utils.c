@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:30:14 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 16:32:45 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:53:25 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ int	is_builtins(char *str)
 
 void	exec_builtins(t_data *data, int type, int i)
 {
-	if (type == 1)
+	if (data->exec[i].infile == -1)
+		data->status = 1;
+	else if (type == 1)
 		ft_echo(data, data->exec[i].argv);
 	else if (type == 2)
 		ft_cd(data, data->exec[i].argv);

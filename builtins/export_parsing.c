@@ -3,34 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   export_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:21:02 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/23 15:32:09 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:58:31 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	check_name(char *str, int i)
+static int	check_name(char *s, int i)
 {
 	int	j;
 
 	j = 0;
 	while (j < i)
 	{
-		if ((!ft_isalnum(str[j]) && str[j] != '_') || 
-			(j == 0 && !ft_isalpha(str[j]) && str[j] != '_'))
+		if ((!ft_isalnum(s[j]) && s[j] != '_') || 
+			(j == 0 && !ft_isalpha(s[j]) && s[j] != '_'))
 		{
 			ft_printf(2, "minishell: export: `%s': not a valid identifier\n", 
-				str);
+				s);
 			return (0);
 		}
 		j++;
 	}
-	if (str[j] == '+' && str[j + 1] != '=')
+	if ((s[j] == '+' && s[j + 1] != '=') || (s[0] == '=') || (s[0] == '+'))
 	{
-		ft_printf(2, "minishell: export: `%s': not a valid identifier\n", str);
+		ft_printf(2, "minishell: export: `%s': not a valid identifier\n", s);
 		return (0);
 	}
 	return (1);

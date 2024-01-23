@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 09:26:17 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 17:12:49 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 17:51:56 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	expand_exit_code(t_data *data, t_lexed *list, int i)
 	char	*tmp;
 	int		len;
 
-	tmp = ft_itoa((int) data->status);
+	tmp = ft_itoa(data->status);
 	len = ft_strlen(tmp);
 	tmp = ft_replace(list->word, tmp, i, i + 2);
 	if (!tmp)
