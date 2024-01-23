@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:36:00 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 10:44:59 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 14:38:13 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,11 @@ int	prompt_reader(t_data *data)
 		line = readline(prompt);
 		free(prompt);
 		if (!line)
-			ft_exit_prog(data);
-		lexer(data, &line);
+			ft_crash(data);
+		if (!check_syntax_error(data, line))
+			lexer(data, &line);
 		add_history(line);
-		if (data->list && !syntax_checker(data, data->list))
+		if (g_signal != SIGINT && data->list && !syntax_checker(data, data->list))
 		{
 			expander(data);
 			parse(data);
@@ -67,6 +68,7 @@ int	prompt_reader(t_data *data)
 				executer(data);
 		}
 		ft_free_cycle(data);
+		g_signal = 0;
 		free(line);
 	}
 	return (0);

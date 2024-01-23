@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 09:32:25 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 12:04:01 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 14:04:44 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	sig_quit(int signal)
 
 void	sig_interrupt(int signal)
 {
-	g_signal = signal;
+	// g_signal = signal;
+	(void)signal;
 	ft_printf(1, "\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);

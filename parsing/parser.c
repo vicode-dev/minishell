@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:04:07 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 10:45:24 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 13:56:26 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,13 @@ void	create_the_array(t_data *data, t_lexed **list, int exec_idx)
 		if ((*list)->token == INFILE || (*list)->token == OUTFILE || (*list)->token == APPEND)
 			parse_ioa(data, exec_idx, (*list));
 		else if ((*list)->token == HERE_DOC)
-			parse_heredoc(data, exec_idx, (*list));
+			here_doc(data, exec_idx, (*list));
 		else if ((*list)->token == WORD)
 			create_the_array_word(data, list);
 		else if ((*list)->token == DQUOTE || (*list)->token == SQUOTE)
 			create_the_array_quot(data, list);
+		if (g_signal == SIGINT)
+			return ;
 		*list = (*list)->next;
 	}
 }
@@ -242,6 +244,8 @@ void	parse(t_data *data)
 		data->exec[exec_idx].argv = data->the_array;
 		data->the_array = NULL;
 		exec_idx++;
+		if (g_signal == SIGINT)
+			return ;
 		if (list)
 			list = list->next;
 	}

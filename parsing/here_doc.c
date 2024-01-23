@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 09:44:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 10:45:33 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 14:25:17 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char	*get_token(char **line, int *i, int token)
 			res = ft_strjoin(tmp_2, tmp);
 			free(tmp_2);
 			free(tmp);
+			i_cpy++;
 			j = i_cpy;
 		}
 		if ((*line)[j] == ' ' || (*line)[j] == '<' || (*line)[j] == '>'
@@ -117,36 +118,54 @@ static char	*expand(t_data *data, char *buff)
 	return (buff);
 }
 
-void	parse_heredoc(t_data *data, int idx, t_lexed *list)
+void	parse_heredoc(t_data *data, int idx, t_lexed *list, int *end)
 {
-	int		doc;
-	int		dup_doc;
-	char	*file_name;
-	char	*tmp;
-	char	*buff;
+	char *buff;
 
-	tmp = ft_strjoin(get_env_var(data->env, "TMPDIR"), ".tmp");
-	file_name = ft_strjoin(tmp, ft_itoa(idx));
-	free(tmp);
-	if (!file_name)
-		ft_crash(data);
-	doc = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 00777);
-	dup_doc = open(file_name, O_RDONLY);
-	if (doc == -1)
-		ft_crash(data); // A changer
+	(void) idx;
 	buff = readline(">");
 	if (!buff)
 		ft_crash(data);
-	while (ft_strncmp(buff, list->word, ft_strlen(buff)))
+	while (buff && ft_strcmp(buff, list->word))
 	{
 		buff = expand(data, buff);
-		ft_printf(doc, "%s\n", buff);
+		ft_printf(end[1], "%s\n", buff);
 		free(buff);
 		buff = readline(">");
-		if (!buff)
-			ft_crash(data);
 	}
-	if (data->exec[idx].infile > 2)
-		close(data->exec[idx].infile);
-	data->exec[idx].infile = dup_doc;
+	free(buff);
+	close(end[1]);
+}
+
+void	here_doc(t_data *data, int idx, t_lexed *list)
+{
+	int	pid;
+	int	old_stdin;
+	int	end[2];
+
+	old_stdin = dup(STDIN_FILENO);
+	signal(SIGINT, sig_interrupt_exec);
+	pipe(end);
+	pid = fork();
+	if (pid < 0)
+		return ;
+	if (!pid)
+	{
+		signal(SIGINT, SIG_DFL);
+		parse_heredoc(data, idx, list, end);
+		exit(0);
+	}
+	else
+	{
+		waitpid(pid, NULL, 0);
+		if (g_signal == SIGINT)
+			data->status  = 1;
+		close(end[1]);
+		signal(SIGINT, sig_interrupt);
+		dup2(old_stdin, STDIN_FILENO);
+		if (data->exec[idx].infile > 2)
+			close(data->exec[idx].infile);
+		if (data->exec[idx].infile > -1)
+			data->exec[idx].infile = end[0];	
+	}
 }

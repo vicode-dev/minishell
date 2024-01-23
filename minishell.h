@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 12:04:14 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 14:36:10 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,14 @@ char	**struct_to_array(t_env *env);
 void	free_struct_env(t_env *env);
 
 // PARSING
+int		check_syntax_error(t_data *data, char *str);
 void	lexer(t_data *data, char **line);
 char	*get_quot(char **line, int *i);
 char	*get_token(char **line, int *i, int token);
 void	expander(t_data *data);
 void	parse(t_data *data);
 int		get_end_quot(char **line, int i, char type);
-void	parse_heredoc(t_data *data, int idx, t_lexed *list);
+void	here_doc(t_data *data, int idx, t_lexed *list);
 int		tab_size(t_lexed *list);
 void	create_the_array_word(t_data *data, t_lexed **list);
 void	create_the_array_quot(t_data *data, t_lexed **list);
