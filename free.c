@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 11:22:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 10:03:17 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:21:32 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@ void	ft_crash(t_data *data)
 {
 	data->status = 1;
 	ft_exit_prog(data);
+}
+
+void	ft_free_strs(char **board, int i, int quit)
+{
+	while (board && board[i])
+		free(board[i++]);
+	free(board);
+	if (quit == 1 || quit == 0)
+		exit(quit);
 }
 
 void	ft_free_lexed(t_lexed **list)

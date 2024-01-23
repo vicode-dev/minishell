@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 18:02:56 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/16 18:03:14 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:22:43 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	create_the_array_word(t_data *data, t_lexed **list)
 	i = -10;
 	if (!w_split)
 		ft_crash(data);
-	if ((*list)->prev && ((*list)->prev->token == DQUOTE || (*list)->prev->token == SQUOTE) 
+	if ((*list)->prev && ((*list)->prev->token == DQUOTE
+			|| (*list)->prev->token == SQUOTE)
 		&& (*list)->word[0] != ' ')
 		data->the_array = join(data, &w_split, &i);
 	tmp_array = ft_arrayjoin(data->the_array, w_split, ft_strslen(w_split));
