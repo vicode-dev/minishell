@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:36:00 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 14:38:13 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:33:33 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
 
-int g_signal;
+int	g_signal;
 
 char	*get_prompt(t_data *data)
 {
@@ -27,10 +26,10 @@ char	*get_prompt(t_data *data)
 	cwd = getcwd(NULL, 0);
 	if (cwd)
 	{
-	tmp = ft_strrchr(cwd, '/');
-	tmp = ft_strjoin(prompt, ++tmp);
-	free(cwd);
-	free(prompt);
+		tmp = ft_strrchr(cwd, '/');
+		tmp = ft_strjoin(prompt, ++tmp);
+		free(cwd);
+		free(prompt);
 	}
 	else
 		tmp = prompt;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:44:54 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/23 12:01:18 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:33:08 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	is_builtins(char *str)
 		return (5);
 	else if (!ft_strcmp(str, "unset"))
 		return (6);
-	else if (!ft_strcmp(str, "exit"))// && i == 0 && !data->exec[i + 1].argv)
+	else if (!ft_strcmp(str, "exit"))
 		return (7);
 	else
 		return (0);
@@ -51,6 +51,7 @@ void	exec_builtins(t_data *data, int type, int i)
 	else if (type == 7)
 		ft_exit(data, data->exec[i].argv);
 }
+
 void	redirect_exec_builtins(t_data *data, int type, int i)
 {
 	int	stdin_cpy;
@@ -68,15 +69,6 @@ void	redirect_exec_builtins(t_data *data, int type, int i)
 	close(stdin_cpy);
 	close(stdout_cpy);
 }
-// static int	ft_execlen(t_exec *exec)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (exec[i].argv)
-// 		i++;
-// 	return (i);
-// }
 
 char	*get_path(char *cmd, char **env)
 {

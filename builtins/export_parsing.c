@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:21:02 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/18 18:52:11 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:32:09 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	export_parse(t_data *data, char *var)
 	while (var[i] && var[i] != '=' && var[i] != '+')
 		i++;
 	if (!check_name(var, i))
-		return (1); // Error : name invalid
+		return (1);
 	exist = check_existence(data, var, i);
 	if (exist >= 0)
 		export_replace(data, var, exist, i);

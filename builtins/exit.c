@@ -6,7 +6,7 @@
 /*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 15:54:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/18 19:07:06 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/19 17:27:19 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	ft_exit(t_data *data, char **argv)
 	{
 		data->status = 1;
 		ft_printf(2, "minishell: exit: too many arguments\n");
+		return ;
 	}
 	else if (argv[1])
 	{

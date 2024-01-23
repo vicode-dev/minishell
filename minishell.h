@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 14:36:10 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:30:45 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ void	ft_init_pipex(t_data *data, int i, int stdout_cpy);
 void	exec_builtins(t_data *data, int type, int i);
 int		is_builtins(char *str);
 
-
 //free functions
 void	ft_free_cycle(t_data *data);
 void	ft_free_lexed(t_lexed **list);
@@ -123,7 +122,6 @@ void	ft_crash(t_data *data);
 void	ft_free_strs(char **board, int i, int quit);
 
 //Signals
-void	switch_signal_print(void);
 void	enable_signal_print(void);
 void	disable_signal_print(void);
 void	sig_interrupt(int signal);
@@ -132,5 +130,6 @@ void	sig_quit(int signal);
 
 //Protos
 void	rl_clear_history(void);
-void 	rl_replace_line(const char *str, int undo);
+void	rl_replace_line(const char *str, int undo);
+
 #endif

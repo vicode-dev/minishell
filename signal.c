@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 09:32:25 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 14:04:44 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:30:32 by jgoudema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,6 @@
 #include <termios.h>
 
 int	g_signal;
-
-void	switch_signal_print(void)
-{
-	struct termios	termios_new;
-
-	tcgetattr(STDIN_FILENO, &termios_new);
-	if (termios_new.c_lflag & ECHOCTL)
-		termios_new.c_lflag &= ~ECHOCTL;
-	else
-		termios_new.c_lflag |= ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &termios_new);
-}
 
 void	enable_signal_print(void)
 {
@@ -53,7 +41,6 @@ void	sig_quit(int signal)
 
 void	sig_interrupt(int signal)
 {
-	// g_signal = signal;
 	(void)signal;
 	ft_printf(1, "\n");
 	rl_on_new_line();
