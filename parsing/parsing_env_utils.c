@@ -6,12 +6,11 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 12:25:51 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 15:21:10 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:24:36 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 char	*get_env_var(char **env, char *var)
 {

@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 10:06:45 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/09 14:04:09 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:32:46 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 size_t	ft_strlen(const char *str)
 {
 	int	i;
-	
+
 	if (!str)
 		return (0);
 	i = 0;

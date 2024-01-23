@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:04:07 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 15:23:37 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:24:49 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,4 @@ void	parse(t_data *data)
 		if (list)
 			list = list->next;
 	}
-
 }

@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:27:48 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/23 12:05:03 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:34:57 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ static void	ft_pipex(t_data *data, int i, int *end)
 			exec_builtins(data, is_builtins(data->exec[i].argv[0]), i);
 			exit (data->status);
 		}
-		else if (execve(data->exec[i].path, data->exec[i].argv, data->env) == -1)
+		else if (execve(data->exec[i].path, data->exec[i].argv, data->env) < 0)
 		{
-			ft_printf(2, "minishell: %s: command not found\n", data->exec[i].argv[0]);
-			// perror("");
+			ft_printf(2, "minishell: %s: command not found\n",
+				data->exec[i].argv[0]);
 			exit (COM_NOT_FOUND);
 		}
 	}
@@ -49,11 +49,11 @@ static void	ft_pipex(t_data *data, int i, int *end)
 void	ft_init_pipex(t_data *data, int i, int stdout_cpy)
 {
 	int		end[2];
-	
+
 	if (pipe(end) == -1)
 	{
 		perror("Pipe");
-		exit (-1); // A CHANGER
+		ft_crash(data);
 	}
 	if (data->exec[i].infile > 2)
 		dup2(data->exec[i].infile, STDIN_FILENO);

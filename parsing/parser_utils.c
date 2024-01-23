@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 18:02:56 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 15:22:43 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:27:14 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,51 @@ void	create_the_array_quot(t_data *data, t_lexed **list)
 		tmp_array = data->the_array;
 	}
 	data->the_array = tmp_array;
+}
+
+char	*get_token(char **line, int *i, int token)
+{
+	int		i_cpy;
+	int		j;
+	char	*res;
+	char	*tmp;
+	char	*tmp_2;
+
+	i_cpy = *i;
+	if (token == HERE_DOC || token == APPEND)
+		i_cpy += 2;
+	else
+		i_cpy++;
+	while ((*line)[i_cpy] == ' ')
+		i_cpy++;
+	j = i_cpy;
+	if ((*line)[j] == '<' || (*line)[j] == '>' || (*line)[j] == '|')
+		return (NULL);
+	res = ft_calloc(1, 1);
+	while ((*line)[j])
+	{
+		if ((*line)[j] == '"' || (*line)[j] == '\'')
+		{
+			tmp = ft_substr(*line, i_cpy, j - i_cpy);
+			tmp_2 = ft_strjoin(res, tmp);
+			free(tmp);
+			i_cpy = j;
+			tmp = get_quot(line, &i_cpy);
+			res = ft_strjoin(tmp_2, tmp);
+			free(tmp_2);
+			free(tmp);
+			i_cpy++;
+			j = i_cpy;
+		}
+		if ((*line)[j] == ' ' || (*line)[j] == '<' || (*line)[j] == '>'
+			|| (*line)[j] == '|')
+			break ;
+		j++;
+	}
+	tmp = ft_substr(*line, i_cpy, j - i_cpy);
+	tmp_2 = ft_strjoin(res, tmp);
+	free(tmp);
+	free(res);
+	*i = j - 1;
+	return (tmp_2);
 }

@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 09:26:17 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/19 11:00:03 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:30:09 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ static int	expand_home(t_data *data, t_lexed *list, int i)
 	home = get_env_var(data->env, "HOME");
 	if (home)
 	{
-	tmp = ft_replace(list->word, ft_strdup(home), i, i + 1);
-	if (!tmp)
-		ft_crash(data);
-	free(list->word);
-	list->word = tmp;
-	return (ft_strlen(home));
+		tmp = ft_replace(list->word, ft_strdup(home), i, i + 1);
+		if (!tmp)
+			ft_crash(data);
+		free(list->word);
+		list->word = tmp;
+		return (ft_strlen(home));
 	}
 	return (1);
 }
