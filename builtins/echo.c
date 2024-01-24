@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 10:39:02 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/23 18:49:32 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/24 18:01:46 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,11 @@ static int	echo_flag(char *arg)
 	i = 0;
 	if (!arg)
 		return (-1);
-	while (arg[i] == ' ')
-		i++;
 	if (arg[i++] == '-')
 	{
 		while (arg[i] == 'n')
 			i++;
-		if (arg[i] != ' ' && arg[i] != 0)
+		if (arg[i] != 0)
 			return (0);
 		return (1);
 	}
@@ -38,7 +36,7 @@ static void	echo_print(char **argv, int j, int flag)
 		ft_printf(1, "%s", argv[j++]);
 	while (argv[j])
 		ft_printf(1, " %s", argv[j++]);
-	if (!flag)
+	if (flag != 1)
 		ft_printf(1, "\n");
 }
 

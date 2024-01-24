@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 12:25:51 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/24 13:53:39 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/24 17:42:15 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,22 @@ void	increase_shlvl(t_data *data)
 {
 	char		*itoa;
 	char		*new_line[3];
-	uint16_t	shlvl;
+	int64_t		shlvl;
 
 	shlvl = 1;
 	if (get_env_var(data->env, "SHLVL"))
-		shlvl += ft_atoi(get_env_var(data->env, "SHLVL"));
+		shlvl += ft_atoi64(get_env_var(data->env, "SHLVL"));
+	if (shlvl <= 0)
+		shlvl = 0;
+	if (shlvl > 1000)
+		shlvl = 1;
 	itoa = ft_itoa(shlvl);
 	new_line[1] = ft_strjoin("SHLVL=", itoa);
+	if (shlvl == 1000)
+	{
+		free(new_line[1]);
+		new_line[1] = ft_strdup("SHLVL=");
+	}
 	new_line[2] = 0;
 	if (!new_line[1])
 		ft_crash(data);

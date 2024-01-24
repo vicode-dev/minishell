@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 15:54:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/19 17:27:19 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/24 17:50:11 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	exit_error_print(const char *str)
 	return (-1);
 }
 
-static int64_t	ft_atoi64(const char *str)
+int64_t	ft_atoi64(const char *str)
 {
 	int64_t	res;
 	int64_t	last;
@@ -72,6 +72,7 @@ void	ft_exit(t_data *data, char **argv)
 {
 	int64_t	code;
 
+	ft_printf(1, "exit\n");
 	if (argv[1] && !exit_check_arg(argv[1]))
 		data->status = exit_error_print(argv[1]);
 	else if (argv[1] && argv[2])

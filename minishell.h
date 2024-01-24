@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/24 14:06:09 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/24 17:43:05 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	ft_cd(t_data *data, char *argv[0]);
 void	ft_echo(t_data *data, char **argv);
 void	ft_pwd(t_data *data);
 void	ft_exit(t_data *data, char **argv);
+int64_t	ft_atoi64(const char *str);
 
 int		ft_structlen(t_env *env);
 int		prompt_reader(t_data *data);
