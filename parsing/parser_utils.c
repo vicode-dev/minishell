@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 18:02:56 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 17:18:48 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/24 10:08:06 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	get_token_handler(char **line, int *i_cpy, int *j, char **res)
 			tmp = ft_substr(*line, *i_cpy, *j - *i_cpy);
 			tmp_2 = ft_strjoin(*res, tmp);
 			free(tmp);
+			free(*res);
 			*i_cpy = *j;
 			tmp = get_quot(line, i_cpy);
 			*res = ft_strjoin(tmp_2, tmp);
@@ -104,10 +105,11 @@ void	get_token_handler(char **line, int *i_cpy, int *j, char **res)
 			(*i_cpy)++;
 			*j = *i_cpy;
 		}
+		else
+			(*j)++;
 		if ((*line)[*j] == ' ' || (*line)[*j] == '<' || (*line)[*j] == '>'
 			|| (*line)[*j] == '|')
 			break ;
-		(*j)++;
 	}
 }
 

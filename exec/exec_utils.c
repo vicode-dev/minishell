@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:30:14 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 18:53:25 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/24 14:05:57 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	redirect_exec_builtins(t_data *data, int type, int i)
 	close(stdout_cpy);
 }
 
-char	*get_path(char *cmd, char **env)
+char	*get_path(t_data *data, char *cmd, char **env)
 {
 	char	**paths;
 	char	*path;
@@ -90,5 +90,15 @@ char	*get_path(char *cmd, char **env)
 		free(path);
 		j++;
 	}
+	ft_printf(2, "minishell: %s: command not found\n", cmd);
+	data->status = COM_NOT_FOUND;
 	return (free(paths), NULL);
+}
+
+int	is_directory(const char *path)
+{
+	struct stat	path_stat;
+
+	stat(path, &path_stat);
+	return (S_ISDIR(path_stat.st_mode));
 }

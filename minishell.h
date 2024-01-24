@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:27:48 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 19:08:18 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/24 14:06:09 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <string.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 
 typedef struct s_env
 {
@@ -93,7 +94,6 @@ int		ft_structlen(t_env *env);
 int		prompt_reader(t_data *data);
 char	*get_env_var(char **env, char *var);
 t_env	*array_to_struct(t_data *data);
-char	**struct_to_array(t_env *env);
 void	free_struct_env(t_env *env);
 
 // PARSING
@@ -117,8 +117,9 @@ void	executer(t_data *data);
 void	ft_init_pipex(t_data *data, int i, int stdout_cpy);
 void	exec_builtins(t_data *data, int type, int i);
 int		is_builtins(char *str);
-char	*get_path(char *cmd, char **env);
+char	*get_path(t_data *data, char *cmd, char **env);
 void	redirect_exec_builtins(t_data *data, int type, int i);
+int		is_directory(const char *path);
 
 // FREE
 void	ft_free_cycle(t_data *data);

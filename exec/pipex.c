@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:27:48 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/23 19:10:01 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/24 11:19:44 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,7 @@ static void	ft_pipex_child(t_data *data, int i, int *end)
 		exit (data->status);
 	}
 	else if (execve(data->exec[i].path, data->exec[i].argv, data->env) < 0)
-	{
-		ft_printf(2, "minishell: %s: command not found\n",
-			data->exec[i].argv[0]);
-		exit (COM_NOT_FOUND);
-	}
+		exit (data->status);
 }
 
 static void	ft_pipex(t_data *data, int i, int *end)
@@ -43,7 +39,7 @@ static void	ft_pipex(t_data *data, int i, int *end)
 		signal(SIGQUIT, sig_quit);
 		signal(SIGINT, sig_interrupt_exec);
 		close(end[1]);
-		if (data->exec[i].infile <= 2)
+		if (data->exec[i + 1].infile <= 2)
 			dup2(end[0], STDIN_FILENO);
 		close(end[0]);
 	}
@@ -58,14 +54,14 @@ void	ft_init_pipex(t_data *data, int i, int stdout_cpy)
 		perror("Pipe");
 		ft_crash(data);
 	}
+	if (data->exec[i + 1].argv)
+		dup2(end[1], STDOUT_FILENO);
+	else
+		dup2(stdout_cpy, STDOUT_FILENO);
 	if (data->exec[i].infile > 2)
 		dup2(data->exec[i].infile, STDIN_FILENO);
 	if (data->exec[i].outfile > 2) 
 		dup2(data->exec[i].outfile, STDOUT_FILENO);
-	else if (data->exec[i + 1].argv)
-		dup2(end[1], STDOUT_FILENO);
-	else
-		dup2(stdout_cpy, STDOUT_FILENO);
 	data->pid = fork();
 	if (data->pid < 0)
 		ft_crash(data);

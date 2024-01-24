@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 18:59:50 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 19:00:24 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/24 11:58:33 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ static void	syntax_cmd(char *str, int *i, int *cmd)
 			return ;
 		if (str[*i] != ' ')
 			*cmd = 1;
-		(*i)++;
+		if (str[*i])
+			(*i)++;
 	}
 }
 

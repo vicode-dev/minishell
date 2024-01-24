@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:44:54 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/23 16:34:03 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/24 14:05:41 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,26 @@ int	g_signal;
 
 static char	*parse_path(t_data *data, int i)
 {
-	char	*path;
-
-	if (access(data->exec[i].argv[0], F_OK | X_OK) != -1)
-		path = ft_strdup(data->exec[i].argv[0]);
-	else
-		path = get_path(data->exec[i].argv[0], data->env);
-	return (path);
+	if (is_builtins(data->exec[i].argv[0]))
+		return (NULL);
+	if ((data->exec[i].argv[0][0] == '/') || 
+		(data->exec[i].argv[0][0] == '.' && data->exec[i].argv[0][1] == '/'))
+	{
+		data->status = CANNOT_EXEC;
+		if (access(data->exec[i].argv[0], F_OK | X_OK) != -1)
+		{
+			if (is_directory(data->exec[i].argv[0]))
+				return (ft_printf(2, "minishell: %s: is a directory\n",
+						data->exec[i].argv[0]), NULL);
+			return (ft_strdup(data->exec[i].argv[0]));
+		}
+		ft_printf(2, "minishell: %s: %s\n",
+			data->exec[i].argv[0], strerror(errno));
+		if (access(data->exec[i].argv[0], F_OK) == -1)
+			data->status = COM_NOT_FOUND;
+		return (NULL);
+	}
+	return (get_path(data, data->exec[i].argv[0], data->env));
 }
 
 static void	receive_sig(t_data *data)

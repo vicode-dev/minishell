@@ -10,7 +10,7 @@ OBJS_PIPEX		:= $(addprefix pipex/,$(SRCS_PIPEX:.c=.o))
 OBJS_EXEC		:= $(addprefix exec/,$(SRCS_EXEC:.c=.o))
 CC				:= gcc
 RM				:= rm -f
-CFLAGS			:= -Wall -Wextra -Werror  -I. -ggdb3 #-fsanitize=address
+CFLAGS			:= -Wall -Wextra -Werror  -I. #-ggdb3 -fsanitize=address
 READLINE		:= -lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
 NAME			:= minishell
 

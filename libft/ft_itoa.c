@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 16:36:59 by vicode            #+#    #+#             */
-/*   Updated: 2023/11/06 10:57:19 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/24 13:41:05 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ char	*ft_itoa(int n)
 	int		neg;
 
 	i = 0;
+	neg = 0;
 	str = malloc(sizeof(char) * (ft_nbrlen(n, &neg) + 1));
 	if (!str)
 		return (NULL);

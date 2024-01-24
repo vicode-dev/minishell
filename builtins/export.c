@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 14:39:28 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/18 18:06:53 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/24 13:03:25 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_export(t_data *data, char **vars)
 	ret = 0;
 	j = 1;
 	if (!vars[j])
-		print_env(data);
+		ret = print_env(data);
 	else
 	{
 		while (vars[j])

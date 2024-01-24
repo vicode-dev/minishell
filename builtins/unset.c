@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:15:55 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/18 18:52:44 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/24 13:35:34 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	ft_unset(t_data *data, char **arg)
 			ret = 1;
 		idx = check_existence(data, arg[i], ft_strlen(arg[i]));
 		if (idx >= 0)
-			unset_remove(data, idx);
+			ret = unset_remove(data, idx);
 		i++;
 	}
 	data->status = ret;

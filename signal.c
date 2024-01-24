@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgoudema <jgoudema@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 09:32:25 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 15:30:32 by jgoudema         ###   ########.fr       */
+/*   Updated: 2024/01/24 09:27:26 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,5 @@ void	sig_interrupt(int signal)
 void	sig_interrupt_exec(int signal)
 {
 	g_signal = signal;
+	ft_printf(1, "\n");
 }

@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 11:22:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 15:49:23 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/24 12:41:17 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	ft_free_cycle(t_data *data)
 		while (data->exec[i].argv)
 		{
 			ft_free_strs(data->exec[i].argv, 0, 2);
+			free(data->exec[i].path);
 			if (data->exec[i].infile > 2)
 				close(data->exec[i].infile);
 			if (data->exec[i].outfile > 2)

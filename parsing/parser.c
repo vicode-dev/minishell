@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:04:07 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 15:24:49 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/24 13:44:58 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	parse_ioa(t_data *data, int idx, t_lexed *list)
 		close(data->exec[idx].outfile);
 	if (list->token == INFILE)
 		data->exec[idx].infile = fd;
-	else if (list->token == OUTFILE)
+	else if (list->token == OUTFILE || list->token == APPEND)
 		data->exec[idx].outfile = fd;
 	else
 		close(fd);
