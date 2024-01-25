@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:44:54 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/24 14:05:41 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/25 11:14:35 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 
 int	g_signal;
 
+/**
+ * @brief parse argv[0] and find a command path or print error message
+ * 
+ * @param data 
+ * @param i index in exec array
+ * @return char* if there is a valid command path or NULL
+ */
 static char	*parse_path(t_data *data, int i)
 {
 	if (is_builtins(data->exec[i].argv[0]))
@@ -52,6 +59,11 @@ static void	receive_sig(t_data *data)
 	}
 }
 
+/**
+ * @brief wait the number of child process that has been fork
+ * 
+ * @param data 
+ */
 static void	waits(t_data *data)
 {
 	int	i;
@@ -77,6 +89,11 @@ static void	executer_handler(t_data *data, int stdout_cpy)
 	}
 }
 
+/**
+ * @brief minishell execution part
+ * 
+ * @param data 
+ */
 void	executer(t_data *data)
 {
 	int		builtin;

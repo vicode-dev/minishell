@@ -6,12 +6,20 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:27:48 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/24 11:19:44 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/25 11:10:21 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+/**
+ * @brief handle child part of pipex exec
+ * check if it is a builtins exec and exit
+ * 
+ * @param data 
+ * @param i index in exec array
+ * @param end pipe FD
+ */
 static void	ft_pipex_child(t_data *data, int i, int *end)
 {
 	close(end[1]);
@@ -30,6 +38,13 @@ static void	ft_pipex_child(t_data *data, int i, int *end)
 		exit (data->status);
 }
 
+/**
+ * @brief handle the parent part of pipex
+ * 
+ * @param data 
+ * @param i index in exec array
+ * @param end pipe FD
+ */
 static void	ft_pipex(t_data *data, int i, int *end)
 {
 	if (!data->pid)
@@ -45,6 +60,13 @@ static void	ft_pipex(t_data *data, int i, int *end)
 	}
 }
 
+/**
+ * @brief create pipe, redirect STDIN and STDOUT and launch pipex
+ * 
+ * @param data 
+ * @param i index in exec array
+ * @param stdout_cpy a clean FD copy of STDOUT
+ */
 void	ft_init_pipex(t_data *data, int i, int stdout_cpy)
 {
 	int		end[2];

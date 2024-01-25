@@ -6,12 +6,18 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:30:14 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/24 14:05:57 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/25 11:34:21 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+/**
+ * @brief check if the string correspond to a builtin 
+ * command call and return a specific int for each
+ * @param str a NULL terminated string to scan
+ * @return int from 1 to 7 in case of builtins and 0 if not
+ */
 int	is_builtins(char *str)
 {
 	if (!ft_strcmp(str, "echo"))

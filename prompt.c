@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:36:00 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/23 17:21:33 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/25 10:54:20 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 int	g_signal;
 
+/**
+ * @brief Get the prompt object
+ * 
+ * @param data 
+ * @return char* 
+ */
 char	*get_prompt(t_data *data)
 {
 	char	*tmp;
@@ -42,6 +48,12 @@ char	*get_prompt(t_data *data)
 	return (prompt);
 }
 
+/**
+ * @brief main while for each command cycle
+ * 
+ * @param data 
+ * @return int always NULL
+ */
 int	prompt_reader(t_data *data)
 {
 	int		again;

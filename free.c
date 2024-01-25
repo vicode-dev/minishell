@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 11:22:05 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/24 12:41:17 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/25 11:35:34 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,24 @@
 
 int	g_signal;
 
-// For malloc crash
+/**
+ * @brief exit the whole minishell with exitcode 1
+ * 
+ * @param data 
+ */
 void	ft_crash(t_data *data)
 {
 	data->status = 1;
 	ft_exit_prog(data);
 }
 
+/**
+ * @brief free a string array
+ * 
+ * @param board the array to free
+ * @param i the first index in array to be freed
+ * @param quit 0 or 1 for exit and -1 for doing nothing
+ */
 void	ft_free_strs(char **board, int i, int quit)
 {
 	while (board && board[i])
@@ -30,6 +41,11 @@ void	ft_free_strs(char **board, int i, int quit)
 		exit(quit);
 }
 
+/**
+ * @brief free linked list from the lexer
+ * 
+ * @param list 
+ */
 void	ft_free_lexed(t_lexed **list)
 {
 	t_lexed	*tmp;
@@ -46,6 +62,11 @@ void	ft_free_lexed(t_lexed **list)
 	*list = NULL;
 }
 
+/**
+ * @brief free and close data except env
+ * 
+ * @param data 
+ */
 void	ft_free_cycle(t_data *data)
 {
 	int	i;
@@ -75,6 +96,11 @@ void	ft_free_cycle(t_data *data)
 	g_signal = 0;
 }
 
+/**
+ * @brief free the whole data struct and exit on data->status
+ * 
+ * @param data 
+ */
 void	ft_exit_prog(t_data *data)
 {
 	ft_free_strs(data->env, 0, 2);

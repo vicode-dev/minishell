@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 09:32:25 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/24 09:27:26 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/25 10:52:12 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 int	g_signal;
 
+/**
+ * @brief enable echo signal in the STDIN
+ * 
+ */
 void	enable_signal_print(void)
 {
 	struct termios	termios_new;
@@ -24,6 +28,10 @@ void	enable_signal_print(void)
 	tcsetattr(STDIN_FILENO, TCSANOW, &termios_new);
 }
 
+/**
+ * @brief disable echo of signal in the STDIN
+ * 
+ */
 void	disable_signal_print(void)
 {
 	struct termios	termios_new;
@@ -33,12 +41,22 @@ void	disable_signal_print(void)
 	tcsetattr(STDIN_FILENO, TCSANOW, &termios_new);
 }
 
+/**
+ * @brief function for handle ctrl-\ during execution
+ * 
+ * @param signal signal code for ctrl-\
+ */
 void	sig_quit(int signal)
 {
 	ft_printf(2, "Quit: 3\n");
 	g_signal = signal;
 }
 
+/**
+ * @brief handle ctrl-c in interactive mode. display new line and new prompt.
+ * 
+ * @param signal 
+ */
 void	sig_interrupt(int signal)
 {
 	(void)signal;
