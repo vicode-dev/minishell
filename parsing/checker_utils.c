@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 18:59:50 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/29 11:22:51 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/29 11:28:04 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	check_syntax_error(t_data *data, char *str)
 	cmd = 1;
 	while (str[i])
 	{
+		syntax_quotes(str, &i, &cmd);
 		syntax_find(str, &i, &cmd);
 		if (!cmd)
 			return (print_syntax_error(data, str[i]), 1);
