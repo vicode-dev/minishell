@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:30:14 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/25 11:34:21 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/29 10:42:59 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	redirect_exec_builtins(t_data *data, int type, int i)
 
 	stdin_cpy = dup(STDIN_FILENO);
 	stdout_cpy = dup(STDOUT_FILENO);
+	if (type == 7)
+		ft_printf(1, "exit\n");
 	if (data->exec[i].infile > -1)
 		dup2(data->exec[i].infile, STDIN_FILENO);
 	if (data->exec[i].outfile > 2)

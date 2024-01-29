@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:04:07 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/24 13:44:58 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/25 12:26:59 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	parse_ioa(t_data *data, int idx, t_lexed *list)
 	else if (list->token == APPEND)
 		fd = open(list->word, O_WRONLY | O_CREAT | O_APPEND, 00777);
 	if (fd == -1)
-		ft_printf(2, "minishell: ");
+		ft_printf(2, "minishell: %s: %s\n", list->word, strerror(errno));
 	if (fd == -1)
-		perror(list->word);
+		data->status = 1;
 	if (list->token == INFILE && data->exec[idx].infile > 2)
 		close(data->exec[idx].infile);
 	else if (list->token != INFILE && data->exec[idx].outfile > 2)

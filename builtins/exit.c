@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 15:54:41 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/24 17:50:11 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/29 10:53:34 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	ft_exit(t_data *data, char **argv)
 {
 	int64_t	code;
 
-	ft_printf(1, "exit\n");
 	if (argv[1] && !exit_check_arg(argv[1]))
 		data->status = exit_error_print(argv[1]);
 	else if (argv[1] && argv[2])

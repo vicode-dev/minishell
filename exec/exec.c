@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:44:54 by jgoudema          #+#    #+#             */
-/*   Updated: 2024/01/25 11:14:35 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/29 10:48:47 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	g_signal;
  */
 static char	*parse_path(t_data *data, int i)
 {
+	if (!data->exec[i].argv[0])
+		return (NULL);
 	if (is_builtins(data->exec[i].argv[0]))
 		return (NULL);
 	if ((data->exec[i].argv[0][0] == '/') || 

@@ -6,7 +6,7 @@
 /*   By: vilibert <vilibert@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:36:00 by vilibert          #+#    #+#             */
-/*   Updated: 2024/01/25 10:54:20 by vilibert         ###   ########.fr       */
+/*   Updated: 2024/01/29 10:53:37 by vilibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,16 @@ char	*get_prompt(t_data *data)
 	return (prompt);
 }
 
+static void	prompt_reader_handler(t_data *data)
+{
+	expander(data);
+	parse(data);
+	if (data->exec && data->exec[0].argv[0])
+		executer(data);
+	else
+		data->status = 0;
+}
+
 /**
  * @brief main while for each command cycle
  * 
@@ -72,12 +82,7 @@ int	prompt_reader(t_data *data)
 		add_history(data->line);
 		if (g_signal != SIGINT && data->list 
 			&& !syntax_checker(data, data->list))
-		{
-			expander(data);
-			parse(data);
-			if (data->exec && data->exec[0].argv[0])
-				executer(data);
-		}
+			prompt_reader_handler(data);
 		ft_free_cycle(data);
 	}
 	return (0);
