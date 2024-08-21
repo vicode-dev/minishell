@@ -84,7 +84,7 @@ Press `Ctrl-D` to exit the shell.
 
 ## 📸 Screenshot
 
-![MiniShell Screenshot](path/to/screenshot.png)
+![MiniShell Screenshot](Minishell.png)
 
 ## 🌈 Possible new features 
 
