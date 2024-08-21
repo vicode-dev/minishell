@@ -54,3 +54,4 @@ dkms.conf
 .vscode/
 out
 .tmp*
+README.md
